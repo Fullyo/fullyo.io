@@ -3,1128 +3,909 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fullyo | Your Automated Short-Term Rental Partner</title>
-
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Fullyo | The Property Growth Agency</title>
     
-    <!-- Font Awesome for social media icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* Custom styles to supplement Tailwind */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        .gradient-text {
-            background: linear-gradient(to right, #4f46e5, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .filter-btn, .process-tab-btn, .example-filter-btn, .ad-example-tab-btn {
-            padding: 0.5rem 1.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 9999px;
-            cursor: pointer;
-            font-weight: 500;
-            color: #4b5563;
-            transition: all 0.2s ease-in-out;
-        }
-        .filter-btn:hover, .process-tab-btn:hover, .example-filter-btn:hover, .ad-example-tab-btn:hover {
-            background-color: #f3f4f6;
-        }
-        .filter-btn.active, .process-tab-btn.active, .example-filter-btn.active, .ad-example-tab-btn.active {
-            background-color: #4f46e5;
-            color: white;
-            border-color: #4f46e5;
-        }
-        /* Custom scrollbar hiding for the carousel */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .prose-custom h2 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            margin-top: 2em;
-            margin-bottom: 1em;
-        }
-        .prose-custom p, .prose-custom li {
-            font-size: 1.125rem;
-            line-height: 1.75;
-            margin-bottom: 1.25em;
-        }
-        .prose-custom ol {
-            list-style-type: decimal;
-            margin-left: 1.5rem;
-        }
-        .prose-custom li {
-            padding-left: 0.5rem;
-            margin-bottom: 0.75em;
-        }
-        .prose-custom strong {
-            font-weight: 600;
-            color: #1f2937;
-        }
-        .service-card {
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-    </style>
-</head>
-<body class="text-gray-800">
-
-    <!-- Header & Navigation -->
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" data-page="home-page" class="nav-link"><img src="https://res.cloudinary.com/dvdxbzv6a/image/upload/v1758484688/v13_id4gem.png" alt="Fullyo Logo" class="h-10"></a>
-            <nav class="hidden lg:flex items-center space-x-8">
-                <a href="#services" data-page="home-page" data-selector="#services" class="nav-link text-gray-600 hover:text-indigo-600 font-medium">The System</a>
-                <a href="#" data-page="success-stories-master-page" class="nav-link text-gray-600 hover:text-indigo-600 font-medium">Success Stories</a>
-                <a href="#" data-page="social-media-page" class="nav-link text-gray-600 hover:text-indigo-600 font-medium">Social Media</a>
-                <a href="#" data-page="advertising-page" class="nav-link text-gray-600 hover:text-indigo-600 font-medium">Advertising</a>
-                <a href="#" data-page="insights-master-page" class="nav-link text-gray-600 hover:text-indigo-600 font-medium">Insights</a>
-                <a href="#about" data-page="home-page" data-selector="#about" class="nav-link text-gray-600 hover:text-indigo-600 font-medium">About</a>
-            </nav>
-            <a href="#" data-page="booking-page" class="nav-link hidden lg:inline-block bg-indigo-600 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors">Book a Strategy Call</a>
-            <!-- Mobile Menu Button -->
-            <button class="lg:hidden" id="mobile-menu-button" aria-label="Open Menu">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white/90 backdrop-blur-lg w-full py-4 text-center">
-            <a href="#services" data-page="home-page" data-selector="#services" class="mobile-nav-link block py-2 text-gray-600 hover:text-indigo-600 font-medium">The System</a>
-            <a href="#" data-page="success-stories-master-page" class="mobile-nav-link block py-2 text-gray-600 hover:text-indigo-600 font-medium">Success Stories</a>
-            <a href="#" data-page="social-media-page" class="mobile-nav-link block py-2 text-gray-600 hover:text-indigo-600 font-medium">Social Media</a>
-            <a href="#" data-page="advertising-page" class="mobile-nav-link block py-2 text-gray-600 hover:text-indigo-600 font-medium">Advertising</a>
-            <a href="#" data-page="insights-master-page" class="mobile-nav-link block py-2 text-gray-600 hover:text-indigo-600 font-medium">Insights</a>
-            <a href="#about" data-page="home-page" data-selector="#about" class="mobile-nav-link block py-2 text-gray-600 hover:text-indigo-600 font-medium">About</a>
-            <a href="#" data-page="booking-page" class="mobile-nav-link block py-2 bg-indigo-600 text-white font-semibold mx-6 my-2 rounded-lg hover:bg-indigo-700">Book a Strategy Call</a>
-        </div>
-    </header>
-
-    <!-- PAGE CONTAINER -->
-    <div id="page-container">
-        <main id="home-page">
-            <section class="py-20 lg:py-32">
-                <div class="container mx-auto px-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div class="text-center lg:text-left">
-                            <h1 class="text-4xl lg:text-6xl font-extrabold text-gray-900 leading-tight">Focus On Your Guests.<span class="block mt-2 lg:mt-4 gradient-text">We'll Automate the Rest.</span></h1>
-                            <p class="mt-6 max-w-xl text-lg lg:text-xl text-gray-600">From direct booking websites to full marketing automation, Fullyo is your dedicated partner for a seamless, profitable operation. Stop juggling tech and marketing, and start generating more bookings.</p>
-                            <div class="mt-10"><a href="#" data-page="booking-page" class="cta-link-home bg-indigo-600 text-white font-bold px-8 py-4 rounded-lg text-lg hover:bg-indigo-700 transition-colors shadow-lg">Book Your Free Strategy Call</a></div>
-                        </div>
-                        <div>
-                            <img src="https://res.cloudinary.com/dvdxbzv6a/image/upload/v1758443674/Gemini_Generated_Image_nwlxvlnwlxvlnwlx_aixlnb.png" alt="Illustration of the Fullyo system automating a rental business" class="w-full h-auto">
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="py-20 bg-white">
-                <div class="container mx-auto px-6">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                        <div class="p-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            <h3 class="text-2xl font-bold text-gray-900">More Bookings</h3>
-                            <p class="mt-3 text-gray-600">Fill your calendar and boost your profits by capturing high-value, commission-free direct bookings.</p>
-                        </div>
-                        <div class="p-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                            <h3 class="text-2xl font-bold text-gray-900">More Control</h3>
-                            <p class="mt-3 text-gray-600">Build a lasting brand that you own, attracting loyal guests who book again and again.</p>
-                        </div>
-                        <div class="p-6">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <h3 class="text-2xl font-bold text-gray-900">More Time</h3>
-                            <p class="mt-3 text-gray-600">Save 10+ hours a week by automating everything from messaging to cleaning schedules.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="services" class="py-20 lg:py-24 bg-gray-50">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="text-3xl lg:text-4xl font-bold text-gray-900">The Fullyo System: Your All-in-One Growth Engine</h2><p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">We don't just build websites. We build integrated, resilient businesses designed for maximum occupancy and independence.</p></div>
-                    <div class="mt-16 relative">
-                         <div class="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden lg:block"></div>
-                         <div class="space-y-20">
-                             <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                                <div class="lg:pr-12"><span class="font-semibold text-indigo-600">Module 1</span><h3 class="mt-2 text-3xl font-bold">Your Own Direct Booking Engine</h3>
-                                    <p class="mt-4 text-lg text-gray-600"><strong class="text-gray-900">Take back the 18% you're losing in commissions.</strong> We build you a beautiful, commission-free booking website that becomes your most profitable channel, putting you back in control of your brand and guest relationships.</p>
-                                </div>
-                                <div class="lg:pl-12"><div class="absolute left-1/2 -translate-x-1/2 -translate-y-4 top-1/2 w-4 h-4 rounded-full bg-indigo-600 ring-8 ring-gray-50 hidden lg:block"></div><img src="https://res.cloudinary.com/dvdxbzv6a/image/upload/v1758565757/FullyoDirectBooking_bvt5ks.png" alt="Direct Booking Website Mockup"></div>
-                            </div>
-                            <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                                <div class="lg:order-2 lg:pl-12"><span class="font-semibold text-indigo-600">Module 2</span><h3 class="mt-2 text-3xl font-bold">The 5x Multi-Channel Strategy</h3>
-                                    <p class="mt-4 text-lg text-gray-600"><strong class="text-gray-900">The Airbnb-only era is over.</strong> We implement our proprietary 5x strategy to ensure you're visible everywhere your ideal guests are searching, turning all channels into a powerful funnel for your direct booking site.</p>
-                                </div>
-                                <div class="lg:order-1 lg:pr-12"><div class="absolute left-1/2 -translate-x-1/2 -translate-y-4 top-1/2 w-4 h-4 rounded-full bg-indigo-600 ring-8 ring-gray-50 hidden lg:block"></div><img src="https://res.cloudinary.com/dvdxbzv6a/image/upload/v1758607780/FullyoOTA_j5vnk3.png" alt="Multi-Channel Sync Mockup"></div>
-                            </div>
-                            <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                                <div class="lg:pr-12"><span class="font-semibold text-indigo-600">Module 3</span><h3 class="mt-2 text-3xl font-bold">Your Business Command Center</h3>
-                                    <p class="mt-4 text-lg text-gray-600"><strong class="text-gray-900">Streamline your entire operation into one powerful command center.</strong> Instead of juggling multiple platforms, we set up and integrate a powerful PMS to act as your central hub, automating your business so you can focus on hospitality.</p>
-                                </div>
-                                <div class="lg:pl-12"><div class="absolute left-1/2 -translate-x-1/2 -translate-y-4 top-1/2 w-4 h-4 rounded-full bg-indigo-600 ring-8 ring-gray-50 hidden lg:block"></div><img src="https://res.cloudinary.com/dvdxbzv6a/image/upload/v1758497872/Untitled_design_2_ou150n.png" alt="PMS Dashboard Mockup"></div>
-                            </div>
-                            <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                                <div class="lg:order-2 lg:pl-12">
-                                    <span class="font-semibold text-indigo-600">Module 4</span>
-                                    <h3 class="mt-2 text-3xl font-bold">Direct Booking Growth Blueprint</h3>
-                                    <p class="mt-4 text-lg text-gray-600"><strong class="text-gray-900">Build a sustainable, sought-after brand that you truly own.</strong> A great system needs great marketing. Our Growth Blueprint is powered by specialized services, including targeted advertising and professional social media management.</p>
-                                </div>
-                                <div class="lg:order-1 lg:pr-12"><div class="absolute left-1/2 -translate-x-1/2 -translate-y-4 top-1/2 w-4 h-4 rounded-full bg-indigo-600 ring-8 ring-gray-50 hidden lg:block"></div><img src="https://res.cloudinary.com/dvdxbzv6a/image/upload/v1758864556/FullyoDirectBooking4_lgh0oh.png" alt="Marketing Growth Mockup"></div>
-                            </div>
-                         </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="py-20 lg:py-24 bg-white">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center">
-                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Proven Results for Hosts Like You</h2>
-                    </div>
-                    <div class="relative mt-16">
-                        <div id="work-carousel" class="flex overflow-x-auto snap-x snap-mandatory space-x-8 pb-6 no-scrollbar">
-                             <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-md"><img src="https://placehold.co/600x400/a5b4fc/ffffff?text=Client+A" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Mountain View Chalet</p><h3 class="mt-2 text-xl font-bold">Increased Direct Bookings by 55%</h3><p class="mt-3 text-gray-600">Reduced OTA reliance and boosted profitability in just 6 months.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                             <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-md"><img src="https://placehold.co/600x400/a78bfa/ffffff?text=Client+B" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Urban Oasis Lofts</p><h3 class="mt-2 text-xl font-bold">Saved 10+ Hours a Week</h3><p class="mt-3 text-gray-600">Full automation of guest comms and check-in processes.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                             <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-md"><img src="https://placehold.co/600x400/d1d5db/ffffff?text=Client+C" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Beachfront Villas</p><h3 class="mt-2 text-xl font-bold">Achieved 95% Occupancy</h3><p class="mt-3 text-gray-600">Dynamic pricing and multi-channel strategy led to a fully booked season.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                             <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-md"><img src="https://placehold.co/600x400/fca5a5/ffffff?text=Client+D" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Desert Modern Home</p><h3 class="mt-2 text-xl font-bold">Doubled Revenue in First Year</h3><p class="mt-3 text-gray-600">A complete brand overhaul and marketing blueprint transformed this property.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                             <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-md"><img src="https://placehold.co/600x400/fdba74/ffffff?text=Client+E" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Lakeside Cabin Retreat</p><h3 class="mt-2 text-xl font-bold">First Page on Google</h3><p class="mt-3 text-gray-600">SEO-focused website build now outranks its own Airbnb listing.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                             <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-md"><img src="https://placehold.co/600x400/86efac/ffffff?text=Client+F" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">City Center Apartments</p><h3 class="mt-2 text-xl font-bold">Streamlined Multi-Property Ops</h3><p class="mt-3 text-gray-600">Centralized PMS setup for a portfolio of 12 units.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                             <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-md"><img src="https://placehold.co/600x400/67e8f9/ffffff?text=Client+G" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Alpine Ski Lodge</p><h3 class="mt-2 text-xl font-bold">Booked Out Ski Season</h3><p class="mt-3 text-gray-600">Targeted ad campaigns filled the calendar before the first snowfall.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                            <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-md"><img src="https://placehold.co/600x400/f9a8d4/ffffff?text=Client+H" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Forest A-Frame</p><h3 class="mt-2 text-xl font-bold">Viral on Social Media</h3><p class="mt-3 text-gray-600">Content strategy led to a feature in a major travel publication.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        </div>
-                        <button id="carousel-prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white rounded-full p-2 text-gray-700 shadow-md hidden md:block" aria-label="Previous Story">&lt;</button>
-                        <button id="carousel-next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white rounded-full p-2 text-gray-700 shadow-md hidden md:block" aria-label="Next Story">&gt;</button>
-                    </div>
-                    <div class="mt-12 text-center"><a href="#" data-page="success-stories-master-page" class="story-link nav-link bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors">See All Success Stories</a></div>
-                </div>
-            </section>
-            
-            <section id="about" class="py-20 lg:py-24 bg-gray-50">
-                 <div class="container mx-auto px-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div><img src="https://placehold.co/500x500/e0e7ff/4338ca?text=Sebastien" alt="Founder Photo" class="rounded-full shadow-xl mx-auto lg:mx-0"></div>
-                        <div class="text-center lg:text-left">
-                             <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">From a Passion for Hospitality to a Mission for Hosts</h2>
-                             <p class="mt-4 text-lg text-gray-600">"My journey in hospitality and marketing, from being a host myself to living in 9 different countries, revealed a universal problem: passionate hosts were being held back by big tech. They were losing control and profits, forced to build their business on a platform they didn't own. I started Fullyo to change that. I'm genuinely passionate about helping hosts build sustainable, independent businesses. We provide the tools and strategies so you can take back control and focus on what you love—creating unforgettable guest experiences."</p>
-                             <p class="mt-6 font-bold text-gray-900">Sebastien L'Heureux, Founder of Fullyo</p>
-                             <a href="#" data-page="about-page" class="nav-link mt-6 inline-block font-semibold text-indigo-600 hover:underline">More About Our Mission &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="bg-indigo-700 text-white">
-               <div class="container mx-auto px-6 py-20 text-center">
-                   <h2 class="text-3xl lg:text-4xl font-bold">Your Path to a More Profitable & Automated Business Starts Here.</h2>
-                    <div class="mt-16 max-w-4xl mx-auto">
-                        <div class="relative">
-                            <div class="absolute top-5 left-0 w-full h-0.5 bg-indigo-500 hidden md:block"></div>
-                            <div class="relative flex flex-col md:flex-row justify-between text-center gap-8">
-                                <div class="md:w-1/4">
-                                    <div class="relative z-10 w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">1</div>
-                                    <h3 class="mt-4 font-semibold">Free Strategy Call</h3>
-                                    <p class="text-sm text-indigo-200 mt-1">A free call to understand your unique business and goals.</p>
-                                </div>
-                                <div class="md:w-1/4">
-                                    <div class="relative z-10 w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">2</div>
-                                    <h3 class="mt-4 font-semibold">Your Custom Growth Plan</h3>
-                                    <p class="text-sm text-indigo-200 mt-1">A custom, step-by-step plan for your success.</p>
-                                </div>
-                                <div class="md:w-1/4">
-                                    <div class="relative z-10 w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">3</div>
-                                    <h3 class="mt-4 font-semibold">System Implementation</h3>
-                                    <p class="text-sm text-indigo-200 mt-1">Our expert team builds and integrates your all-in-one system.</p>
-                                </div>
-                                <div class="md:w-1/4">
-                                    <div class="relative z-10 w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">4</div>
-                                    <h3 class="mt-4 font-semibold">Growth & Partnership</h3>
-                                    <p class="text-sm text-indigo-200 mt-1">Ongoing support to ensure your long-term success.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   <div class="mt-16"><a href="#" data-page="booking-page" class="cta-link-footer bg-white text-indigo-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-100 transition-colors shadow-lg">Book Your Free Strategy Call</a></div>
-               </div>
-            </section>
-        </main>
-        
-        <!-- ADVERTISING PAGE -->
-        <main id="advertising-page" style="display: none;">
-             <!-- Section 1: Hero -->
-            <section class="py-20 lg:py-24 bg-white">
-                <div class="container mx-auto px-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div class="text-center lg:text-left">
-                            <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">Fill Your Calendar with High-Value <span class="gradient-text">Direct Bookings.</span></h1>
-                            <p class="mt-6 text-lg text-gray-600">Our expert-managed ad campaigns on Google, Facebook, and Instagram find travelers who are ready to book, driving them directly to your website. Plans start from $499/mo.</p>
-                            <ul class="mt-6 space-y-3 text-lg text-gray-600">
-                                <li class="flex items-center"><svg class="w-6 h-6 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Performance-focused ad creative</li>
-                                <li class="flex items-center"><svg class="w-6 h-6 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Precision targeting of active travelers</li>
-                                <li class="flex items-center"><svg class="w-6 h-6 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Made by certified ad specialists, not AI</li>
-                            </ul>
-                             <a href="#" data-page="booking-page" class="nav-link mt-8 inline-block bg-indigo-600 text-white font-semibold px-8 py-4 rounded-lg hover:bg-indigo-700">Book Your Free Strategy Call</a>
-                        </div>
-                        <div>
-                             <img src="https://placehold.co/600x500/e0e7ff/4338ca?text=Collage+of+STR+Ads" alt="A collage of effective ad mockups for STRs on Google, Facebook, and Instagram." class="rounded-xl shadow-xl">
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 2: Ad Examples -->
-            <section class="py-20 lg:py-24 bg-gray-50">
-                <div class="container mx-auto px-6">
-                    <div class="text-center max-w-3xl mx-auto">
-                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Ads That Convert Travelers Into Guests</h2>
-                         <p class="mt-4 text-lg text-gray-600">We create platform-specific ads designed to capture attention and drive clicks from high-intent travelers.</p>
-                    </div>
-                    <div id="ad-example-tabs" class="mt-12 flex flex-wrap justify-center gap-2 md:gap-4">
-                        <button class="ad-example-tab-btn active" data-tab="google">Google Ads</button>
-                        <button class="ad-example-tab-btn" data-tab="facebook">Facebook Ads</button>
-                        <button class="ad-example-tab-btn" data-tab="instagram">Instagram Ads</button>
-                    </div>
-                    <div class="mt-8 bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
-                        <div id="google-tab-content" class="ad-example-tab-content"><img src="https://placehold.co/800x400/e0e7ff/4338ca?text=Google+Search+Ad+Mockup" alt="Mockup of a Google search ad for 'cabin rental in Squamish'" class="rounded-lg shadow-inner"></div>
-                        <div id="facebook-tab-content" class="ad-example-tab-content hidden"><img src="https://placehold.co/800x400/c4b5fd/4338ca?text=Facebook+Carousel+Ad+Mockup" alt="Mockup of a Facebook carousel ad showcasing a luxury villa" class="rounded-lg shadow-inner"></div>
-                        <div id="instagram-tab-content" class="ad-example-tab-content hidden"><img src="https://placehold.co/800x400/a5b4fc/4338ca?text=Instagram+Story+Ad+Mockup" alt="Mockup of an Instagram Story video ad for a modern city loft" class="rounded-lg shadow-inner"></div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 3: Why a specialist -->
-            <section class="py-20 lg:py-24">
-                <div class="container mx-auto px-6 text-center max-w-3xl">
-                     <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Why a Generic Marketer Will Burn Your Ad Budget</h2>
-                     <p class="mt-4 text-xl text-gray-600">Your ad budget is precious. Generic marketers target broad interests; we target <strong class="text-gray-800">travel intent</strong>. We understand booking windows, seasonality in places like Squamish, and how to write copy that sells an experience, not just a room. Every dollar you spend with us is optimized for one goal: <strong class="gradient-text">putting heads in beds.</strong></p>
-                </div>
-            </section>
-            
-            <!-- Section 4: Ad Services Grid -->
-            <section class="py-20 lg:py-24 bg-gray-50">
-                <div class="container mx-auto px-6">
-                    <div class="text-center max-w-3xl mx-auto">
-                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">A Full Suite of Ad Services to Fill Your Calendar</h2>
-                    </div>
-                    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">Meta Ads Management</h3><p class="text-gray-600 text-sm mt-2 flex-grow">Complete management of your Facebook & Instagram ad campaigns, from strategy to execution.</p><p class="text-2xl font-bold mt-4">$499</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">Google PPC Ads</h3><p class="text-gray-600 text-sm mt-2 flex-grow">Capture high-intent travelers actively searching on Google for stays in your area.</p><p class="text-2xl font-bold mt-4">$499</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">UGC Video Ads</h3><p class="text-gray-600 text-sm mt-2 flex-grow">Engaging user-generated content style videos created to build authenticity and drive conversions.</p><p class="text-2xl font-bold mt-4">$99</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 5: The Transformation -->
-            <section class="py-20 lg:py-24">
-                <div class="container mx-auto px-6 max-w-5xl">
-                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 text-center">From Relying on Luck to Driving Results</h2>
-                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-                        <div class="bg-white p-8 rounded-xl border">
-                            <h3 class="text-2xl font-bold text-gray-800">Before Fullyo...</h3>
-                            <ul class="mt-6 space-y-4 text-lg text-gray-600">
-                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3">×</span>Relying on unpredictable OTA algorithms</li>
-                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3">×</span>Struggling to fill shoulder seasons</li>
-                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3">×</span>Losing thousands to commissions</li>
-                            </ul>
-                        </div>
-                         <div class="bg-indigo-600 text-white p-8 rounded-xl">
-                            <h3 class="text-2xl font-bold">After Fullyo.</h3>
-                             <ul class="mt-6 space-y-4 text-lg">
-                                <li class="flex items-start"><span class="font-bold mr-3">✓</span>A consistent flow of direct booking inquiries</li>
-                                <li class="flex items-start"><span class="font-bold mr-3">✓</span>Control over your calendar and pricing</li>
-                                <li class="flex items-start"><span class="font-bold mr-3">✓</span>Higher profit margins on every stay</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        
-        <!-- SOCIAL MEDIA PAGE -->
-        <main id="social-media-page" style="display: none;">
-            <!-- Section 1: Hero -->
-            <section class="py-20 lg:py-24 bg-white">
-                <div class="container mx-auto px-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div class="text-center lg:text-left">
-                            <span class="text-indigo-600 font-semibold">TOP 1% OF GLOBAL CREATIVE TALENT</span>
-                            <h1 class="mt-4 text-4xl lg:text-5xl font-extrabold text-gray-900">Expert social media management from only <span class="gradient-text">$199/mo</span></h1>
-                            <ul class="mt-6 space-y-3 text-lg text-gray-600">
-                                <li class="flex items-center"><svg class="w-6 h-6 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Premium content with your branding</li>
-                                <li class="flex items-center"><svg class="w-6 h-6 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>80% cheaper than alternatives</li>
-                                <li class="flex items-center"><svg class="w-6 h-6 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Made by real people - <strong>not AI</strong></li>
-                            </ul>
-                             <a href="#" data-page="booking-page" class="nav-link mt-8 inline-block bg-indigo-600 text-white font-semibold px-8 py-4 rounded-lg hover:bg-indigo-700">Book Your Free Strategy Call</a>
-                             <div class="mt-6">
-                                <p class="text-sm text-gray-500">Supported social media channels:</p>
-                                <div class="flex space-x-4 mt-2 text-2xl text-gray-600">
-                                    <i class="fab fa-facebook"></i>
-                                    <i class="fab fa-instagram"></i>
-                                    <i class="fab fa-linkedin-in"></i>
-                                    <i class="fab fa-pinterest"></i>
-                                    <i class="fab fa-tiktok"></i>
-                                    <i class="fab fa-youtube"></i>
-                                </div>
-                             </div>
-                        </div>
-                        <div>
-                             <img src="https://placehold.co/600x500/e0e7ff/4338ca?text=Collage+of+STR+Social+Posts" alt="A collage of beautiful social media posts for various short-term rentals" class="rounded-xl shadow-xl">
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 2: Filterable Example Gallery -->
-            <section class="py-20 lg:py-24 bg-gray-50">
-                <div class="container mx-auto px-6">
-                    <div class="text-center max-w-3xl mx-auto">
-                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Content Tailored To Your Property Type</h2>
-                         <p class="mt-4 text-lg text-gray-600">From luxury villas to unique glamping spots, we create content that speaks directly to your ideal guest. Explore some of our work below.</p>
-                    </div>
-                    <div id="example-filters" class="mt-12 flex flex-wrap justify-center gap-2 md:gap-4">
-                        <button class="example-filter-btn active" data-filter="all">All</button>
-                        <button class="example-filter-btn" data-filter="luxury-villas">Luxury Villas</button>
-                        <button class="example-filter-btn" data-filter="city-stays">City Stays</button>
-                        <button class="example-filter-btn" data-filter="cabin-retreats">Cabin Retreats</button>
-                        <button class="example-filter-btn" data-filter="glamping-unique">Glamping & Unique</button>
-                        <button class="example-filter-btn" data-filter="boutique-hotels">Boutique Hotels</button>
-                    </div>
-                    <div id="example-grid" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="example-item luxury-villas"><img src="https://placehold.co/600x600/a5b4fc/4338ca?text=Luxury+Villa+Post" class="rounded-lg shadow-md" alt="Social post for a luxury villa"></div>
-                        <div class="example-item city-stays"><img src="https://placehold.co/600x600/c4b5fd/4338ca?text=Modern+City+Loft+Post" class="rounded-lg shadow-md" alt="Social post for a modern city loft"></div>
-                        <div class="example-item cabin-retreats"><img src="https://placehold.co/600x600/e0e7ff/4338ca?text=Cozy+Cabin+in+Squamish" class="rounded-lg shadow-md" alt="Social post for a cozy cabin in Squamish"></div>
-                        <div class="example-item glamping-unique"><img src="https://placehold.co/600x600/d1d5db/4338ca?text=Unique+Glamping+Tent" class="rounded-lg shadow-md" alt="Social post for a unique glamping tent"></div>
-                        <div class="example-item boutique-hotels"><img src="https://placehold.co/600x600/a78bfa/4338ca?text=Boutique+Hotel+Lobby" class="rounded-lg shadow-md" alt="Social post for a boutique hotel lobby"></div>
-                        <div class="example-item luxury-villas city-stays"><img src="https://placehold.co/600x600/818cf8/4338ca?text=Urban+Luxury+Penthouse" class="rounded-lg shadow-md" alt="Social post for an urban luxury penthouse"></div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 3: Why a specialist -->
-            <section class="py-20 lg:py-24">
-                <div class="container mx-auto px-6 text-center max-w-3xl">
-                     <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Why a Generic Agency Will Fail Your Rental Business</h2>
-                     <p class="mt-4 text-xl text-gray-600">Your business is unique. You care about <strong class="text-gray-800">occupancy rates</strong>, not just 'engagement.' You need <strong class="text-gray-800">direct bookings</strong>, not just 'followers.' We're not a generic social media agency; we are STR marketing specialists. We understand the language of travel, the importance of shoulder seasons, and the goal of everything we post is to <strong class="gradient-text">put heads in beds.</strong></p>
-                </div>
-            </section>
-
-            <!-- Section 4: All Services Grid -->
-            <section class="py-20 lg:py-24 bg-gray-50">
-                <div class="container mx-auto px-6">
-                    <div class="text-center max-w-3xl mx-auto">
-                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">All Your STR Marketing Needs, In One Place</h2>
-                         <p class="mt-4 text-lg text-gray-600">Choose from a suite of services designed to build your brand and drive direct bookings. Mix and match to create your perfect marketing package.</p>
-                    </div>
-                    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">Social Media Posts</h3><p class="text-gray-600 text-sm mt-2 flex-grow">Static, single-image content created & posted monthly to your channels.</p><p class="text-2xl font-bold mt-4">$99</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">Short-Form Videos</h3><p class="text-gray-600 text-sm mt-2 flex-grow">We edit your raw footage into 5-15 second videos for TikTok, Reels, and Shorts.</p><p class="text-2xl font-bold mt-4">$99</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">Email Design</h3><p class="text-gray-600 text-sm mt-2 flex-grow">Custom newsletters to re-engage past guests and drive repeat bookings.</p><p class="text-2xl font-bold mt-4">$149</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">Blog Post</h3><p class="text-gray-600 text-sm mt-2 flex-grow">SEO-optimized blog posts for your website to attract organic traffic.</p><p class="text-2xl font-bold mt-4">$99</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">SEO Backlinks</h3><p class="text-gray-600 text-sm mt-2 flex-grow">High-quality DA40+ backlinks to boost your website's search engine rankings.</p><p class="text-2xl font-bold mt-4">$99</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">Instagram Growth</h3><p class="text-gray-600 text-sm mt-2 flex-grow">Real, targeted follower growth through manual engagement with your ideal audience.</p><p class="text-2xl font-bold mt-4">$129</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                        <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">UGC Videos</h3><p class="text-gray-600 text-sm mt-2 flex-grow">Engaging user-generated content style videos for paid social, featuring authentic promotion.</p><p class="text-2xl font-bold mt-4">$99</p><p class="text-gray-500 text-xs">Pricing from</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg">Select</a></div>
-                         <div class="bg-white p-6 rounded-lg border service-card text-center flex flex-col"><h3 class="font-bold text-lg">And More...</h3><p class="text-gray-600 text-sm mt-2 flex-grow">Need something else? We offer a full range of marketing services. Let's chat.</p><p class="text-2xl font-bold mt-4">&nbsp;</p><p class="text-gray-500 text-xs">&nbsp;</p><a href="#" data-page="booking-page" class="nav-link mt-4 w-full bg-gray-800 text-white font-semibold py-2 rounded-lg">Book a Strategy Call</a></div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 5: The Transformation -->
-            <section class="py-20 lg:py-24">
-                <div class="container mx-auto px-6 max-w-5xl">
-                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 text-center">The Fullyo Difference</h2>
-                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-                        <div class="bg-white p-8 rounded-xl border">
-                            <h3 class="text-2xl font-bold text-gray-800">Before Fullyo...</h3>
-                            <ul class="mt-6 space-y-4 text-lg text-gray-600">
-                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3">×</span>Unreliable freelancers & poor communication</li>
-                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3">×</span>Inconsistent quality & missed posts</li>
-                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3">×</span>Unmanageable workloads & stress</li>
-                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3">×</span>Not enough time to focus on your guests</li>
-                            </ul>
-                        </div>
-                         <div class="bg-indigo-600 text-white p-8 rounded-xl">
-                            <h3 class="text-2xl font-bold">After Fullyo.</h3>
-                             <ul class="mt-6 space-y-4 text-lg">
-                                <li class="flex items-start"><span class="font-bold mr-3">✓</span>Premium, on-brand content creation</li>
-                                <li class="flex items-start"><span class="font-bold mr-3">✓</span>Affordable, fixed monthly pricing</li>
-                                <li class="flex items-start"><span class="font-bold mr-3">✓</span>Fast, reliable turnaround times</li>
-                                <li class="flex items-start"><span class="font-bold mr-3">✓</span>More bookings & time for your business</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 6: Social Proof -->
-            <section class="py-20 lg:py-24 bg-gray-50">
-                <div class="container mx-auto px-6">
-                    <div class="text-center max-w-3xl mx-auto">
-                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Trusted by Hosts Worldwide</h2>
-                        <p class="mt-4 text-lg text-gray-600">Join successful hosts from over 12 countries who trust Fullyo to build their brand and drive direct bookings.</p>
-                    </div>
-                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="bg-white p-6 rounded-lg border"><p class="text-gray-600">"They have saved me so much time and effort. I now have more time for my family and other areas of my business!"</p><div class="mt-4 flex items-center"><img src="https://placehold.co/40x40/cbd5e1/475569" class="w-10 h-10 rounded-full" alt="Cecilia M."><div class="ml-3"><p class="font-semibold text-gray-900">Cecilia M.</p><p class="text-gray-500 text-sm">Co-Host</p></div></div></div>
-                        <div class="bg-white p-6 rounded-lg border"><p class="text-gray-600">"Consistent, quality content that actually gets me bookings. The increase in direct inquiries since starting is impressive."</p><div class="mt-4 flex items-center"><img src="https://placehold.co/40x40/cbd5e1/475569" class="w-10 h-10 rounded-full" alt="Isaac S."><div class="ml-3"><p class="font-semibold text-gray-900">Isaac S.</p><p class="text-gray-500 text-sm">Property Manager</p></div></div></div>
-                        <div class="bg-white p-6 rounded-lg border"><p class="text-gray-600">"The process of reviewing and approving posts is so streamlined. It saves me an invaluable amount of time!"</p><div class="mt-4 flex items-center"><img src="https://placehold.co/40x40/cbd5e1/475569" class="w-10 h-10 rounded-full" alt="Timothy Y."><div class="ml-3"><p class="font-semibold text-gray-900">Timothy Y.</p><p class="text-gray-500 text-sm">Host</p></div></div></div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 7: Our Process -->
-            <section class="py-20 lg:py-24">
-                <div class="container mx-auto px-6">
-                    <div class="text-center max-w-3xl mx-auto">
-                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">A Seamless Experience, Built for Hosts</h2>
-                        <p class="mt-4 text-lg text-gray-600">Our service is a flexible subscription enabled by technology to deliver compelling creative at scale. Here’s how it works.</p>
-                    </div>
-                    <div id="process-tabs" class="mt-12 flex flex-wrap justify-center gap-2 md:gap-4">
-                        <button class="process-tab-btn active" data-tab="services">Services</button>
-                        <button class="process-tab-btn" data-tab="onboarding">Onboarding</button>
-                        <button class="process-tab-btn" data-tab="communication">Communication</button>
-                        <button class="process-tab-btn" data-tab="collaboration">Collaboration</button>
-                        <button class="process-tab-btn" data-tab="scheduling">Scheduling</button>
-                        <button class="process-tab-btn" data-tab="analytics">Analytics</button>
-                    </div>
-                    <div class="mt-8 bg-white p-8 rounded-xl shadow-lg max-w-5xl mx-auto">
-                        <div id="services-tab-content" class="process-tab-content grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                            <div><h3 class="text-2xl font-bold">Select Your Services</h3><p class="mt-3 text-lg text-gray-600">Choose services, add-ons, and social platforms to create the perfect package for your business needs.</p></div>
-                            <img src="https://placehold.co/500x300/e0e7ff/4338ca?text=UI+showing+service+selection" class="rounded-lg" alt="UI showing service selection">
-                        </div>
-                        <div id="onboarding-tab-content" class="process-tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                             <div><h3 class="text-2xl font-bold">Streamlined Onboarding</h3><p class="mt-3 text-lg text-gray-600">Our streamlined onboarding gets you set up in minutes. Connect your accounts, share your assets, and we're ready to go.</p></div>
-                             <img src="https://placehold.co/500x300/e0e7ff/4338ca?text=Simple+onboarding+screen" class="rounded-lg" alt="Simple onboarding screen">
-                        </div>
-                        <div id="communication-tab-content" class="process-tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                             <div><h3 class="text-2xl font-bold">Unified Communication</h3><p class="mt-3 text-lg text-gray-600">All communication and feedback happens in one organized place. No more messy email chains or missed messages.</p></div>
-                             <img src="https://placehold.co/500x300/e0e7ff/4338ca?text=Communication+dashboard" class="rounded-lg" alt="Communication dashboard">
-                        </div>
-                        <div id="collaboration-tab-content" class="process-tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                             <div><h3 class="text-2xl font-bold">Easy Collaboration</h3><p class="mt-3 text-lg text-gray-600">Easily review and approve content before it goes live. You have full visibility and control over your brand's voice.</p></div>
-                             <img src="https://placehold.co/500x300/e0e7ff/4338ca?text=Content+approval+UI" class="rounded-lg" alt="Content approval UI">
-                        </div>
-                        <div id="scheduling-tab-content" class="process-tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                             <div><h3 class="text-2xl font-bold">Automated Scheduling</h3><p class="mt-3 text-lg text-gray-600">We manage the entire content calendar, scheduling posts for optimal engagement so you don't have to think about it.</p></div>
-                             <img src="https://placehold.co/500x300/e0e7ff/4338ca?text=Social+media+calendar" class="rounded-lg" alt="Social media calendar">
-                        </div>
-                        <div id="analytics-tab-content" class="process-tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                             <div><h3 class="text-2xl font-bold">Clear Analytics</h3><p class="mt-3 text-lg text-gray-600">Receive a clear, easy-to-understand monthly report tracking your growth in followers, engagement, and direct booking inquiries.</p></div>
-                             <img src="https://placehold.co/500x300/e0e7ff/4338ca?text=Simple+analytics+dashboard" class="rounded-lg" alt="Simple analytics dashboard">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-             <section class="bg-indigo-700 text-white">
-                <div class="container mx-auto px-6 py-20 text-center">
-                    <h2 class="text-3xl lg:text-4xl font-bold">Your Path to a More Profitable & Automated Business Starts Here.</h2>
-                     <div class="mt-16 max-w-4xl mx-auto">
-                        <div class="relative">
-                            <div class="absolute top-5 left-0 w-full h-0.5 bg-indigo-500 hidden md:block"></div>
-                            <div class="relative flex flex-col md:flex-row justify-between text-center gap-8">
-                                <div class="md:w-1/4">
-                                    <div class="relative z-10 w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">1</div>
-                                    <h3 class="mt-4 font-semibold">Free Strategy Call</h3>
-                                    <p class="text-sm text-indigo-200 mt-1">A free call to understand your unique business and goals.</p>
-                                </div>
-                                <div class="md:w-1/4">
-                                    <div class="relative z-10 w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">2</div>
-                                    <h3 class="mt-4 font-semibold">Your Custom Growth Plan</h3>
-                                    <p class="text-sm text-indigo-200 mt-1">A custom, step-by-step plan for your success.</p>
-                                </div>
-                                <div class="md:w-1/4">
-                                    <div class="relative z-10 w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">3</div>
-                                    <h3 class="mt-4 font-semibold">System Implementation</h3>
-                                    <p class="text-sm text-indigo-200 mt-1">Our expert team builds and integrates your all-in-one system.</p>
-                                </div>
-                                <div class="md:w-1/4">
-                                    <div class="relative z-10 w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">4</div>
-                                    <h3 class="mt-4 font-semibold">Growth & Partnership</h3>
-                                    <p class="text-sm text-indigo-200 mt-1">Ongoing support to ensure your long-term success.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-16"><a href="#" data-page="booking-page" class="cta-link-footer bg-white text-indigo-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-100 transition-colors shadow-lg">Book Your Free Strategy Call</a></div>
-                </div>
-            </section>
-        </main>
-        
-        <!-- ABOUT PAGE -->
-        <main id="about-page" style="display: none;">
-             <section class="py-20 text-center bg-white"><div class="container mx-auto px-6"><h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">We believe technology should empower hosts, not overwhelm them.</h1><p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">Our mission is to be the essential technology and marketing partner for short-term rental hosts, providing the expertise and integrated systems needed to build a truly independent and profitable business.</p></div></section>
-             <section class="py-20 lg:py-24">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center max-w-3xl mx-auto">
-                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">The Best of Both Worlds: Personal Service, Powerful Team</h2>
-                         <p class="mt-4 text-lg text-gray-600">We built our agency to solve a key problem: the choice between a small, personal team and a large, powerful agency. With Fullyo, you get both.</p>
-                    </div>
-                    <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-                        <div class="bg-gray-50 p-8 rounded-xl">
-                            <h3 class="font-bold text-2xl text-gray-900">Your Dedicated Strategy Team</h3>
-                             <p class="mt-3 text-lg text-gray-600">Your day-to-day contact is with a small, dedicated team of strategists. We know you by name, we understand your properties, and we are focused entirely on your success. This is your core team, your personal guides in the world of STRs.</p>
-                             <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                                <div><img src="https://placehold.co/200x200/cbd5e1/475569?text=Team+1" alt="Team Member 1" class="rounded-full w-24 h-24 mx-auto shadow-lg"><p class="mt-2 font-semibold text-sm">Jane Doe</p><p class="text-xs text-gray-500">Marketing Strategist</p></div>
-                                <div><img src="https://placehold.co/200x200/cbd5e1/475569?text=Team+2" alt="Team Member 2" class="rounded-full w-24 h-24 mx-auto shadow-lg"><p class="mt-2 font-semibold text-sm">John Smith</p><p class="text-xs text-gray-500">Automation Architect</p></div>
-                                <div><img src="https://placehold.co/200x200/cbd5e1/475569?text=Team+3" alt="Team Member 3" class="rounded-full w-24 h-24 mx-auto shadow-lg"><p class="mt-2 font-semibold text-sm">Emily Chen</p><p class="text-xs text-gray-500">Guest Experience</p></div>
-                            </div>
-                        </div>
-                         <div class="bg-gray-50 p-8 rounded-xl">
-                            <h3 class="font-bold text-2xl text-gray-900">Powered by Our "Army of Tech Ninjas"</h3>
-                             <p class="mt-3 text-lg text-gray-600">Behind the scenes, your strategy team is supported by a large, specialized technical staff. These are our "tech ninjas"—the expert developers, PMS integrators, and SEO specialists who build and maintain your powerful business engine. You get personal attention, backed by enterprise-level power.</p>
-                             <img src="https://placehold.co/400x200/e0e7ff/4338ca?text=Tech+Ninjas+at+Work" class="rounded-lg mt-6 w-full object-cover">
-                        </div>
-                    </div>
-                </div>
-            </section>
-             <section class="bg-indigo-700">
-               <div class="container mx-auto px-6 py-20 text-center">
-                   <h2 class="text-3xl lg:text-4xl font-bold text-white">Ready to Run a Smarter Rental Business?</h2>
-                   <p class="mt-4 max-w-2xl mx-auto text-lg text-indigo-200">Let's build a seamless, automated system that lets you get back to what you do best—hospitality.</p>
-                   <div class="mt-10">
-                       <a href="#" data-page="booking-page" class="cta-link-footer bg-white text-indigo-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-100 transition-colors shadow-lg">Book Your Free Strategy Call</a>
-                   </div>
-               </div>
-            </section>
-        </main>
-        
-        <!-- SUCCESS STORIES MASTER PAGE -->
-        <main id="success-stories-master-page" style="display: none;">
-            <section class="py-20 bg-white"><div class="container mx-auto px-6 text-center"><h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">Success Stories</h1><p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">Explore our portfolio of successful projects and see the transformations for yourself.</p></div></section>
-             <section class="py-20 lg:py-24">
-                 <div class="container mx-auto px-6">
-                    <div id="filter-buttons" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
-                        <button class="filter-btn active" data-filter="all">All Projects</button>
-                        <button class="filter-btn" data-filter="website">Direct Booking Websites</button>
-                        <button class="filter-btn" data-filter="multichannel">Multi-Channel Strategy</button>
-                        <button class="filter-btn" data-filter="pms">PMS & Automation</button>
-                        <button class="filter-btn" data-filter="growth">Growth & Marketing</button>
-                    </div>
-                    <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                        <div class="portfolio-item website pms multichannel growth text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Chalet</span><img src="https://placehold.co/600x400/a5b4fc/ffffff?text=Client+A" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Mountain View Chalet</p><h3 class="mt-2 text-xl font-bold">Increased Direct Bookings by 55%</h3><p class="mt-3 text-gray-600">Reduced OTA reliance and boosted profitability in just 6 months.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item pms text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Loft</span><img src="https://placehold.co/600x400/a78bfa/ffffff?text=Client+B" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Urban Oasis Lofts</p><h3 class="mt-2 text-xl font-bold">Saved 10+ Hours a Week</h3><p class="mt-3 text-gray-600">Full automation of guest comms and check-in processes.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item multichannel growth text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Villa</span><img src="https://placehold.co/600x400/d1d5db/ffffff?text=Client+C" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Beachfront Villas</p><h3 class="mt-2 text-xl font-bold">Achieved 95% Occupancy</h3><p class="mt-3 text-gray-600">Dynamic pricing and multi-channel strategy led to a fully booked season.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item website growth text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Villa</span><img src="https://placehold.co/600x400/fca5a5/ffffff?text=Client+D" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Desert Modern Home</p><h3 class="mt-2 text-xl font-bold">Doubled Revenue in First Year</h3><p class="mt-3 text-gray-600">A complete brand overhaul and marketing blueprint transformed this property.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item website text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Cabin</span><img src="https://placehold.co/600x400/fdba74/ffffff?text=Client+E" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Lakeside Cabin Retreat</p><h3 class="mt-2 text-xl font-bold">First Page on Google</h3><p class="mt-3 text-gray-600">SEO-focused website build now outranks its own Airbnb listing.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item pms text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Apartment</span><img src="https://placehold.co/600x400/86efac/ffffff?text=Client+F" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">City Center Apartments</p><h3 class="mt-2 text-xl font-bold">Streamlined Multi-Property Ops</h3><p class="mt-3 text-gray-600">Centralized PMS setup for a portfolio of 12 units.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                         <div class="portfolio-item growth multichannel text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Chalet</span><img src="https://placehold.co/600x400/67e8f9/ffffff?text=Client+G" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Alpine Ski Lodge</p><h3 class="mt-2 text-xl font-bold">Booked Out Ski Season</h3><p class="mt-3 text-gray-600">Targeted ad campaigns filled the calendar before the first snowfall.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item growth text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Cabin</span><img src="https://placehold.co/600x400/f9a8d4/ffffff?text=Client+H" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Forest A-Frame</p><h3 class="mt-2 text-xl font-bold">Viral on Social Media</h3><p class="mt-3 text-gray-600">Content strategy led to a feature in a major travel publication.</p><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item website text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Loft</span><img src="https://placehold.co/600x400/fde047/ffffff?text=Client+I" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Industrial Arts Loft</p><h3 class="mt-2 text-xl font-bold">Became a Photoshoot Hotspot</h3><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                         <div class="portfolio-item growth text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Villa</span><img src="https://placehold.co/600x400/f87171/ffffff?text=Client+J" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Tuscan Vineyard Estate</p><h3 class="mt-2 text-xl font-bold">50% Repeat Guest Rate</h3><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item pms text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Apartment</span><img src="https://placehold.co/600x400/4ade80/ffffff?text=Client+K" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">The Business Traveler Suite</p><h3 class="mt-2 text-xl font-bold">Dominated Mid-Week Bookings</h3><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="portfolio-item website growth text-left bg-white p-6 rounded-xl shadow-lg relative"><span class="absolute top-4 right-4 bg-white text-gray-700 text-xs font-semibold px-2 py-1 rounded-full border">Cabin</span><img src="https://placehold.co/600x400/fb923c/ffffff?text=Client+L" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Riverfront Fishing Cabin</p><h3 class="mt-2 text-xl font-bold">Ranked #1 for Niche Hobby</h3><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        
-        <!-- SINGLE SUCCESS STORY PAGE -->
-        <main id="success-story-single-page" style="display: none;">
-             <article class="py-20 lg:py-24 bg-white">
-                <header class="container mx-auto px-6 text-center max-w-4xl">
-                    <a href="#" data-page="success-stories-master-page" class="back-link-work nav-link text-indigo-600 font-semibold hover:underline">&larr; Back to All Projects</a>
-                    <p class="mt-6 font-semibold text-indigo-600">SUCCESS STORY</p>
-                    <h1 class="mt-2 text-4xl lg:text-5xl font-extrabold text-gray-900">Mountain View Chalet</h1>
-                </header>
-                <!-- Stats Bar -->
-                <div class="mt-12 container mx-auto px-6 max-w-6xl">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center bg-gray-100 p-8 rounded-xl shadow-inner">
-                        <div>
-                            <p class="text-3xl lg:text-4xl font-bold text-indigo-600">+55%</p>
-                            <p class="mt-1 text-gray-600">Increase in Direct Bookings</p>
-                        </div>
-                        <div>
-                            <p class="text-3xl lg:text-4xl font-bold text-indigo-600">-75%</p>
-                            <p class="mt-1 text-gray-600">Reliance on OTA Channels</p>
-                        </div>
-                        <div>
-                            <p class="text-3xl lg:text-4xl font-bold text-indigo-600">+10 hrs</p>
-                            <p class="mt-1 text-gray-600">Time Saved Per Week</p>
-                        </div>
-                    </div>
-                    <!-- Before and After Chart -->
-                     <div class="mt-12 bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
-                        <h3 class="text-2xl font-bold text-center text-gray-900">Revenue Source Transformation</h3>
-                        <div class="mt-6 flex flex-col md:flex-row gap-8 items-end">
-                            <!-- Before -->
-                            <div class="flex-1 text-center">
-                                <p class="font-semibold">Before Fullyo</p>
-                                <div class="mt-2 bg-gray-200 rounded-lg h-64 flex flex-col justify-end">
-                                    <div class="bg-red-400" style="height: 85%;" title="Airbnb: 85%"></div>
-                                    <div class="bg-blue-400" style="height: 15%;" title="Vrbo: 15%"></div>
-                                </div>
-                            </div>
-                            <!-- After -->
-                             <div class="flex-1 text-center">
-                                <p class="font-semibold">After Fullyo</p>
-                                <div class="mt-2 bg-gray-200 rounded-lg h-64 flex flex-col justify-end">
-                                    <div class="bg-indigo-600" style="height: 40%;" title="Direct Bookings: 40%"></div>
-                                    <div class="bg-red-400" style="height: 40%;" title="Airbnb: 40%"></div>
-                                    <div class="bg-blue-400" style="height: 20%;" title="Vrbo: 20%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex justify-center space-x-4 text-xs">
-                            <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-indigo-600 mr-2"></span>Direct</span>
-                             <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-red-400 mr-2"></span>Airbnb</span>
-                             <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-400 mr-2"></span>Vrbo</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Narrative & Details -->
-                <div class="mt-16 container mx-auto px-6 max-w-4xl prose-custom">
-                    <div class="bg-gray-100 p-6 rounded-xl shadow-md text-gray-800">
-                        <h3 class="text-2xl font-bold">Project Details</h3>
-                        <ul class="mt-4 text-sm space-y-2">
-                            <li><strong>Client:</strong> Mountain View Chalet</li>
-                            <li><strong>Location:</strong> Aspen, Colorado</li>
-                            <li><strong>Property Type:</strong> Luxury Ski Chalet</li>
-                            <li><strong>Services:</strong> Direct Booking Website, PMS Integration, Marketing Blueprint</li>
-                            <li><a href="#" class="inline-block mt-2 font-semibold text-indigo-600 hover:underline">View Live Site &rarr;</a></li>
-                        </ul>
-                    </div>
-                    <h2 class="mt-12 text-3xl font-bold text-gray-900">The Challenge</h2>
-                    <p>The owners of Mountain View Chalet had a stunning property but were completely dependent on Airbnb for bookings. They were losing a significant portion of their revenue to commissions, had no direct relationship with their guests, and spent countless hours manually managing inquiries.</p>
-                    <h2 class="text-3xl font-bold text-gray-900">The Solution</h2>
-                    <p>Fullyo was brought in to build a complete, independent business system. Our four-pillar approach included: <strong>1.</strong> A visually stunning website with an integrated booking engine. <strong>2.</strong> Optimizing their existing Airbnb listing and syncing it with the new site. <strong>3.</strong> Implementing a PMS to automate guest messaging. <strong>4.</strong> Launching a targeted social media campaign to drive direct traffic.</p>
-                    <h2 class="text-3xl font-bold text-gray-900">The Results</h2>
-                    <p>Within six months, the new website became their primary source of revenue, dramatically increasing profitability. The automation freed up the owners' time, allowing them to focus on guest experience and acquiring new properties. The Chalet is now a thriving, independent brand.</p>
-                    <div class="mt-12 p-8 border-l-4 border-indigo-600 bg-indigo-50 rounded-r-lg">
-                        <p class="text-xl italic text-gray-800">"Working with Fullyo was the single best decision we made for our business. They didn't just build us a website; they gave us back our time and our profits. We finally feel in control."</p>
-                        <p class="mt-4 font-bold text-gray-900">- Jane Doe, Owner</p>
-                    </div>
-                </div>
-                 <!-- "Explore More" Section -->
-                <div class="mt-20 container mx-auto px-6">
-                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 text-center">Explore More Projects</h2>
-                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                        <div class="p-6 rounded-xl shadow-lg relative bg-white"><img src="https://placehold.co/600x400/a78bfa/ffffff?text=Client+B" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Urban Oasis Lofts</p><h3 class="mt-2 text-xl font-bold">Saved 10+ Hours a Week</h3><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="p-6 rounded-xl shadow-lg relative bg-white"><img src="https://placehold.co/600x400/d1d5db/ffffff?text=Client+C" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Beachfront Villas</p><h3 class="mt-2 text-xl font-bold">Achieved 95% Occupancy</h3><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                        <div class="p-6 rounded-xl shadow-lg relative bg-white"><img src="https://placehold.co/600x400/fca5a5/ffffff?text=Client+D" alt="Client Property" class="rounded-lg shadow-md mb-6"><p class="font-semibold text-indigo-600">Desert Modern Home</p><h3 class="mt-2 text-xl font-bold">Doubled Revenue in First Year</h3><a href="#" data-page="success-story-single-page" class="story-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">View Full Story &rarr;</a></div>
-                    </div>
-                </div>
-            </article>
-        </main>
-        
-        <!-- PROFIT TOOLS PAGE -->
-        <main id="profit-tools-page" style="display: none;">
-            <section class="py-20 bg-white"><div class="container mx-auto px-6 text-center"><h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">STR Profitability Tools</h1><p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">Use our simple calculators to get a clearer picture of your business finances and identify opportunities for growth.</p></div></section>
-            
-            <section id="calculator-tool" class="py-20 lg:py-24">
-                <div class="container mx-auto px-6 max-w-3xl">
-                    <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-                        <h2 class="text-3xl font-bold text-gray-900">OTA Commission Savings Calculator</h2>
-                        <p class="mt-4 text-gray-600">See how much of your revenue you're losing to commissions. This is the profit you could be putting back in your pocket with a direct booking strategy.</p>
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                            <div>
-                                <label for="annualRevenueTool" class="block text-left font-medium text-gray-700">Your Annual Gross Rental Revenue ($)</label>
-                                <input type="number" id="annualRevenueTool" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg p-3" placeholder="e.g., 80000">
-                            </div>
-                            <div>
-                                <label for="commissionRateTool" class="block text-left font-medium text-gray-700">Average OTA Commission Rate (%)</label>
-                                <input type="number" id="commissionRateTool" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg p-3" placeholder="18" value="18">
-                            </div>
-                        </div>
-                        <button id="calculateSavingsTool" class="mt-8 w-full bg-indigo-600 text-white font-bold px-8 py-4 rounded-lg text-lg hover:bg-indigo-700 transition-colors">Calculate My Savings</button>
-                        <div id="savingsResultTool" class="mt-6 text-2xl font-bold text-gray-800" style="display: none;">
-                            You could be saving an estimated <span class="gradient-text"></span> per year.
-                            <div class="mt-6 p-6 bg-gray-50 rounded-lg text-base font-normal">
-                                <p class="font-semibold text-gray-800">Want a detailed breakdown sent to your inbox?</p>
-                                <div class="mt-4 flex flex-col sm:flex-row gap-2">
-                                    <input type="email" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg p-3" placeholder="your@email.com">
-                                    <button class="bg-gray-800 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-gray-900 transition-colors">Send Report</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-16 bg-white p-8 rounded-xl shadow-lg text-center">
-                        <h2 class="text-3xl font-bold text-gray-900">Multi-Channel Growth & Time Savings Calculator</h2>
-                        <p class="mt-4 text-gray-600">Most hosts are only on Airbnb. See your potential revenue growth and time saved by implementing our multi-channel strategy with a PMS.</p>
-                        <div class="mt-8">
-                            <div>
-                                <label for="currentAnnualRevenue" class="block text-left font-medium text-gray-700">Your Current Annual Gross Rental Revenue ($)</label>
-                                <input type="number" id="currentAnnualRevenue" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg p-3" placeholder="e.g., 80000">
-                            </div>
-                        </div>
-                        <button id="calculateGrowthTool" class="mt-8 w-full bg-indigo-600 text-white font-bold px-8 py-4 rounded-lg text-lg hover:bg-indigo-700 transition-colors">Calculate My Growth Potential</button>
-                        <div id="growthResultTool" class="mt-6" style="display: none;">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <p class="text-gray-600 text-sm font-semibold">Potential New Revenue</p>
-                                    <p id="newRevenueResult" class="text-2xl font-bold gradient-text"></p>
-                                </div>
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <p class="text-gray-600 text-sm font-semibold">Additional Annual Revenue</p>
-                                    <p id="additionalRevenueResult" class="text-2xl font-bold gradient-text"></p>
-                                </div>
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <p class="text-gray-600 text-sm font-semibold">Annual Time Saved</p>
-                                    <p id="timeSavedResult" class="text-2xl font-bold gradient-text"></p>
-                                </div>
-                            </div>
-                             <div class="mt-6 p-6 bg-gray-50 rounded-lg text-base font-normal">
-                                <p class="font-semibold text-gray-800">Want a personalized growth plan sent to your inbox?</p>
-                                <div class="mt-4 flex flex-col sm:flex-row gap-2">
-                                    <input type="email" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg p-3" placeholder="your@email.com">
-                                    <button class="bg-gray-800 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-gray-900 transition-colors">Send Plan</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- BOOKING PAGE -->
-        <main id="booking-page" style="display: none;">
-            <div class="py-20 lg:py-24"><div class="container mx-auto px-6 text-center"><h1 class="text-3xl lg:text-4xl font-extrabold text-gray-900">Book Your Free Strategy Call</h1><p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Let's discuss your goals and see how Fullyo can build you a more profitable and automated rental business. Choose a time that works for you below.</p></div><div class="container mx-auto px-6 mt-12 max-w-4xl"><div class="tidycal-embed" data-path="fullybooked365/fully-booked-direct-booking-website-consultation"></div><script src="https://asset-tidycal.b-cdn.net/js/embed.js" async></script></div></div>
-        </main>
-        
-        <!-- INSIGHTS MASTER PAGE -->
-        <main id="insights-master-page" style="display: none;">
-             <section class="py-20 bg-white"><div class="container mx-auto px-6 text-center"><h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">STR Insights & Strategies</h1><p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">Actionable advice and industry deep-dives from the experts at Fullyo, designed to help you build a more profitable rental business.</p></div></section>
-             <section class="py-20 lg:py-24">
-                 <div class="container mx-auto px-6">
-                    <div id="insights-filter-buttons" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
-                        <button class="filter-btn active" data-filter="all">All Insights</button>
-                        <button class="filter-btn" data-filter="direct-bookings">Direct Bookings</button>
-                        <button class="filter-btn" data-filter="multi-channel">Multi-Channel</button>
-                        <button class="filter-btn" data-filter="automation">Automation</button>
-                        <button class="filter-btn" data-filter="branding-growth">Branding & Growth</button>
-                    </div>
-                    <!-- Grid for all Insights articles -->
-                    <div id="insights-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    </div>
-                </div>
-            </section>
-        </main>
-        
-        <!-- INSIGHTS SINGLE PAGE -->
-        <main id="insights-single-page" style="display: none;">
-            <article class="py-20 bg-white">
-                <header class="container mx-auto px-6 text-center max-w-3xl" id="insights-header-content">
-                    <!-- Dynamic content will be inserted here -->
-                </header>
-                <!-- Main Article Content -->
-                <div class="container mx-auto px-6 mt-12 max-w-3xl prose-custom" id="insights-article-content">
-                    <!-- Dynamic article content will be inserted here -->
-                </div>
-                 <!-- "Explore More" Section -->
-                <div class="mt-20 container mx-auto px-6">
-                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 text-center">Explore More Insights</h2>
-                    <div class="relative mt-12">
-                        <div id="more-insights-carousel" class="flex overflow-x-auto snap-x snap-mandatory space-x-8 pb-6 no-scrollbar">
-                            <!-- More articles will be dynamically inserted here -->
-                        </div>
-                        <button id="more-insights-prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white rounded-full p-2 text-gray-700 shadow-md hidden md:block">&lt;</button>
-                        <button id="more-insights-next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white rounded-full p-2 text-gray-700 shadow-md hidden md:block">&gt;</button>
-                    </div>
-                </div>
-            </article>
-        </main>
-    </div>
-
-    <!-- Footer -->
-    <footer id="footer" class="bg-gray-900 text-gray-400">
-       <div class="container mx-auto px-6 pt-16 pb-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-1"><a href="#" data-page="home-page" class="nav-link"><img src="https://res.cloudinary.com/dvdxbzv6a/image/upload/v1758484952/Untitled_design_ycjtzl.png" alt="Fullyo Logo" class="h-10 mb-4"></a><p class="text-sm">Your dedicated partner in building a more profitable and stress-free rental business through expert strategy and streamlined systems.</p></div>
-                <div><h3 class="font-semibold text-white tracking-wider uppercase">Sitemap</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" data-page="home-page" class="nav-link hover:text-white">Home</a></li>
-                        <li><a href="#" data-page="about-page" class="nav-link hover:text-white">About Us</a></li>
-                        <li><a href="#" data-page="success-stories-master-page" class="nav-link hover:text-white">Success Stories</a></li>
-                        <li><a href="#" data-page="insights-master-page" class="nav-link hover:text-white">Insights</a></li>
-                        <li><a href="#" data-page="booking-page" class="nav-link hover:text-white">Book a Call</a></li>
-                    </ul>
-                </div>
-                <div><h3 class="font-semibold text-white tracking-wider uppercase">Services</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#services" data-page="home-page" data-selector="#services" class="nav-link hover:text-white">The System</a></li>
-                        <li><a href="#" data-page="advertising-page" class="nav-link hover:text-white">Advertising Services</a></li>
-                        <li><a href="#" data-page="social-media-page" class="nav-link hover:text-white">Social Media Management</a></li>
-                    </ul>
-                </div>
-                <div><h3 class="font-semibold text-white tracking-wider uppercase">Connect</h3><div class="mt-4 flex space-x-6">
-                    <a href="#" class="hover:text-white" aria-label="Follow us on LinkedIn"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                    <a href="#" class="hover:text-white" aria-label="Follow us on Facebook"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
-                    <a href="#" class="hover:text-white" aria-label="Follow us on Instagram"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg></a>
-                </div></div>
-            </div>
-            <div class="mt-8 border-t border-gray-700 pt-8 text-center text-sm"><p>&copy; 2025 Fullyo. All Rights Reserved.</p></div>
-        </div>
-    </footer>
-    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MTDGG0R49H"></script>
     <script>
-        // Data for insights articles
-        const insightsData = [
-            { 
-                id: 'article1', 
-                category: 'Automation', 
-                title: 'The 5 Automated Messages That Earn 5-Star Reviews', 
-                image: 'https://placehold.co/600x400/94a3b8/ffffff?text=Article+1', 
-                summary: 'The most crucial messages can be completely automated, saving you countless hours while simultaneously improving your guest experience and boosting your ranking...',
-                author: 'Fullyo Team',
-                date: 'September 13, 2025',
-                text: `
-                <p>In the world of short-term rentals, communication is king. Great communication not only leads to smoother stays and happier guests, but it's also the secret weapon for securing those coveted 5-star reviews. It’s the difference between a good host and a truly professional operator. The best part? The most crucial messages can be completely automated, saving you countless hours while simultaneously improving your guest experience and boosting your ranking in the algorithm.</p>
-                <p>Leveraging a powerful Property Management System (PMS) like Guesty, you can set up a sophisticated messaging flow that runs on autopilot. Here are the five essential messages every host should set up today:</p>
-                <h2 class="text-2xl font-bold">1. The Instant Booking Confirmation</h2>
-                <p>This isn't just a receipt; it's your first opportunity to build trust. It provides immediate peace of mind and sets a professional tone from the very beginning.</p>
-                <h2 class="text-2xl font-bold">2. The "Pre-Arrival Hype" Message (7 Days Out)</h2>
-                <p>This is where you go beyond the basics. Include a link to your digital guidebook, a personal local tip, and a reminder of a key amenity. This shows you care about their entire experience, not just their booking.</p>
-                <h2 class="text-2xl font-bold">3. The "Check-In & First Impressions" Message (2 Hours Post-Arrival)</h2>
-                <p>This proactive message is a game-changer for preventing negative reviews. By asking if everything is okay, you can solve small issues before they become big annoyances. It’s an easy way to prevent a negative review and turn a potential problem into a positive interaction.</p>
-                <h2 class="text-2xl font-bold">4. The "Mid-Stay Check-In" Message (For longer stays)</h2>
-                <p>A simple, unintrusive message asking if they need anything reinforces your role as a top-tier host and can be the difference-maker in a truly glowing review.</p>
-                <h2 class="text-2xl font-bold">5. The "Farewell & Review Request" Message (3 Hours Post-Departure)</h2>
-                <p>The timing is key. Thank them for being great guests and politely ask for a review while the positive memories are still fresh. This simple prompt can significantly increase your review rate and help your property stand out.</p>
-                <div class="mt-12 bg-indigo-500 text-white p-8 rounded-xl shadow-lg text-center">
-                    <h3 class="text-2xl font-bold">Want this level of expertise applied to your business?</h3>
-                    <p class="mt-4 text-lg text-indigo-100">Book a Free Strategy Call to see how we can build you a seamless, automated system that grows your revenue and saves you time.</p>
-                    <a href="#" data-page="booking-page" class="cta-insights nav-link mt-6 inline-block bg-white text-indigo-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-100 transition-colors shadow-lg">Book Your Free Strategy Call</a>
-                </div>
-                `
-            },
-            { 
-                id: 'article2', 
-                category: 'Direct Bookings', 
-                title: 'The True Cost of an Airbnb Booking', 
-                image: 'https://placehold.co/600x400/94a3b8/ffffff?text=Article+2', 
-                summary: 'This article breaks down the hidden costs of OTA reliance, from commissions to the lack of control over your guest relationships and branding...',
-                author: 'Fullyo Team',
-                date: 'September 13, 2025',
-                text: `
-                <p>Most hosts see the 15-25% commission from OTAs like Airbnb and Vrbo as a necessary cost of doing business. But what if it wasn't? That seemingly small fee is often the largest single expense for a short-term rental operator. Let's do the math: for a property generating $80,000 a year, a 15% commission is $12,000 straight out of your pocket. That's not a small business expense; it's a massive revenue leak.</p>
-                <p>This article breaks down the hidden costs of OTA reliance, from commissions to the lack of control over your guest relationships and branding. We'll show you a simple formula to calculate exactly how much you're losing annually, and what that money could be doing for you instead.</p>
-                <img src="https://placehold.co/800x400/e2e8f0/64748b?text=ROI+Calculator+Graphic" alt="ROI Calculator Graphic" class="rounded-lg shadow-lg my-8">
-                <p>Then, we'll demonstrate how a direct booking website isn't a cost but your single most profitable investment. By capturing even a fraction of your bookings directly, the website often pays for itself within a few months and becomes a pure profit engine for your business, allowing you to build a sustainable brand that you truly own. It's time to stop paying a premium to a middleman and start investing in your own success.</p>
-                <div class="mt-12 bg-indigo-500 text-white p-8 rounded-xl shadow-lg text-center">
-                    <h3 class="text-2xl font-bold">Want this level of expertise applied to your business?</h3>
-                    <p class="mt-4 text-lg text-indigo-100">Book a Free Strategy Call to see how we can build you a seamless, automated system that grows your revenue and saves you time.</p>
-                    <a href="#" data-page="booking-page" class="cta-insights nav-link mt-6 inline-block bg-white text-indigo-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-100 transition-colors shadow-lg">Book Your Free Strategy Call</a>
-                </div>
-                `
-            },
-            { 
-                id: 'article3', 
-                category: 'Multi-Channel', 
-                title: 'Beyond Airbnb: A 3-Step Guide to Diversifying', 
-                image: 'https://placehold.co/600x400/94a3b8/ffffff?text=Article+3', 
-                summary: 'Relying on a single channel is the biggest risk to your business\'s long-term health. This guide provides a simple, 3-step process to intelligently expand your presence...',
-                author: 'Fullyo Team',
-                date: 'September 13, 2025',
-                text: `
-                <p>The Airbnb-only era is over. Your ideal guests are searching on Google, Vrbo, Booking.com, and social media. Relying on a single channel is the biggest risk to your business's long-term health. But diversifying doesn't have to be chaotic or time-consuming. With a strategic approach and the right tools, you can expand your reach and build a more resilient business without the fear of double-bookings or mismatched calendars.</p>
-                <p>This guide provides a simple, 3-step process to intelligently expand your presence and capture new bookings:</p>
-                <h2 class="text-2xl font-bold">1. Identify Your #2 Channel</h2>
-                <p>We analyze the pros and cons of different platforms, like Vrbo vs. Booking.com, for various property types. For example, family-friendly homes do exceptionally well on Vrbo, while urban apartments often thrive on Booking.com. Knowing where your ideal guest is searching is the first step to winning more business.</p>
-                <img src="https://placehold.co/800x400/e2e8f0/64748b?text=Multi-Channel+Chart" alt="Multi-Channel Chart" class="rounded-lg shadow-lg my-8">
-                <h2 class="text-2xl font-bold">2. The Magic of a Channel Manager</h2>
-                <p>The fear of double-bookings is the number one reason hosts avoid diversifying. The solution? A Property Management System (PMS) with a built-in channel manager. We explain how a tool like Guesty automatically syncs your calendars and pricing across all platforms, eliminating the risk and giving you peace of mind.</p>
-                <h2 class="text-2xl font-bold">3. Optimize, Don't Just List</h2>
-                <p>Just listing your property on a new platform isn't enough. We provide actionable tips for tailoring your photos, descriptions, and amenities to fit each new audience, maximizing your visibility and conversion rates. By following this blueprint, you can stop being dependent on a single platform and start building a resilient, multi-channel business.</p>
-                <div class="mt-12 bg-indigo-500 text-white p-8 rounded-xl shadow-lg text-center">
-                    <h3 class="text-2xl font-bold">Want this level of expertise applied to your business?</h3>
-                    <p class="mt-4 text-lg text-indigo-100">Book a Free Strategy Call to see how we can build you a seamless, automated system that grows your revenue and saves you time.</p>
-                    <a href="#" data-page="booking-page" class="cta-insights nav-link mt-6 inline-block bg-white text-indigo-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-100 transition-colors shadow-lg">Book Your Free Strategy Call</a>
-                </div>
-                `
-            }
-        ];
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-        // Main function to set up all event listeners after the DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initial page load
-            showPage('home-page');
-            populateInsightsGrid();
-            
-            // Setup event listeners once
-            addStaticEventListeners();
-            addDelegatedEventListeners();
-        });
-        
-        // Listeners for static elements that are always on the page
-        function addStaticEventListeners() {
-             // Mobile menu toggle
-            document.getElementById('mobile-menu-button')?.addEventListener('click', toggleMobileMenu);
+      gtag('config', 'G-MTDGG0R49H');
+    </script>
 
-            // Carousels
-            document.getElementById('carousel-prev')?.addEventListener('click', () => scrollCarousel(-1, 'work-carousel'));
-            document.getElementById('carousel-next')?.addEventListener('click', () => scrollCarousel(1, 'work-carousel'));
-            document.getElementById('more-insights-prev')?.addEventListener('click', () => scrollCarousel(-1, 'more-insights-carousel'));
-            document.getElementById('more-insights-next')?.addEventListener('click', () => scrollCarousel(1, 'more-insights-carousel'));
-        }
-
-        // Use event delegation for dynamically created elements or elements that exist on multiple pages
-        function addDelegatedEventListeners() {
-            document.body.addEventListener('click', (e) => {
-                const navLink = e.target.closest('.nav-link');
-                const mobileNavLink = e.target.closest('.mobile-nav-link');
-                const insightsLink = e.target.closest('.insights-link');
-                const filterBtn = e.target.closest('.filter-btn');
-                const exampleFilterBtn = e.target.closest('.example-filter-btn');
-                const processTabBtn = e.target.closest('.process-tab-btn');
-                const adExampleTabBtn = e.target.closest('.ad-example-tab-btn');
-
-                if (navLink || mobileNavLink) {
-                    e.preventDefault();
-                    const link = navLink || mobileNavLink;
-                    const pageId = link.dataset.page;
-                    const selector = link.dataset.selector;
-                    showPage(pageId, selector);
-                    if (mobileNavLink) {
-                        document.getElementById('mobile-menu').classList.add('hidden');
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        // RESTORED: Inter as the primary font for everything
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'infinite-scroll': 'infinite-scroll 60s linear infinite',
+                    },
+                    keyframes: {
+                        'infinite-scroll': {
+                            from: { transform: 'translateX(0)' },
+                            to: { transform: 'translateX(-100%)' },
+                        }
                     }
                 }
-                
-                if (insightsLink) {
-                    e.preventDefault();
-                    showSingleInsightPage(insightsLink.dataset.articleId);
-                }
-                
-                if (filterBtn) {
-                     filterSelection(filterBtn.dataset.filter, filterBtn, '#filter-buttons', '.portfolio-item');
-                }
-                
-                if(exampleFilterBtn) {
-                     filterSelection(exampleFilterBtn.dataset.filter, exampleFilterBtn, '#example-filters', '.example-item');
-                }
-
-                if(processTabBtn) {
-                    switchTabs(processTabBtn, '.process-tab-btn', '.process-tab-content');
-                }
-
-                if(adExampleTabBtn) {
-                    switchTabs(adExampleTabBtn, '.ad-example-tab-btn', '.ad-example-tab-content');
-                }
-            });
+            }
         }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* RESTORED: Headings use the clean Inter font again */
+        h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; }
         
-        function switchTabs(button, buttonClass, contentClass) {
-            const tabId = button.dataset.tab;
-            document.querySelectorAll(buttonClass).forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll(contentClass).forEach(content => content.classList.add('hidden'));
-            button.classList.add('active');
-            document.getElementById(`${tabId}-tab-content`).classList.remove('hidden');
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-white text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
+    <div id="root"></div>
 
-        function filterSelection(filter, button, buttonContainerSelector, itemSelector) {
-            const items = document.querySelectorAll(itemSelector);
-            if (filter === "all") filter = "";
-            items.forEach(item => {
-                item.style.display = item.className.indexOf(filter) > -1 ? "block" : "none";
-            });
-            document.querySelectorAll(`${buttonContainerSelector} .filter-btn, ${buttonContainerSelector} .example-filter-btn`).forEach(btn => btn.classList.remove("active"));
-            button.classList.add("active");
+    <script type="importmap">
+    {
+        "imports": {
+            "react": "https://esm.sh/react@18.2.0",
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?external=react",
+            "framer-motion": "https://esm.sh/framer-motion@10.16.4?external=react,react-dom",
+            "lucide-react": "https://esm.sh/lucide-react@0.292.0?external=react"
         }
+    }
+    </script>
 
-        // Page navigation function
-        function showPage(pageId, targetSelector = null) {
-            document.querySelectorAll('#page-container > main').forEach(page => {
-                page.style.display = 'none';
-            });
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.style.display = 'block';
-                window.scrollTo({ top: 0, behavior: 'instant' });
+    <script type="module">
+        import React, { useState, useEffect, createElement } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+        import { 
+            BarChart3, Globe, Share2, LayoutDashboard, Megaphone, Calendar, 
+            ArrowRight, TrendingUp, Clock, CheckCircle2, Star, Quote, ChevronLeft,
+            Mail, MapPin, Phone, ShieldCheck, X, User, ChevronDown, Plus, Minus
+        } from 'lucide-react';
+
+        const h = createElement;
+
+        // --- CONTENT DATABASE FOR SERVICE PAGES ---
+        const servicesData = {
+            'strategic-analysis': {
+                pillar: "Fullyo Pillar #1",
+                icon: BarChart3,
+                title: "Strategic Listing Optimization",
+                description: "We conduct a deep dive into your business—identifying what works and what doesn't, defining your ideal guest avatar, and using powerful tools to uncover key areas for improvement.",
+                subheadline: "Why Analysis Comes First",
+                subtext: "You can't improve what you don't measure. Before we run ads or build websites, we build a custom blueprint based on data, not guesswork.",
+                benefits: [
+                    "Identify revenue leaks in your current listing",
+                    "Competitor price benchmarking",
+                    "Ideal Guest Avatar definition",
+                    "Custom Performance Blueprint creation"
+                ]
+            },
+            'direct-booking': {
+                pillar: "Fullyo Pillar #2",
+                icon: Globe,
+                title: "Direct Booking Website Design",
+                description: "Stop losing money to commissions. We build a beautiful, commission-free direct booking website that acts as your most profitable channel, putting you back in control of your brand.",
+                subheadline: "Your Most Profitable Channel",
+                subtext: "Relying solely on Airbnb and VRBO exposes your business to algorithm changes and policy shifts. A direct booking website is your insurance policy.",
+                benefits: [
+                    "Seamless PMS Integration",
+                    "Automated Upsells & Add-ons",
+                    "Mobile-First & Speed Optimized",
+                    "Full Guest Data Capture (Email/Phone)"
+                ]
+            },
+            'multi-channel': {
+                pillar: "Fullyo Pillar #3",
+                icon: Share2,
+                title: "5x Multi-Channel Distribution",
+                description: "The Airbnb-only era is over. We ensure you're visible on at least five key channels where your ideal guests are searching, turning them all into a powerful funnel.",
+                subheadline: "Be Everywhere Your Guests Are",
+                subtext: "We synchronize your calendar and pricing across Airbnb, VRBO, Booking.com, Expedia, and niche sites. Never miss a booking because you weren't seen.",
+                benefits: [
+                    "Sync across 5+ Major OTAs",
+                    "Zero Double-Bookings Guarantee",
+                    "Centralized Calendar Management",
+                    "Niche Site Listing (e.g., Glamping Hub, Pet-Friendly)"
+                ]
+            },
+            'pms-integration': {
+                pillar: "Fullyo Pillar #4",
+                icon: LayoutDashboard,
+                title: "PMS & Command Center Integration",
+                description: "We centralize your entire operation into one powerful dashboard. Whether integrating with your existing PMS or setting you up with our preferred system, we synchronize your business.",
+                subheadline: "Automate the Busy Work",
+                subtext: "This allows us to automate everything from messaging to cleaning schedules, saving you 12+ hours per week so you can focus on growth.",
+                benefits: [
+                    "Unified Inbox for all channels",
+                    "Automated Guest Messaging",
+                    "Cleaner & Maintenance Scheduling",
+                    "Dynamic Pricing Tool Integration"
+                ]
+            },
+            'growth-marketing': {
+                pillar: "Fullyo Pillar #5",
+                icon: Megaphone,
+                title: "Growth Marketing Plan",
+                description: "A great system requires a powerful plan. We go beyond just a document; we execute a dynamic marketing strategy to build your property into a sought-after brand.",
+                subheadline: "Drive Traffic on Demand",
+                subtext: "We use email marketing, social media retargeting, and strategic partnerships to fill your calendar during shoulder seasons.",
+                benefits: [
+                    "Email Marketing Campaigns",
+                    "Social Media Retargeting Ads",
+                    "Influencer Partnership Strategy",
+                    "Repeat Guest Loyalty Programs"
+                ]
             }
-            if (pageId === 'home-page' && targetSelector) {
-                setTimeout(() => document.querySelector(targetSelector)?.scrollIntoView({ behavior: 'smooth' }), 50);
-            }
-        }
+        };
 
-        // Carousel scrolling function
-        function scrollCarousel(direction, carouselId) {
-            const carousel = document.getElementById(carouselId);
-            if (carousel && carousel.querySelector('div')) {
-                const scrollAmount = carousel.querySelector('div').clientWidth + 32; // Card width + space-x-8 (2rem = 32px)
-                carousel.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
-            }
-        }
+        const FullyoApp = () => {
+            const [currentRoute, setCurrentRoute] = useState('home');
 
-        // Mobile menu toggle function
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
+            const navigateTo = (route) => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setCurrentRoute(route);
+            };
+
+            // Determine if we are on a service page
+            const isServicePage = currentRoute.startsWith('service-');
+            const serviceKey = isServicePage ? currentRoute.replace('service-', '') : null;
+
+            return h('div', { className: "min-h-screen bg-white text-slate-900 font-sans overflow-x-hidden" },
+                h(AnimatePresence, { mode: "wait" },
+                    !isServicePage
+                        ? h(MainFunnel, { key: "home", onNavigate: navigateTo })
+                        : h(ServicePage, { key: "service", serviceKey: serviceKey, onNavigate: navigateTo })
+                )
+            );
+        };
+
+        const MainFunnel = ({ onNavigate }) => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [activeCaseStudy, setActiveCaseStudy] = useState(null);
+
+            useEffect(() => {
+                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const scrollToBooking = () => {
+                const element = document.getElementById('booking-section');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return h(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } },
+                h('nav', { className: `fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}` },
+                    h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
+                        // LOGO
+                        h('div', { 
+                            className: "text-3xl font-extrabold tracking-tighter cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-indigo-800 to-slate-900 hover:opacity-80 transition-opacity", 
+                            onClick: () => window.scrollTo(0,0) 
+                        }, "Fullyo."),
+                        
+                        h('button', { onClick: scrollToBooking, className: "hidden md:flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white rounded-full font-medium text-sm hover:bg-slate-800 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-slate-900/20" }, "Partner With Us")
+                    )
+                ),
+                h(HeroSection, { onCta: scrollToBooking }),
+                h(PainPoints),
+                h(TheSystem),
+                h(ResultsSection, { onOpenCase: setActiveCaseStudy }),
+                h(GrowthEngine),
+                h(BrandMarquee),
+                h(TestimonialsSection),
+                h(FAQSection),
+                h(BookingSection),
+                h(Footer, { onNavigate }),
+                
+                // Modal
+                h(AnimatePresence, {},
+                    activeCaseStudy && h(CaseStudyModal, { 
+                        key: 'modal', 
+                        data: activeCaseStudy, 
+                        onClose: () => setActiveCaseStudy(null),
+                        onBook: () => { setActiveCaseStudy(null); setTimeout(scrollToBooking, 300); }
+                    })
+                )
+            );
+        };
+
+        const ServicePage = ({ serviceKey, onNavigate }) => {
+            const data = servicesData[serviceKey];
+
+            // Order of pillars for navigation
+            const serviceOrder = [
+                'strategic-analysis', 
+                'direct-booking', 
+                'multi-channel', 
+                'pms-integration', 
+                'growth-marketing'
+            ];
+            
+            const currentIndex = serviceOrder.indexOf(serviceKey);
+            const nextIndex = (currentIndex + 1) % serviceOrder.length;
+            const nextKey = serviceOrder[nextIndex];
+            const nextData = servicesData[nextKey];
+
+            // Fallback if data not found
+            if (!data) return h('div', { className: "p-20 text-center" }, "Service not found.");
+
+            return h(motion.div, {
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                exit: { opacity: 0, y: -20 },
+                className: "bg-white min-h-screen"
+            },
+                h('nav', { className: "border-b border-slate-100 py-4 bg-white sticky top-0 z-50" },
+                    h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
+                        h('div', { 
+                            onClick: () => onNavigate('home'),
+                            className: "flex items-center gap-2 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors group"
+                        },
+                            h(ChevronLeft, { size: 20, className: "group-hover:-translate-x-1 transition-transform" }),
+                            h('span', { className: "font-medium text-sm" }, "Back to Home")
+                        ),
+                        h('button', {
+                            onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); },
+                            className: "px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-colors"
+                        }, "Book Strategy Call")
+                    )
+                ),
+                
+                // --- SPLIT HERO SECTION ---
+                h('div', { className: "container mx-auto px-6 pt-16 pb-24 max-w-6xl" },
+                    h('div', { className: "grid lg:grid-cols-2 gap-16 items-center mb-20" },
+                        // LEFT: Text Content
+                        h('div', null,
+                             h('span', { className: "inline-block py-1 px-3 rounded-full bg-indigo-50 text-indigo-600 font-semibold tracking-wide uppercase text-xs mb-6" }, data.pillar),
+                             h('h1', { className: "text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight" }, data.title),
+                             h('p', { className: "text-xl text-slate-600 leading-relaxed" }, data.description)
+                        ),
+                        // RIGHT: Visual Placeholder (Laptop style)
+                        h(motion.div, { 
+                            initial: { opacity: 0, x: 50 }, 
+                            animate: { opacity: 1, x: 0 },
+                            transition: { delay: 0.2 },
+                            className: "relative" 
+                        },
+                            h('div', { className: "bg-slate-900 rounded-2xl p-2 shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500" },
+                                h('div', { className: "bg-slate-800 rounded-xl aspect-video flex items-center justify-center overflow-hidden border border-slate-700 relative" },
+                                    h('div', { className: "absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-violet-500/10" }),
+                                    // Dynamic Icon representing the visual
+                                    h(data.icon, { size: 80, className: "text-slate-500/20" }),
+                                    h('div', { className: "absolute bottom-6 px-6 py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/10" },
+                                        h('span', { className: "text-sm font-medium text-slate-200" }, "System Visualization")
+                                    )
+                                )
+                            )
+                        )
+                    ),
+
+                    // BODY CONTENT
+                    h('div', { className: "prose prose-slate prose-lg max-w-4xl mx-auto" },
+                        h('h3', { className: "text-3xl font-bold text-slate-900 mb-6 text-center" }, data.subheadline),
+                        h('p', { className: "mb-12 text-center text-xl leading-relaxed" }, data.subtext),
+                        
+                        h('div', { className: "my-12 p-10 bg-slate-50 rounded-3xl border border-slate-100" },
+                            h('h4', { className: "text-slate-900 font-bold mb-8 mt-0 text-center uppercase tracking-widest text-sm" }, "The Fullyo Difference"),
+                            h('ul', { className: "grid md:grid-cols-2 gap-6 list-none pl-0" },
+                                data.benefits.map((item, i) => 
+                                    h('li', { key: i, className: "flex items-start gap-3" },
+                                        h(CheckCircle2, { size: 20, className: "text-emerald-500 mt-1 flex-shrink-0" }),
+                                        h('span', { className: "text-base font-medium text-slate-700" }, item)
+                                    )
+                                )
+                            )
+                        )
+                    ),
+
+                    // --- DUAL PATH FOOTER ---
+                    h('div', { className: "mt-20 grid md:grid-cols-2 gap-6" },
+                        // CARD A: Action (Primary)
+                        h('div', { className: "bg-slate-900 rounded-3xl p-10 text-center flex flex-col justify-center items-center relative overflow-hidden group" },
+                             h('div', { className: "absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity" }),
+                             h('h3', { className: "text-2xl font-bold text-white mb-4 relative z-10" }, "Ready to implement this?"),
+                             h('p', { className: "text-slate-400 mb-8 relative z-10" }, "Let's discuss how this specific pillar fits into your property's growth plan."),
+                             h('button', {
+                                onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); },
+                                className: "px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-blue-50 transition-colors inline-flex items-center gap-2 relative z-10"
+                            }, "Book Strategy Call", h(ArrowRight, { size: 20 }))
+                        ),
+
+                        // CARD B: Education (Next Step)
+                        h('div', { 
+                            onClick: () => { window.scrollTo({top: 0, behavior: 'smooth'}); onNavigate(`service-${nextKey}`); },
+                            className: "bg-white border border-slate-200 rounded-3xl p-10 flex flex-col justify-center hover:border-indigo-300 hover:shadow-xl transition-all cursor-pointer group"
+                        },
+                            h('span', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2" }, "Next Step in System"),
+                            h('h3', { className: "text-2xl font-bold text-slate-900 mb-2 group-hover:text-indigo-700 transition-colors" }, nextData.title),
+                            h('div', { className: "mt-auto pt-6 flex items-center gap-2 text-slate-400 font-medium group-hover:text-indigo-600 transition-colors" },
+                                "Explore Pillar",
+                                h(ArrowRight, { size: 18 })
+                            )
+                        )
+                    )
+                ),
+                h(Footer, { onNavigate })
+            );
+        };
+
+        // --- COMPONENTS (Hero, PainPoints, TheSystem, etc. remain the same) ---
         
-        // Populate and show the single insights page
-        function showSingleInsightPage(articleId) {
-            const articleData = insightsData.find(article => article.id === articleId);
-            if (!articleData) return;
+        const CaseStudyModal = ({ data, onClose, onBook }) => {
+            return h(motion.div, {
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                exit: { opacity: 0 },
+                className: "fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm",
+                onClick: onClose
+            },
+                h(motion.div, {
+                    initial: { scale: 0.95, opacity: 0 },
+                    animate: { scale: 1, opacity: 1 },
+                    exit: { scale: 0.95, opacity: 0 },
+                    className: "bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden relative",
+                    onClick: (e) => e.stopPropagation()
+                },
+                    h('button', { onClick: onClose, className: "absolute top-4 right-4 p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors z-10" }, h(X, { size: 20 })),
+                    h('div', { className: `h-48 ${data.color} flex items-center justify-center relative` },
+                        h('div', { className: "text-center" },
+                            h(Globe, { size: 48, className: "text-slate-300 mx-auto mb-2" }),
+                            h('span', { className: "text-slate-400 font-medium" }, "Website Mockup Preview")
+                        )
+                    ),
+                    h('div', { className: "p-8 md:p-10" },
+                        h('div', { className: "flex items-center justify-between mb-6" },
+                            h('div', null,
+                                h('h3', { className: "text-2xl font-bold text-slate-900" }, data.label),
+                                h('p', { className: "text-slate-500" }, data.sub)
+                            ),
+                            h('div', { className: "text-right" },
+                                h('div', { className: "text-4xl font-bold text-indigo-600" }, data.metric),
+                                h('div', { className: "text-xs font-bold uppercase tracking-wider text-slate-400" }, "Growth")
+                            )
+                        ),
+                        h('div', { className: "space-y-4 mb-8" },
+                            h('p', { className: "text-slate-600" }, "Before Fullyo, this property relied 100% on Airbnb. They were losing $12k/year in commissions and had zero guest data."),
+                            h('p', { className: "text-slate-600" }, "We deployed a custom direct booking engine, synced their calendars, and launched a retargeting ad campaign."),
+                            h('div', { className: "flex gap-2 pt-2" },
+                                h('span', { className: "px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium" }, "Web Design"),
+                                h('span', { className: "px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium" }, "SEO"),
+                                h('span', { className: "px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium" }, "Email Automation")
+                            )
+                        ),
+                        h('button', { 
+                            onClick: onBook,
+                            className: "w-full py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-indigo-500/30 transition-all flex items-center justify-center gap-2"
+                        }, "Get These Results For Your Property", h(ArrowRight, { size: 18 }))
+                    )
+                )
+            );
+        };
 
-            document.getElementById('insights-header-content').innerHTML = `
-                <a href="#" data-page="insights-master-page" class="nav-link text-indigo-600 font-semibold hover:underline">&larr; Back to All Insights</a>
-                <p class="mt-6 text-sm font-semibold text-indigo-600 uppercase">${articleData.category}</p>
-                <h1 class="mt-2 text-4xl lg:text-5xl font-extrabold text-gray-900">${articleData.title}</h1>
-                <p class="mt-6 text-lg text-gray-600">By ${articleData.author} &bull; ${articleData.date}</p>
-            `;
-            document.getElementById('insights-article-content').innerHTML = articleData.text;
+        const HeroSection = ({ onCta }) => {
+            const { scrollY } = useScroll();
+            const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+            const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
-            const moreInsightsCarousel = document.getElementById('more-insights-carousel');
-            if (moreInsightsCarousel) {
-                const otherArticles = insightsData.filter(article => article.id !== articleId);
-                let moreInsightsHTML = '';
-                otherArticles.forEach(article => {
-                    const truncatedSummary = article.summary.length > 120 ? article.summary.substring(0, 120) + '...' : article.summary;
-                    moreInsightsHTML += `
-                        <div class="snap-center flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 text-left bg-white p-6 rounded-xl shadow-lg">
-                            <img src="${article.image}" alt="${article.title}" class="rounded-lg shadow-md mb-6 w-full h-48 object-cover">
-                            <p class="font-semibold text-indigo-600 text-xs uppercase">${article.category}</p>
-                            <h3 class="mt-2 text-xl font-bold text-gray-900">${article.title}</h3>
-                            <p class="mt-3 text-gray-600 text-sm">${truncatedSummary}</p>
-                            <a href="#" data-article-id="${article.id}" class="insights-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">Read Full Article &rarr;</a>
-                        </div>
-                    `;
-                });
-                moreInsightsCarousel.innerHTML = moreInsightsHTML;
-            }
-            showPage('insights-single-page');
-        }
+            return h('section', { className: "relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" },
+                h(motion.div, { style: { y: y1 }, className: "absolute top-20 right-[-10%] w-[500px] h-[500px] bg-indigo-50/50 rounded-full blur-3xl opacity-60" }),
+                h(motion.div, { style: { y: y2 }, className: "absolute bottom-20 left-[-10%] w-[600px] h-[600px] bg-violet-50/50 rounded-full blur-3xl opacity-60" }),
+                h('div', { className: "container mx-auto px-6 relative z-10 text-center" },
+                    h(motion.div, {
+                        initial: { opacity: 0, y: 30 },
+                        animate: { opacity: 1, y: 0 },
+                        transition: { duration: 0.8 },
+                        className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-100 mb-8 shadow-sm"
+                    },
+                        h('span', { className: "w-2 h-2 rounded-full bg-indigo-500 animate-pulse" }),
+                        h('span', { className: "text-xs font-semibold uppercase tracking-widest text-indigo-600" }, "Agency for Property Growth")
+                    ),
+                    h(motion.h1, {
+                        initial: { opacity: 0, y: 50 },
+                        animate: { opacity: 1, y: 0 },
+                        transition: { duration: 0.8, delay: 0.2 },
+                        className: "text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 mb-8 leading-[1.1]"
+                    },
+                        "Focus on your guests, ", h('br'),
+                        h('span', { className: "text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600" }, "we automate the rest.")
+                    ),
+                    h(motion.p, {
+                        initial: { opacity: 0 },
+                        animate: { opacity: 1 },
+                        transition: { duration: 0.8, delay: 0.4 },
+                        className: "text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed"
+                    }, "Stop trading time for bookings. We deploy a 5-part high-converting system designed specifically for Short-Term Rental Owners & Property Managers ready to scale."),
+                    h(motion.div, {
+                        initial: { opacity: 0, scale: 0.9 },
+                        animate: { opacity: 1, scale: 1 },
+                        transition: { duration: 0.5, delay: 0.6 }
+                    },
+                        h('button', { onClick: onCta, className: "group relative px-8 py-4 bg-slate-900 text-white rounded-full font-semibold text-lg overflow-hidden shadow-2xl hover:shadow-xl transition-all" },
+                            h('div', { className: "absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-600 to-violet-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" }),
+                            h('span', { className: "relative flex items-center gap-3" }, 
+                                "Book Your Strategy Call", 
+                                h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform" })
+                            )
+                        )
+                    )
+                )
+            );
+        };
 
-        // Dynamically generate the insights grid on the master page
-        function populateInsightsGrid() {
-            const grid = document.getElementById('insights-grid');
-            if(!grid) return;
-            grid.innerHTML = ''; // Clear existing content
-            insightsData.forEach(article => {
-                const articleElement = document.createElement('div');
-                let categoryClass = article.category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
-                articleElement.className = `insights-item ${categoryClass} text-left bg-white p-6 rounded-xl shadow-lg relative`;
-                const summary = article.summary;
-                const truncatedSummary = summary.length > 150 ? summary.substring(0, 150) + '...' : summary;
+        const PainPoints = () => {
+            const points = [
+                { title: "Booking Droughts", desc: "Empty calendars during off-seasons while competitors thrive.", icon: Calendar },
+                { title: "Commission Bleed", desc: "Paying 15-20% fees to OTAs like Airbnb & Booking.com.", icon: TrendingUp },
+                { title: "Operational Chaos", desc: "No central system. Scattered messages. Zero free time.", icon: Clock },
+            ];
+            return h('section', { className: "py-24 bg-slate-50 relative" },
+                h('div', { className: "container mx-auto px-6" },
+                    h('div', { className: "grid md:grid-cols-2 gap-16 items-center" },
+                        h(motion.div, {
+                            initial: { opacity: 0, x: -50 },
+                            whileInView: { opacity: 1, x: 0 },
+                            viewport: { once: true },
+                            transition: { duration: 0.8 }
+                        },
+                            h('h2', { className: "text-4xl md:text-5xl font-bold mb-6 text-slate-900" }, 
+                                "The Owner & Manager's ", h('span', { className: "text-indigo-500" }, "Dilemma.")
+                            ),
+                            h('p', { className: "text-lg text-slate-600 leading-relaxed mb-8" }, "Great properties often fail because they rely solely on algorithms they can't control. You didn't start this business to be an employee of Airbnb."),
+                            h('div', { className: "h-1 w-20 bg-indigo-600 rounded-full" })
+                        ),
+                        h('div', { className: "space-y-6" }, points.map((point, index) => 
+                            h(motion.div, {
+                                key: index,
+                                initial: { opacity: 0, x: 50 },
+                                whileInView: { opacity: 1, x: 0 },
+                                viewport: { once: true },
+                                transition: { duration: 0.6, delay: index * 0.2 },
+                                className: "bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-indigo-50 flex items-start gap-4 group"
+                            },
+                                h('div', { className: "p-3 bg-indigo-50 text-indigo-600 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors" }, h(point.icon, { size: 24 })),
+                                h('div', null,
+                                    h('h3', { className: "text-xl font-bold text-slate-800 mb-2" }, point.title),
+                                    h('p', { className: "text-slate-500" }, point.desc)
+                                )
+                            )
+                        ))
+                    )
+                )
+            );
+        };
 
-                articleElement.innerHTML = `
-                    <img src="${article.image}" alt="Article Image" class="rounded-lg shadow-md mb-6">
-                    <p class="font-semibold text-indigo-600">${article.category.toUpperCase()}</p>
-                    <h3 class="mt-2 text-xl font-bold">${article.title}</h3>
-                    <p class="mt-3 text-gray-600">${truncatedSummary}</p>
-                    <a href="#" data-article-id="${article.id}" class="insights-link nav-link mt-4 inline-block font-semibold text-indigo-600 hover:underline">Read Full Article &rarr;</a>
-                `;
-                grid.appendChild(articleElement);
-            });
-        }
+        const TheSystem = () => {
+            const steps = [
+                { 
+                    title: "Strategic Listing Optimization", 
+                    desc: ["We conduct a deep dive analysis to define your ideal guest and uncover key improvements, optimizing your listing to achieve an average of ", h('strong', {className: "font-bold text-emerald-600"}, "28.5% increase"), " in performance."], 
+                    icon: BarChart3 
+                },
+                { 
+                    title: "Your Own Direct Booking Website", 
+                    desc: ["A commission-free direct booking engine that puts you in control of your brand, increasing your profit margin by ", h('strong', {className: "font-bold text-emerald-600"}, "up to 18%"), "."], 
+                    icon: Globe 
+                },
+                { 
+                    title: "The 5x Multi-Channel Strategy", 
+                    desc: ["We ensure you're visible on ", h('strong', {className: "font-bold text-emerald-600"}, "at least five key channels"), " where your guests are searching, turning them into a powerful funnel."], 
+                    icon: Share2 
+                },
+                { 
+                    title: "All-in-One Command Center", 
+                    desc: ["Centralize operations into one dashboard. Automate messaging and schedules, ", h('strong', {className: "font-bold text-emerald-600"}, "saving you 12+ hours"), " per week."], 
+                    icon: LayoutDashboard 
+                },
+                { 
+                    title: "Marketing Plan for Growth", 
+                    desc: ["A dynamic strategy to build your brand and increase your direct bookings by ", h('strong', {className: "font-bold text-emerald-600"}, "10-30%"), "."], 
+                    icon: Megaphone 
+                },
+            ];
+
+            return h('section', { className: "py-32 bg-white relative overflow-hidden" },
+                h('div', { className: "container mx-auto px-6" },
+                    h('div', { className: "text-center mb-20" },
+                        h(motion.h2, {
+                            initial: { opacity: 0, y: 20 },
+                            whileInView: { opacity: 1, y: 0 },
+                            viewport: { once: true },
+                            className: "text-4xl md:text-6xl font-bold text-slate-900 mb-6"
+                        }, "The Fullyo System"),
+                        h('p', { className: "text-xl text-slate-500 max-w-2xl mx-auto" }, "A cohesive ecosystem designed to reclaim your time and maximize revenue.")
+                    ),
+                    h('div', { className: "relative" },
+                        h('div', { className: "absolute left-1/2 top-0 bottom-0 w-px bg-slate-200 hidden md:block transform -translate-x-1/2" }),
+                        h('div', { className: "space-y-12 md:space-y-24" }, steps.map((step, index) => 
+                            h(TimelineCard, { key: index, step, index })
+                        ))
+                    )
+                )
+            );
+        };
+
+        const TimelineCard = ({ step, index }) => {
+            const isEven = index % 2 === 0;
+            return h(motion.div, {
+                initial: { opacity: 0, y: 50 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true, margin: "-100px" },
+                transition: { duration: 0.7 },
+                className: `flex flex-col md:flex-row items-center gap-8 md:gap-0 ${isEven ? 'md:flex-row-reverse' : ''}`
+            },
+                h('div', { className: "flex-1 w-full md:w-1/2 md:px-12" },
+                    h('div', { className: `flex flex-col ${isEven ? 'md:items-start' : 'md:items-end'} text-center md:text-left ${!isEven && 'md:text-right'}` },
+                        h('div', { className: "w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-200 rotate-3 hover:rotate-6 transition-transform" }, h(step.icon, { size: 32 })),
+                        h('h3', { className: "text-2xl font-bold mb-3" }, step.title),
+                        h('p', { className: "text-slate-500 leading-relaxed" }, step.desc)
+                    )
+                ),
+                h('div', { className: "hidden md:flex relative z-10 w-8 h-8 rounded-full bg-white border-4 border-indigo-600 shadow-xl items-center justify-center" },
+                    h('div', { className: "w-2 h-2 bg-indigo-600 rounded-full" })
+                ),
+                h('div', { className: "flex-1 w-full md:w-1/2 md:px-12" },
+                    h('div', { className: "bg-slate-50 p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-500 group" },
+                        h('div', { className: "h-32 rounded-xl bg-white w-full flex items-center justify-center overflow-hidden relative" },
+                            h('div', { className: "absolute inset-0 bg-grid-slate-100 opacity-20" }),
+                            h('div', { className: "text-slate-200 group-hover:text-indigo-600 transition-colors duration-500 transform group-hover:scale-110" }, h(step.icon, { size: 64 }))
+                        )
+                    )
+                )
+            );
+        };
+
+        // --- RESULTS SECTION (VISUAL) ---
+        const ResultsSection = ({ onOpenCase }) => {
+            const cases = [
+                { label: "Whistler Chalet", metric: "94%", sub: "Occupancy Rate", color: "bg-indigo-50" },
+                { label: "Squamish Lofts", metric: "$42k", sub: "Direct Booking Rev.", color: "bg-violet-50" },
+                { label: "Tofino Cabins", metric: "3.5x", sub: "ROAS on Ads", color: "bg-blue-50" }
+            ];
+
+            return h('section', { className: "py-24 bg-slate-50" },
+                h('div', { className: "container mx-auto px-6" },
+                    h('div', { className: "text-center mb-16" },
+                        h(motion.div, {
+                            initial: { opacity: 0, y: 20 },
+                            whileInView: { opacity: 1, y: 0 },
+                            viewport: { once: true },
+                            className: "inline-block px-4 py-1 rounded-full border border-slate-200 bg-white text-sm font-medium mb-4 text-slate-500"
+                        }, "Proven Results"),
+                        h('h2', { className: "text-3xl md:text-5xl font-bold text-slate-900" }, "Websites that convert.")
+                    ),
+                    h('div', { className: "grid md:grid-cols-3 gap-8" }, cases.map((c, i) => 
+                        h(motion.div, {
+                            key: i,
+                            initial: { opacity: 0, y: 30 },
+                            whileInView: { opacity: 1, y: 0 },
+                            viewport: { once: true },
+                            transition: { delay: i * 0.1 },
+                            className: "bg-white rounded-3xl border border-slate-100 shadow-lg hover:shadow-xl transition-all overflow-hidden flex flex-col cursor-pointer",
+                            onClick: () => onOpenCase(c)
+                        },
+                            // Visual Mockup Placeholder
+                            h('div', { className: `h-48 ${c.color} relative flex items-center justify-center overflow-hidden border-b border-slate-100` },
+                                h('div', { className: "w-32 h-20 bg-white rounded-lg shadow-sm transform rotate-[-5deg] border border-slate-200 absolute top-8 left-8" }),
+                                h('div', { className: "w-40 h-24 bg-white rounded-lg shadow-md border border-slate-200 absolute top-12 left-16 flex items-center justify-center" },
+                                    h(Globe, { className: "text-slate-300", size: 32 })
+                                )
+                            ),
+                            // Metrics
+                            h('div', { className: "p-8" },
+                                h('h3', { className: "text-lg font-bold text-slate-900 mb-1" }, c.label),
+                                h('div', { className: "flex items-baseline gap-2 mt-4" },
+                                    h('span', { className: "text-4xl font-bold text-emerald-600 tracking-tight" }, c.metric),
+                                    h('span', { className: "text-sm text-slate-500 font-medium" }, c.sub)
+                                ),
+                                h('div', { className: "mt-6 flex items-center gap-2 text-indigo-600 text-sm font-semibold cursor-pointer group" },
+                                    "View Case Study",
+                                    h(ArrowRight, { size: 16, className: "group-hover:translate-x-1 transition-transform" })
+                                )
+                            )
+                        )
+                    ))
+                )
+            );
+        };
+
+        const GrowthEngine = () => {
+            return h('section', { className: "py-24 bg-slate-900 text-white overflow-hidden relative" },
+                h('div', { className: "absolute inset-0 opacity-10" }),
+                h('div', { className: "container mx-auto px-6 relative z-10" },
+                    h('div', { className: "flex flex-col lg:flex-row gap-16 items-center" },
+                        h('div', { className: "lg:w-1/2" },
+                            h('div', { className: "inline-block px-4 py-1 rounded-full border border-slate-700 bg-slate-800/50 text-sm font-medium mb-6" }, "The Accelerator"),
+                            h('h2', { className: "text-4xl md:text-5xl font-bold mb-6" }, "Social Media &", h('br'), h('span', { className: "text-indigo-400" }, "Paid Advertising.")),
+                            h('p', { className: "text-slate-400 text-lg mb-8 leading-relaxed" }, "Organic reach is good. Paid amplification is better. We manage your social presence and run high-ROAS ad campaigns to fill your calendar months in advance."),
+                            h('ul', { className: "space-y-4" }, ['Facebook & Instagram Ads', 'Content Creation', 'Influencer Partnerships'].map((item, i) => 
+                                h(motion.li, {
+                                    key: i,
+                                    initial: { opacity: 0, x: -20 },
+                                    whileInView: { opacity: 1, x: 0 },
+                                    transition: { delay: i * 0.1 },
+                                    className: "flex items-center gap-3"
+                                },
+                                    h(CheckCircle2, { className: "text-indigo-400", size: 20 }),
+                                    h('span', null, item)
+                                )
+                            ))
+                        ),
+                        h('div', { className: "lg:w-1/2 w-full" },
+                            h(motion.div, {
+                                initial: { scale: 0.8, opacity: 0 },
+                                whileInView: { scale: 1, opacity: 1 },
+                                viewport: { once: true },
+                                className: "relative aspect-square rounded-3xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 p-8 shadow-2xl flex items-center justify-center"
+                            },
+                                h('div', { className: "absolute inset-0 bg-indigo-500/10 rounded-3xl blur-2xl" }),
+                                h('div', { className: "absolute inset-0 flex items-center justify-center" },
+                                    h('div', { className: "bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-center" },
+                                        h('p', { className: "text-sm text-slate-300 uppercase tracking-wider mb-2" }, "Return on Ad Spend"),
+                                        h('p', { className: "text-5xl font-bold text-white" }, h('span', { className: "text-emerald-400" }, "4.8x"))
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        };
+
+        // --- BRAND SCROLL SECTION ---
+        const BrandMarquee = () => {
+            // Simulate brands with text for now, replace with Logos
+            const brands = [
+                "Summit Stays", "Coastal Retreats", "Urban Host Co.", "Cabin & Co.", "Alpine Lodging", "Sea to Sky Rentals", "Boutique Homes", "Escape Properties"
+            ];
+            
+            return h('section', { className: "py-10 bg-white border-b border-slate-100 overflow-hidden" },
+                h('p', { className: "text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-8 font-display" }, "Trusted by Leading Owners & Managers"),
+                h('div', { className: "relative flex overflow-x-hidden group" },
+                    h('div', { className: "animate-infinite-scroll whitespace-nowrap flex gap-16 px-8" },
+                        // Double the list to create infinite loop effect
+                        [...brands, ...brands].map((brand, i) => 
+                            h('div', { key: i, className: "text-xl font-display italic text-slate-400 font-bold whitespace-nowrap" }, brand)
+                        )
+                    )
+                )
+            );
+        };
+
+        // --- FAQ SECTION ---
+        const FAQSection = () => {
+            const faqs = [
+                { q: "Do you work with individual owners or just property managers?", a: "We work with both. Our system is designed to scale, whether you have one high-performing property or 50+ listings. We tailor the strategy to your specific goals." },
+                { q: "Does this replace my Airbnb listing?", a: "No, it enhances it. We use a multi-channel strategy where Airbnb is just one source. We build your direct booking engine to capture repeat guests and save on fees, while optimizing OTAs for visibility." },
+                { q: "How quickly can we launch?", a: "Our onboarding is streamlined. We typically have your Strategic Analysis ready in 5 days and your full Direct Booking ecosystem live within 3-4 weeks." },
+                { q: "Do I need to switch my current PMS?", a: "Not necessarily. We integrate with most major Property Management Systems. If you don't have one, or yours is holding you back, we will recommend and implement the best-in-class solution for your needs." }
+            ];
+
+            const [openIndex, setOpenIndex] = useState(null);
+
+            return h('section', { className: "py-24 bg-slate-50" },
+                h('div', { className: "container mx-auto px-6 max-w-3xl" },
+                    h('div', { className: "text-center mb-16" },
+                        h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "Common Questions"),
+                        h('p', { className: "text-slate-500" }, "Everything you need to know about the Fullyo system.")
+                    ),
+                    h('div', { className: "space-y-4" },
+                        faqs.map((faq, index) => {
+                            const isOpen = openIndex === index;
+                            return h(motion.div, {
+                                key: index,
+                                initial: false,
+                                className: "bg-white rounded-2xl border border-slate-200 overflow-hidden"
+                            },
+                                h('button', {
+                                    onClick: () => setOpenIndex(isOpen ? null : index),
+                                    className: "w-full flex items-center justify-between p-6 text-left"
+                                },
+                                    h('span', { className: "font-bold text-slate-900 text-lg" }, faq.q),
+                                    h(motion.div, {
+                                        animate: { rotate: isOpen ? 180 : 0 },
+                                        transition: { duration: 0.2 }
+                                    }, h(ChevronDown, { className: "text-indigo-500" }))
+                                ),
+                                h(AnimatePresence, {},
+                                    isOpen && h(motion.div, {
+                                        initial: { height: 0, opacity: 0 },
+                                        animate: { height: "auto", opacity: 1 },
+                                        exit: { height: 0, opacity: 0 },
+                                        transition: { duration: 0.3 }
+                                    },
+                                        h('div', { className: "px-6 pb-6 text-slate-600 leading-relaxed" }, faq.a)
+                                    )
+                                )
+                            )
+                        })
+                    )
+                )
+            );
+        };
+
+        const TestimonialsSection = () => {
+             const testimonials = [
+                { quote: "We were drowning in messages and cleaning schedules. Fullyo's system didn't just get us more bookings, it gave us our weekends back.", author: "Sarah J.", role: "Owner, Mountain View Retreats", stars: 5, color: "bg-indigo-50" },
+                { quote: "The direct booking site they built accounts for 40% of our revenue now. We're saving thousands in Airbnb fees every season.", author: "Michael T.", role: "Property Manager, Coastal Stays", stars: 5, color: "bg-violet-50" },
+                { quote: "Our revenue grew by 40% in the first quarter alone. The ROI on this system is undeniable. It paid for itself in the first month.", author: "James P.", role: "Owner, Lakeside Cabins", stars: 5, color: "bg-blue-50" }
+            ];
+            return h('section', { className: "py-24 bg-white" },
+                h('div', { className: "container mx-auto px-6 max-w-6xl" },
+                    h('div', { className: "grid md:grid-cols-3 gap-8" }, testimonials.map((t, i) => 
+                        h(motion.div, {
+                            key: i,
+                            initial: { opacity: 0, y: 20 },
+                            whileInView: { opacity: 1, y: 0 },
+                            viewport: { once: true },
+                            transition: { delay: i * 0.2 },
+                            className: "bg-slate-50 p-8 rounded-3xl relative flex flex-col h-full"
+                        },
+                            h(Quote, { className: "absolute top-8 left-8 text-slate-200 w-12 h-12 -z-0" }),
+                            h('div', { className: "relative z-10 flex-1 flex flex-col" },
+                                h('div', { className: "flex gap-1 mb-6 text-yellow-400" }, 
+                                    Array.from({length: t.stars}).map((_, i) => h(Star, { key: i, size: 18, fill: "currentColor" }))
+                                ),
+                                h('p', { className: "text-lg text-slate-700 font-medium leading-relaxed mb-8 flex-1" }, `"${t.quote}"`),
+                                h('div', { className: "flex items-center gap-4 mt-auto" },
+                                    // NEW: Avatar Placeholder
+                                    h('div', { className: `w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-indigo-600 flex-shrink-0` },
+                                        h(User, { size: 24 })
+                                    ),
+                                    h('div', null,
+                                        h('div', { className: "font-bold text-slate-900 text-sm" }, t.author),
+                                        h('div', { className: "text-slate-500 text-xs" }, t.role)
+                                    )
+                                )
+                            )
+                        )
+                    ))
+                )
+            );
+        };
+
+        const BookingSection = () => {
+            // Compact Process Roadmap Content
+            const steps = ["Strategy Call", "Custom Plan", "System Build", "Growth"];
+
+            return h('section', { id: "booking-section", className: "py-24 bg-white border-t border-slate-100" },
+                h('div', { className: "container mx-auto px-6 max-w-4xl text-center" },
+                    h(motion.div, {
+                        initial: { opacity: 0, y: 30 },
+                        whileInView: { opacity: 1, y: 0 },
+                        viewport: { once: true },
+                        className: "bg-slate-900 rounded-3xl p-12 md:p-20 shadow-2xl relative overflow-hidden"
+                    },
+                        h('div', { className: "absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:16px_16px]" }),
+                        
+                        h('div', { className: "relative z-10" },
+                            h('h2', { className: "text-4xl md:text-5xl font-bold text-white mb-6" }, "Ready to Scale Your Business?"),
+                            h('p', { className: "text-xl text-slate-300 mb-10 max-w-2xl mx-auto" }, "Stop trading time for bookings. Join the owners and managers scaling their revenue with the Fullyo system."),
+                            
+                            // COMPACT ROADMAP ROW
+                            h('div', { className: "flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-10 text-sm md:text-base text-indigo-200 font-medium" },
+                                steps.map((step, i) => [
+                                    h('span', { key: i, className: "flex items-center gap-2" }, 
+                                        h('span', { className: "bg-indigo-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" }, i + 1),
+                                        step
+                                    ),
+                                    i < steps.length - 1 && h(ArrowRight, { key: `arrow-${i}`, size: 14, className: "text-slate-600" })
+                                ])
+                            ),
+
+                            h('button', { 
+                                className: "group relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-full font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 transition-all inline-flex items-center gap-2"
+                            }, 
+                                "Book Your Strategy Call",
+                                h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform" })
+                            ),
+                            h('p', { className: "mt-6 text-sm text-slate-500" }, "Let's see if we can help. Just an honest conversation and real feedback.")
+                        )
+                    )
+                )
+            );
+        };
+
+        // --- UPDATED FOOTER ---
+        const Footer = ({ onNavigate }) => {
+            return h('footer', { className: "bg-slate-50 pt-20 pb-10 border-t border-slate-200" },
+                h('div', { className: "container mx-auto px-6" },
+                    
+                    // Trust Strip
+                    h('div', { className: "flex flex-wrap justify-center gap-8 mb-20 opacity-40 grayscale" },
+                        h('div', { className: "font-bold text-xl font-display" }, "Airbnb"),
+                        h('div', { className: "font-bold text-xl font-display" }, "VRBO"),
+                        h('div', { className: "font-bold text-xl font-display" }, "Booking.com"),
+                        h('div', { className: "font-bold text-xl font-display" }, "Expedia")
+                    ),
+
+                    h('div', { className: "grid md:grid-cols-4 gap-12 mb-16" },
+                        // Brand Column
+                        h('div', null,
+                        // Simplified Logo in Footer
+                            h('div', { className: "text-3xl font-bold tracking-tighter mb-6 text-slate-900" },
+                                "Fullyo."
+                            ),
+                            h('p', { className: "text-slate-500 text-sm leading-relaxed mb-6" }, "The premier growth partner for owners and managers who value their time."),
+                            h('div', { className: "flex gap-4 text-slate-400" },
+                                h(Mail, { size: 20, className: "hover:text-indigo-600 cursor-pointer transition-colors" }),
+                                h(MapPin, { size: 20, className: "hover:text-indigo-600 cursor-pointer transition-colors" })
+                            )
+                        ),
+                        
+                        // Services Column (SEO) - UPDATED TO MATCH 5 PILLARS
+                        h('div', null,
+                            h('h4', { className: "font-bold text-slate-900 mb-6" }, "Solutions"),
+                            h('ul', { className: "space-y-4 text-sm text-slate-500" },
+                                h('li', { 
+                                    onClick: () => onNavigate('service-strategic-analysis'),
+                                    className: "hover:text-indigo-600 cursor-pointer transition-colors" 
+                                }, "Strategic Listing Optimization"),
+                                h('li', { 
+                                    onClick: () => onNavigate('service-direct-booking'),
+                                    className: "hover:text-indigo-600 cursor-pointer transition-colors"
+                                }, "Direct Booking Websites"),
+                                h('li', { 
+                                    onClick: () => onNavigate('service-multi-channel'),
+                                    className: "hover:text-indigo-600 cursor-pointer transition-colors" 
+                                }, "Multi-Channel Distribution"),
+                                h('li', { 
+                                    onClick: () => onNavigate('service-pms-integration'),
+                                    className: "hover:text-indigo-600 cursor-pointer transition-colors" 
+                                }, "PMS Integration"),
+                                h('li', { 
+                                    onClick: () => onNavigate('service-growth-marketing'),
+                                    className: "hover:text-indigo-600 cursor-pointer transition-colors" 
+                                }, "Growth Marketing")
+                            )
+                        ),
+
+                        // Company Column
+                        h('div', null,
+                            h('h4', { className: "font-bold text-slate-900 mb-6" }, "Company"),
+                            h('ul', { className: "space-y-4 text-sm text-slate-500" },
+                                h('li', { className: "hover:text-indigo-600 cursor-pointer transition-colors" }, "Case Studies"),
+                                h('li', { className: "hover:text-indigo-600 cursor-pointer transition-colors" }, "About Us"),
+                                h('li', { className: "hover:text-indigo-600 cursor-pointer transition-colors" }, "Careers"),
+                                h('li', { className: "hover:text-indigo-600 cursor-pointer transition-colors" }, "Contact")
+                            )
+                        ),
+
+                        // Contact/Legal Column
+                        h('div', null,
+                            h('h4', { className: "font-bold text-slate-900 mb-6" }, "Get in Touch"),
+                            h('ul', { className: "space-y-4 text-sm text-slate-500" },
+                                h('li', { className: "flex items-center gap-2" }, h(Mail, { size: 16 }), "hello@fullyo.com"),
+                                h('li', { className: "flex items-center gap-2" }, h(Phone, { size: 16 }), "+1 (555) 123-4567"),
+                                h('li', { className: "flex items-center gap-2" }, h(MapPin, { size: 16 }), "Squamish, BC"),
+                                h('li', { className: "pt-4 flex items-center gap-2 text-slate-400" }, h(ShieldCheck, { size: 16 }), "Secure & Private")
+                            )
+                        )
+                    ),
+                    h('div', { className: "pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center opacity-60 text-sm" },
+                        h('p', null, "© 2024 Fullyo Inc. All rights reserved."),
+                        h('div', { className: "flex gap-6 mt-4 md:mt-0" },
+                            h('span', { className: "cursor-pointer hover:text-slate-900" }, "Privacy Policy"),
+                            h('span', { className: "cursor-pointer hover:text-slate-900" }, "Terms of Service")
+                        )
+                    )
+                )
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(h(FullyoApp));
     </script>
 </body>
 </html>
-
