@@ -21,17 +21,22 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        // RESTORED: Inter as the primary font for everything
                         sans: ['Inter', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
                     },
                     animation: {
                         'infinite-scroll': 'infinite-scroll 60s linear infinite',
+                        'float': 'float 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         'infinite-scroll': {
                             from: { transform: 'translateX(0)' },
                             to: { transform: 'translateX(-100%)' },
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
                         }
                     }
                 }
@@ -41,7 +46,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        /* RESTORED: Headings use the clean Inter font again */
         h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; }
         
         ::-webkit-scrollbar { width: 8px; }
@@ -71,7 +75,8 @@
         import { 
             BarChart3, Globe, Share2, LayoutDashboard, Megaphone, Calendar, 
             ArrowRight, TrendingUp, Clock, CheckCircle2, Star, Quote, ChevronLeft,
-            Mail, MapPin, Phone, ShieldCheck, X, User, ChevronDown, Plus, Minus
+            Mail, MapPin, Phone, ShieldCheck, X, User, ChevronDown, Plus, Minus, 
+            AlertCircle, Check, Zap, Target, Layers, AlertTriangle, Activity
         } from 'lucide-react';
 
         const h = createElement;
@@ -158,7 +163,6 @@
                 setCurrentRoute(route);
             };
 
-            // Determine if we are on a service page
             const isServicePage = currentRoute.startsWith('service-');
             const serviceKey = isServicePage ? currentRoute.replace('service-', '') : null;
 
@@ -168,6 +172,18 @@
                         ? h(MainFunnel, { key: "home", onNavigate: navigateTo })
                         : h(ServicePage, { key: "service", serviceKey: serviceKey, onNavigate: navigateTo })
                 )
+            );
+        };
+
+        // --- REUSABLE BACKGROUND COMPONENT (MORE VISIBLE CIRCLES) ---
+        const CircleBackground = () => {
+            return h('div', { className: "absolute inset-0 overflow-hidden pointer-events-none" },
+                // Increased opacity even more for better visibility
+                h('div', { className: "absolute -top-[20%] -right-[10%] w-[900px] h-[900px] rounded-full border-2 border-white/10 bg-gradient-to-br from-white/10 to-transparent blur-3xl opacity-60 animate-pulse-slow" }),
+                h('div', { className: "absolute top-[10%] -right-[20%] w-[600px] h-[600px] rounded-full border border-white/10 opacity-30" }),
+                h('div', { className: "absolute -bottom-[20%] -left-[10%] w-[800px] h-[800px] rounded-full bg-gradient-to-tr from-indigo-500/40 to-transparent blur-3xl opacity-40" }),
+                // Crisp line circle for tech feel
+                h('div', { className: "absolute bottom-[10%] left-[5%] w-[300px] h-[300px] rounded-full border border-white/20 opacity-40 animate-float" })
             );
         };
 
@@ -187,29 +203,25 @@
             };
 
             return h(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } },
-                h('nav', { className: `fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}` },
+                h('nav', { className: `fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-indigo-900/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}` },
                     h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
-                        // LOGO
                         h('div', { 
-                            className: "text-3xl font-extrabold tracking-tighter cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-indigo-800 to-slate-900 hover:opacity-80 transition-opacity", 
+                            className: "text-3xl font-extrabold tracking-tighter cursor-pointer text-white hover:opacity-80 transition-opacity", 
                             onClick: () => window.scrollTo(0,0) 
                         }, "Fullyo."),
-                        
-                        h('button', { onClick: scrollToBooking, className: "hidden md:flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white rounded-full font-medium text-sm hover:bg-slate-800 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-slate-900/20" }, "Partner With Us")
+                        h('button', { onClick: scrollToBooking, className: "hidden md:flex items-center gap-2 px-6 py-2.5 bg-white text-indigo-900 rounded-full font-medium text-sm hover:bg-indigo-50 transition-all hover:scale-105 active:scale-95 shadow-lg" }, "Partner With Us")
                     )
                 ),
                 h(HeroSection, { onCta: scrollToBooking }),
-                h(PainPoints),
-                h(TheSystem),
-                h(ResultsSection, { onOpenCase: setActiveCaseStudy }),
-                h(GrowthEngine),
-                h(BrandMarquee),
-                h(TestimonialsSection),
+                h(TheSystem), 
+                h(ResultCards, { onOpenCase: setActiveCaseStudy }), // AGGREGATE RESULTS
+                h(ComparisonSection), // REVERTED TO TABLE LAYOUT
+                h(VisualBreakSection),
+                h(ProofStack, { onOpenCase: setActiveCaseStudy }), 
                 h(FAQSection),
                 h(BookingSection),
                 h(Footer, { onNavigate }),
                 
-                // Modal
                 h(AnimatePresence, {},
                     activeCaseStudy && h(CaseStudyModal, { 
                         key: 'modal', 
@@ -221,68 +233,38 @@
             );
         };
 
+        // ... (ServicePage remains the same) ...
         const ServicePage = ({ serviceKey, onNavigate }) => {
             const data = servicesData[serviceKey];
-
-            // Order of pillars for navigation
-            const serviceOrder = [
-                'strategic-analysis', 
-                'direct-booking', 
-                'multi-channel', 
-                'pms-integration', 
-                'growth-marketing'
-            ];
-            
+            const serviceOrder = ['strategic-analysis', 'direct-booking', 'multi-channel', 'pms-integration', 'growth-marketing'];
             const currentIndex = serviceOrder.indexOf(serviceKey);
             const nextIndex = (currentIndex + 1) % serviceOrder.length;
             const nextKey = serviceOrder[nextIndex];
             const nextData = servicesData[nextKey];
 
-            // Fallback if data not found
             if (!data) return h('div', { className: "p-20 text-center" }, "Service not found.");
 
-            return h(motion.div, {
-                initial: { opacity: 0, y: 20 },
-                animate: { opacity: 1, y: 0 },
-                exit: { opacity: 0, y: -20 },
-                className: "bg-white min-h-screen"
-            },
+            return h(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -20 }, className: "bg-white min-h-screen" },
                 h('nav', { className: "border-b border-slate-100 py-4 bg-white sticky top-0 z-50" },
                     h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
-                        h('div', { 
-                            onClick: () => onNavigate('home'),
-                            className: "flex items-center gap-2 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors group"
-                        },
+                        h('div', { onClick: () => onNavigate('home'), className: "flex items-center gap-2 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors group" },
                             h(ChevronLeft, { size: 20, className: "group-hover:-translate-x-1 transition-transform" }),
                             h('span', { className: "font-medium text-sm" }, "Back to Home")
                         ),
-                        h('button', {
-                            onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); },
-                            className: "px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-colors"
-                        }, "Book Strategy Call")
+                        h('button', { onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); }, className: "px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-colors" }, "Book Strategy Call")
                     )
                 ),
-                
-                // --- SPLIT HERO SECTION ---
                 h('div', { className: "container mx-auto px-6 pt-16 pb-24 max-w-6xl" },
                     h('div', { className: "grid lg:grid-cols-2 gap-16 items-center mb-20" },
-                        // LEFT: Text Content
                         h('div', null,
                              h('span', { className: "inline-block py-1 px-3 rounded-full bg-indigo-50 text-indigo-600 font-semibold tracking-wide uppercase text-xs mb-6" }, data.pillar),
                              h('h1', { className: "text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight" }, data.title),
                              h('p', { className: "text-xl text-slate-600 leading-relaxed" }, data.description)
                         ),
-                        // RIGHT: Visual Placeholder (Laptop style)
-                        h(motion.div, { 
-                            initial: { opacity: 0, x: 50 }, 
-                            animate: { opacity: 1, x: 0 },
-                            transition: { delay: 0.2 },
-                            className: "relative" 
-                        },
-                            h('div', { className: "bg-slate-900 rounded-2xl p-2 shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500" },
+                        h(motion.div, { initial: { opacity: 0, x: 50 }, animate: { opacity: 1, x: 0 }, transition: { delay: 0.2 }, className: "relative" },
+                            h('div', { className: "bg-slate-900 rounded-2xl p-2 shadow-2xl transition-transform duration-500" },
                                 h('div', { className: "bg-slate-800 rounded-xl aspect-video flex items-center justify-center overflow-hidden border border-slate-700 relative" },
                                     h('div', { className: "absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-violet-500/10" }),
-                                    // Dynamic Icon representing the visual
                                     h(data.icon, { size: 80, className: "text-slate-500/20" }),
                                     h('div', { className: "absolute bottom-6 px-6 py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/10" },
                                         h('span', { className: "text-sm font-medium text-slate-200" }, "System Visualization")
@@ -291,12 +273,9 @@
                             )
                         )
                     ),
-
-                    // BODY CONTENT
                     h('div', { className: "prose prose-slate prose-lg max-w-4xl mx-auto" },
                         h('h3', { className: "text-3xl font-bold text-slate-900 mb-6 text-center" }, data.subheadline),
                         h('p', { className: "mb-12 text-center text-xl leading-relaxed" }, data.subtext),
-                        
                         h('div', { className: "my-12 p-10 bg-slate-50 rounded-3xl border border-slate-100" },
                             h('h4', { className: "text-slate-900 font-bold mb-8 mt-0 text-center uppercase tracking-widest text-sm" }, "The Fullyo Difference"),
                             h('ul', { className: "grid md:grid-cols-2 gap-6 list-none pl-0" },
@@ -309,10 +288,7 @@
                             )
                         )
                     ),
-
-                    // --- DUAL PATH FOOTER ---
                     h('div', { className: "mt-20 grid md:grid-cols-2 gap-6" },
-                        // CARD A: Action (Primary)
                         h('div', { className: "bg-slate-900 rounded-3xl p-10 text-center flex flex-col justify-center items-center relative overflow-hidden group" },
                              h('div', { className: "absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity" }),
                              h('h3', { className: "text-2xl font-bold text-white mb-4 relative z-10" }, "Ready to implement this?"),
@@ -322,18 +298,10 @@
                                 className: "px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-blue-50 transition-colors inline-flex items-center gap-2 relative z-10"
                             }, "Book Strategy Call", h(ArrowRight, { size: 20 }))
                         ),
-
-                        // CARD B: Education (Next Step)
-                        h('div', { 
-                            onClick: () => { window.scrollTo({top: 0, behavior: 'smooth'}); onNavigate(`service-${nextKey}`); },
-                            className: "bg-white border border-slate-200 rounded-3xl p-10 flex flex-col justify-center hover:border-indigo-300 hover:shadow-xl transition-all cursor-pointer group"
-                        },
+                        h('div', { onClick: () => { window.scrollTo({top: 0, behavior: 'smooth'}); onNavigate(`service-${nextKey}`); }, className: "bg-white border border-slate-200 rounded-3xl p-10 flex flex-col justify-center hover:border-indigo-300 hover:shadow-xl transition-all cursor-pointer group" },
                             h('span', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2" }, "Next Step in System"),
                             h('h3', { className: "text-2xl font-bold text-slate-900 mb-2 group-hover:text-indigo-700 transition-colors" }, nextData.title),
-                            h('div', { className: "mt-auto pt-6 flex items-center gap-2 text-slate-400 font-medium group-hover:text-indigo-600 transition-colors" },
-                                "Explore Pillar",
-                                h(ArrowRight, { size: 18 })
-                            )
+                            h('div', { className: "mt-auto pt-6 flex items-center gap-2 text-slate-400 font-medium group-hover:text-indigo-600 transition-colors" }, "Explore Pillar", h(ArrowRight, { size: 18 }))
                         )
                     )
                 ),
@@ -341,278 +309,144 @@
             );
         };
 
-        // --- COMPONENTS (Hero, PainPoints, TheSystem, etc. remain the same) ---
-        
-        const CaseStudyModal = ({ data, onClose, onBook }) => {
-            return h(motion.div, {
-                initial: { opacity: 0 },
-                animate: { opacity: 1 },
-                exit: { opacity: 0 },
-                className: "fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm",
-                onClick: onClose
-            },
-                h(motion.div, {
-                    initial: { scale: 0.95, opacity: 0 },
-                    animate: { scale: 1, opacity: 1 },
-                    exit: { scale: 0.95, opacity: 0 },
-                    className: "bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden relative",
-                    onClick: (e) => e.stopPropagation()
-                },
-                    h('button', { onClick: onClose, className: "absolute top-4 right-4 p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors z-10" }, h(X, { size: 20 })),
-                    h('div', { className: `h-48 ${data.color} flex items-center justify-center relative` },
-                        h('div', { className: "text-center" },
-                            h(Globe, { size: 48, className: "text-slate-300 mx-auto mb-2" }),
-                            h('span', { className: "text-slate-400 font-medium" }, "Website Mockup Preview")
-                        )
-                    ),
-                    h('div', { className: "p-8 md:p-10" },
-                        h('div', { className: "flex items-center justify-between mb-6" },
-                            h('div', null,
-                                h('h3', { className: "text-2xl font-bold text-slate-900" }, data.label),
-                                h('p', { className: "text-slate-500" }, data.sub)
-                            ),
-                            h('div', { className: "text-right" },
-                                h('div', { className: "text-4xl font-bold text-indigo-600" }, data.metric),
-                                h('div', { className: "text-xs font-bold uppercase tracking-wider text-slate-400" }, "Growth")
-                            )
-                        ),
-                        h('div', { className: "space-y-4 mb-8" },
-                            h('p', { className: "text-slate-600" }, "Before Fullyo, this property relied 100% on Airbnb. They were losing $12k/year in commissions and had zero guest data."),
-                            h('p', { className: "text-slate-600" }, "We deployed a custom direct booking engine, synced their calendars, and launched a retargeting ad campaign."),
-                            h('div', { className: "flex gap-2 pt-2" },
-                                h('span', { className: "px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium" }, "Web Design"),
-                                h('span', { className: "px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium" }, "SEO"),
-                                h('span', { className: "px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium" }, "Email Automation")
-                            )
-                        ),
-                        h('button', { 
-                            onClick: onBook,
-                            className: "w-full py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-indigo-500/30 transition-all flex items-center justify-center gap-2"
-                        }, "Get These Results For Your Property", h(ArrowRight, { size: 18 }))
-                    )
-                )
-            );
-        };
 
         const HeroSection = ({ onCta }) => {
             const { scrollY } = useScroll();
             const y1 = useTransform(scrollY, [0, 500], [0, 200]);
             const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
-            return h('section', { className: "relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" },
-                h(motion.div, { style: { y: y1 }, className: "absolute top-20 right-[-10%] w-[500px] h-[500px] bg-indigo-50/50 rounded-full blur-3xl opacity-60" }),
-                h(motion.div, { style: { y: y2 }, className: "absolute bottom-20 left-[-10%] w-[600px] h-[600px] bg-violet-50/50 rounded-full blur-3xl opacity-60" }),
-                h('div', { className: "container mx-auto px-6 relative z-10 text-center" },
+            return h('section', { className: "relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 text-white" },
+                h(CircleBackground),
+                h('div', { className: "absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-white/5 pointer-events-none" }),
+                
+                h('div', { className: "container mx-auto px-6 relative z-10 text-center max-w-5xl" },
                     h(motion.div, {
                         initial: { opacity: 0, y: 30 },
                         animate: { opacity: 1, y: 0 },
                         transition: { duration: 0.8 },
-                        className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-100 mb-8 shadow-sm"
+                        className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-8 backdrop-blur-sm"
                     },
-                        h('span', { className: "w-2 h-2 rounded-full bg-indigo-500 animate-pulse" }),
-                        h('span', { className: "text-xs font-semibold uppercase tracking-widest text-indigo-600" }, "Agency for Property Growth")
+                        h('span', { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
+                        h('span', { className: "text-xs font-semibold uppercase tracking-widest text-white" }, "Agency for Property Growth")
                     ),
                     h(motion.h1, {
                         initial: { opacity: 0, y: 50 },
                         animate: { opacity: 1, y: 0 },
                         transition: { duration: 0.8, delay: 0.2 },
-                        className: "text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 mb-8 leading-[1.1]"
+                        className: "text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.1]"
                     },
                         "Focus on your guests, ", h('br'),
-                        h('span', { className: "text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600" }, "we automate the rest.")
+                        h('span', { className: "text-indigo-200" }, "we automate the rest.")
                     ),
                     h(motion.p, {
                         initial: { opacity: 0 },
                         animate: { opacity: 1 },
                         transition: { duration: 0.8, delay: 0.4 },
-                        className: "text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed"
-                    }, "Stop trading time for bookings. We deploy a 5-part high-converting system designed specifically for Short-Term Rental Owners & Property Managers ready to scale."),
+                        className: "text-lg md:text-2xl text-slate-200 max-w-3xl mx-auto mb-12 leading-relaxed font-light"
+                    }, "We implement our proprietary 5-part system to maximize direct bookings. We handle the tech and marketing setup, empowering you to run efficient operations with total control."),
                     h(motion.div, {
                         initial: { opacity: 0, scale: 0.9 },
                         animate: { opacity: 1, scale: 1 },
                         transition: { duration: 0.5, delay: 0.6 }
                     },
-                        h('button', { onClick: onCta, className: "group relative px-8 py-4 bg-slate-900 text-white rounded-full font-semibold text-lg overflow-hidden shadow-2xl hover:shadow-xl transition-all" },
-                            h('div', { className: "absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-600 to-violet-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" }),
+                        h('button', { onClick: onCta, className: "group relative px-10 py-5 bg-white text-indigo-900 rounded-full font-bold text-lg overflow-hidden shadow-2xl hover:shadow-indigo-500/50 transition-all hover:-translate-y-1" },
                             h('span', { className: "relative flex items-center gap-3" }, 
                                 "Book Your Strategy Call", 
-                                h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform" })
+                                h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform text-indigo-600" })
                             )
                         )
                     )
-                )
-            );
-        };
-
-        const PainPoints = () => {
-            const points = [
-                { title: "Booking Droughts", desc: "Empty calendars during off-seasons while competitors thrive.", icon: Calendar },
-                { title: "Commission Bleed", desc: "Paying 15-20% fees to OTAs like Airbnb & Booking.com.", icon: TrendingUp },
-                { title: "Operational Chaos", desc: "No central system. Scattered messages. Zero free time.", icon: Clock },
-            ];
-            return h('section', { className: "py-24 bg-slate-50 relative" },
-                h('div', { className: "container mx-auto px-6" },
-                    h('div', { className: "grid md:grid-cols-2 gap-16 items-center" },
-                        h(motion.div, {
-                            initial: { opacity: 0, x: -50 },
-                            whileInView: { opacity: 1, x: 0 },
-                            viewport: { once: true },
-                            transition: { duration: 0.8 }
-                        },
-                            h('h2', { className: "text-4xl md:text-5xl font-bold mb-6 text-slate-900" }, 
-                                "The Owner & Manager's ", h('span', { className: "text-indigo-500" }, "Dilemma.")
-                            ),
-                            h('p', { className: "text-lg text-slate-600 leading-relaxed mb-8" }, "Great properties often fail because they rely solely on algorithms they can't control. You didn't start this business to be an employee of Airbnb."),
-                            h('div', { className: "h-1 w-20 bg-indigo-600 rounded-full" })
-                        ),
-                        h('div', { className: "space-y-6" }, points.map((point, index) => 
-                            h(motion.div, {
-                                key: index,
-                                initial: { opacity: 0, x: 50 },
-                                whileInView: { opacity: 1, x: 0 },
-                                viewport: { once: true },
-                                transition: { duration: 0.6, delay: index * 0.2 },
-                                className: "bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-indigo-50 flex items-start gap-4 group"
-                            },
-                                h('div', { className: "p-3 bg-indigo-50 text-indigo-600 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors" }, h(point.icon, { size: 24 })),
-                                h('div', null,
-                                    h('h3', { className: "text-xl font-bold text-slate-800 mb-2" }, point.title),
-                                    h('p', { className: "text-slate-500" }, point.desc)
-                                )
-                            )
-                        ))
+                ),
+                h('div', { className: "absolute bottom-0 w-full overflow-hidden leading-none" },
+                    h('svg', { className: "relative block w-full h-[60px]", viewBox: "0 0 1200 120", preserveAspectRatio: "none" },
+                        h('path', { d: "M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z", className: "fill-white" })
                     )
                 )
             );
         };
 
+        // --- THE SYSTEM (TABS) ---
         const TheSystem = () => {
+            const [activeTab, setActiveTab] = useState(0);
             const steps = [
-                { 
-                    title: "Strategic Listing Optimization", 
-                    desc: ["We conduct a deep dive analysis to define your ideal guest and uncover key improvements, optimizing your listing to achieve an average of ", h('strong', {className: "font-bold text-emerald-600"}, "28.5% increase"), " in performance."], 
-                    icon: BarChart3 
-                },
-                { 
-                    title: "Your Own Direct Booking Website", 
-                    desc: ["A commission-free direct booking engine that puts you in control of your brand, increasing your profit margin by ", h('strong', {className: "font-bold text-emerald-600"}, "up to 18%"), "."], 
-                    icon: Globe 
-                },
-                { 
-                    title: "The 5x Multi-Channel Strategy", 
-                    desc: ["We ensure you're visible on ", h('strong', {className: "font-bold text-emerald-600"}, "at least five key channels"), " where your guests are searching, turning them into a powerful funnel."], 
-                    icon: Share2 
-                },
-                { 
-                    title: "All-in-One Command Center", 
-                    desc: ["Centralize operations into one dashboard. Automate messaging and schedules, ", h('strong', {className: "font-bold text-emerald-600"}, "saving you 12+ hours"), " per week."], 
-                    icon: LayoutDashboard 
-                },
-                { 
-                    title: "Marketing Plan for Growth", 
-                    desc: ["A dynamic strategy to build your brand and increase your direct bookings by ", h('strong', {className: "font-bold text-emerald-600"}, "10-30%"), "."], 
-                    icon: Megaphone 
-                },
+                { title: "Strategic Analysis", desc: "Deep dive analysis to define your ideal guest and uncover revenue leaks.", icon: BarChart3 },
+                { title: "Direct Booking Site", desc: "Commission-free engine that puts you in control of your brand and profit.", icon: Globe },
+                { title: "5x Multi-Channel", desc: "Visibility on 5+ key channels to create a powerful funnel.", icon: Share2 },
+                { title: "Command Center", desc: "Centralized dashboard automating messages and schedules to save 12+ hrs/week.", icon: LayoutDashboard },
+                { title: "Growth Marketing", desc: "Dynamic strategy to build your brand and increase direct bookings by 10-30%.", icon: Megaphone },
             ];
 
-            return h('section', { className: "py-32 bg-white relative overflow-hidden" },
+            return h('section', { className: "py-20 bg-white relative overflow-hidden" },
                 h('div', { className: "container mx-auto px-6" },
-                    h('div', { className: "text-center mb-20" },
-                        h(motion.h2, {
-                            initial: { opacity: 0, y: 20 },
-                            whileInView: { opacity: 1, y: 0 },
-                            viewport: { once: true },
-                            className: "text-4xl md:text-6xl font-bold text-slate-900 mb-6"
-                        }, "The Fullyo System"),
-                        h('p', { className: "text-xl text-slate-500 max-w-2xl mx-auto" }, "A cohesive ecosystem designed to reclaim your time and maximize revenue.")
+                    // Mobile
+                    h('div', { className: "block lg:hidden space-y-8" },
+                        steps.map((step, index) => 
+                            h(motion.div, { key: index, initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, className: "bg-slate-50 p-6 rounded-2xl border border-slate-100" },
+                                h('div', { className: "flex items-center gap-4 mb-3" },
+                                    h('div', { className: "p-3 bg-indigo-100 text-indigo-600 rounded-xl" }, h(step.icon, { size: 20 })),
+                                    h('h3', { className: "font-bold text-slate-900" }, step.title)
+                                ),
+                                h('p', { className: "text-slate-600 text-sm" }, step.desc)
+                            )
+                        )
                     ),
-                    h('div', { className: "relative" },
-                        h('div', { className: "absolute left-1/2 top-0 bottom-0 w-px bg-slate-200 hidden md:block transform -translate-x-1/2" }),
-                        h('div', { className: "space-y-12 md:space-y-24" }, steps.map((step, index) => 
-                            h(TimelineCard, { key: index, step, index })
-                        ))
-                    )
-                )
-            );
-        };
-
-        const TimelineCard = ({ step, index }) => {
-            const isEven = index % 2 === 0;
-            return h(motion.div, {
-                initial: { opacity: 0, y: 50 },
-                whileInView: { opacity: 1, y: 0 },
-                viewport: { once: true, margin: "-100px" },
-                transition: { duration: 0.7 },
-                className: `flex flex-col md:flex-row items-center gap-8 md:gap-0 ${isEven ? 'md:flex-row-reverse' : ''}`
-            },
-                h('div', { className: "flex-1 w-full md:w-1/2 md:px-12" },
-                    h('div', { className: `flex flex-col ${isEven ? 'md:items-start' : 'md:items-end'} text-center md:text-left ${!isEven && 'md:text-right'}` },
-                        h('div', { className: "w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-200 rotate-3 hover:rotate-6 transition-transform" }, h(step.icon, { size: 32 })),
-                        h('h3', { className: "text-2xl font-bold mb-3" }, step.title),
-                        h('p', { className: "text-slate-500 leading-relaxed" }, step.desc)
-                    )
-                ),
-                h('div', { className: "hidden md:flex relative z-10 w-8 h-8 rounded-full bg-white border-4 border-indigo-600 shadow-xl items-center justify-center" },
-                    h('div', { className: "w-2 h-2 bg-indigo-600 rounded-full" })
-                ),
-                h('div', { className: "flex-1 w-full md:w-1/2 md:px-12" },
-                    h('div', { className: "bg-slate-50 p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-500 group" },
-                        h('div', { className: "h-32 rounded-xl bg-white w-full flex items-center justify-center overflow-hidden relative" },
-                            h('div', { className: "absolute inset-0 bg-grid-slate-100 opacity-20" }),
-                            h('div', { className: "text-slate-200 group-hover:text-indigo-600 transition-colors duration-500 transform group-hover:scale-110" }, h(step.icon, { size: 64 }))
+                    // Desktop
+                    h('div', { className: "hidden lg:flex flex-col items-center" },
+                        h('div', { className: "flex bg-slate-50 p-1 rounded-full border border-slate-200 mb-12 shadow-sm" },
+                            steps.map((step, index) => 
+                                h('button', {
+                                    key: index,
+                                    onClick: () => setActiveTab(index),
+                                    className: `px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${activeTab === index ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:text-indigo-600'}`
+                                }, step.title)
+                            )
+                        ),
+                        h(motion.div, {
+                            key: activeTab,
+                            initial: { opacity: 0, y: 10 },
+                            animate: { opacity: 1, y: 0 },
+                            transition: { duration: 0.3 },
+                            className: "flex w-full max-w-5xl items-center gap-12 p-8 bg-white rounded-3xl border border-slate-100 shadow-2xl"
+                        },
+                            h('div', { className: "w-5/12" },
+                                h('span', { className: "text-indigo-600 font-bold tracking-wider text-xs uppercase mb-3 block" }, `Pillar 0${activeTab + 1}`),
+                                h('h3', { className: "text-3xl font-bold text-slate-900 mb-4" }, steps[activeTab].title),
+                                h('p', { className: "text-lg text-slate-600 leading-relaxed" }, steps[activeTab].desc)
+                            ),
+                            h('div', { className: "w-7/12 bg-slate-100 rounded-2xl aspect-[4/3] flex items-center justify-center relative overflow-hidden border border-slate-200" },
+                                h('div', { className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10" }),
+                                h(steps[activeTab].icon, { size: 80, className: "text-slate-300" }),
+                                h('div', { className: "absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-lg text-center" },
+                                    h('span', { className: "text-xs font-bold text-slate-400 uppercase" }, "System Interface Preview")
+                                )
+                            )
                         )
                     )
                 )
             );
         };
 
-        // --- RESULTS SECTION (VISUAL) ---
-        const ResultsSection = ({ onOpenCase }) => {
-            const cases = [
-                { label: "Whistler Chalet", metric: "94%", sub: "Occupancy Rate", color: "bg-indigo-50" },
-                { label: "Squamish Lofts", metric: "$42k", sub: "Direct Booking Rev.", color: "bg-violet-50" },
-                { label: "Tofino Cabins", metric: "3.5x", sub: "ROAS on Ads", color: "bg-blue-50" }
+        // --- UPDATED: RESULT CARD (BRIDGE with Aggregate Stats) ---
+        const ResultCards = ({ onOpenCase }) => {
+            const aggregates = [
+                { metric: "28.5%", label: "Increase in Bookings", icon: TrendingUp, color: "bg-indigo-50", text: "text-indigo-600" },
+                { metric: "15-20%", label: "Reduction in Fees", icon: CheckCircle2, color: "bg-emerald-50", text: "text-emerald-600" },
+                { metric: "4+ Hrs", label: "Regained Weekly", icon: Clock, color: "bg-blue-50", text: "text-blue-600" }
             ];
-
-            return h('section', { className: "py-24 bg-slate-50" },
+            return h('section', { className: "py-12 bg-white" },
                 h('div', { className: "container mx-auto px-6" },
-                    h('div', { className: "text-center mb-16" },
-                        h(motion.div, {
-                            initial: { opacity: 0, y: 20 },
-                            whileInView: { opacity: 1, y: 0 },
-                            viewport: { once: true },
-                            className: "inline-block px-4 py-1 rounded-full border border-slate-200 bg-white text-sm font-medium mb-4 text-slate-500"
-                        }, "Proven Results"),
-                        h('h2', { className: "text-3xl md:text-5xl font-bold text-slate-900" }, "Websites that convert.")
-                    ),
-                    h('div', { className: "grid md:grid-cols-3 gap-8" }, cases.map((c, i) => 
-                        h(motion.div, {
-                            key: i,
-                            initial: { opacity: 0, y: 30 },
-                            whileInView: { opacity: 1, y: 0 },
-                            viewport: { once: true },
-                            transition: { delay: i * 0.1 },
-                            className: "bg-white rounded-3xl border border-slate-100 shadow-lg hover:shadow-xl transition-all overflow-hidden flex flex-col cursor-pointer",
-                            onClick: () => onOpenCase(c)
+                    h('div', { className: "grid md:grid-cols-3 gap-8" }, aggregates.map((item, i) => 
+                        h(motion.div, { 
+                            key: i, 
+                            initial: { opacity: 0, y: 30 }, 
+                            whileInView: { opacity: 1, y: 0 }, 
+                            viewport: { once: true }, 
+                            className: "bg-white rounded-3xl border border-slate-100 shadow-lg hover:shadow-xl transition-all p-8 flex items-center gap-6" 
                         },
-                            // Visual Mockup Placeholder
-                            h('div', { className: `h-48 ${c.color} relative flex items-center justify-center overflow-hidden border-b border-slate-100` },
-                                h('div', { className: "w-32 h-20 bg-white rounded-lg shadow-sm transform rotate-[-5deg] border border-slate-200 absolute top-8 left-8" }),
-                                h('div', { className: "w-40 h-24 bg-white rounded-lg shadow-md border border-slate-200 absolute top-12 left-16 flex items-center justify-center" },
-                                    h(Globe, { className: "text-slate-300", size: 32 })
-                                )
-                            ),
-                            // Metrics
-                            h('div', { className: "p-8" },
-                                h('h3', { className: "text-lg font-bold text-slate-900 mb-1" }, c.label),
-                                h('div', { className: "flex items-baseline gap-2 mt-4" },
-                                    h('span', { className: "text-4xl font-bold text-emerald-600 tracking-tight" }, c.metric),
-                                    h('span', { className: "text-sm text-slate-500 font-medium" }, c.sub)
-                                ),
-                                h('div', { className: "mt-6 flex items-center gap-2 text-indigo-600 text-sm font-semibold cursor-pointer group" },
-                                    "View Case Study",
-                                    h(ArrowRight, { size: 16, className: "group-hover:translate-x-1 transition-transform" })
-                                )
+                            h('div', { className: `p-4 rounded-2xl ${item.color} ${item.text}` }, h(item.icon, { size: 32 })),
+                            h('div', null,
+                                h('h3', { className: `text-4xl font-extrabold ${item.text} tracking-tight` }, item.metric),
+                                h('p', { className: "text-slate-500 font-medium mt-1" }, item.label)
                             )
                         )
                     ))
@@ -620,41 +454,37 @@
             );
         };
 
-        const GrowthEngine = () => {
-            return h('section', { className: "py-24 bg-slate-900 text-white overflow-hidden relative" },
-                h('div', { className: "absolute inset-0 opacity-10" }),
-                h('div', { className: "container mx-auto px-6 relative z-10" },
-                    h('div', { className: "flex flex-col lg:flex-row gap-16 items-center" },
-                        h('div', { className: "lg:w-1/2" },
-                            h('div', { className: "inline-block px-4 py-1 rounded-full border border-slate-700 bg-slate-800/50 text-sm font-medium mb-6" }, "The Accelerator"),
-                            h('h2', { className: "text-4xl md:text-5xl font-bold mb-6" }, "Social Media &", h('br'), h('span', { className: "text-indigo-400" }, "Paid Advertising.")),
-                            h('p', { className: "text-slate-400 text-lg mb-8 leading-relaxed" }, "Organic reach is good. Paid amplification is better. We manage your social presence and run high-ROAS ad campaigns to fill your calendar months in advance."),
-                            h('ul', { className: "space-y-4" }, ['Facebook & Instagram Ads', 'Content Creation', 'Influencer Partnerships'].map((item, i) => 
-                                h(motion.li, {
-                                    key: i,
-                                    initial: { opacity: 0, x: -20 },
-                                    whileInView: { opacity: 1, x: 0 },
-                                    transition: { delay: i * 0.1 },
-                                    className: "flex items-center gap-3"
-                                },
-                                    h(CheckCircle2, { className: "text-indigo-400", size: 20 }),
-                                    h('span', null, item)
-                                )
-                            ))
+        // --- UPDATED: COMPARISON SECTION (TABLE LAYOUT) ---
+        const ComparisonSection = () => {
+            const comparison = [
+                { feature: "Setup Time", diy: "100+ hours of frustration", fullyo: "Zero. We handle it all." },
+                { feature: "Tech Stack", diy: "Fragmented, expensive subscriptions", fullyo: "Unified, Integrated System" },
+                { feature: "Expertise", diy: "Learning by trial & error", fullyo: "Proven Agency Strategy" },
+                { feature: "Results", diy: "Unpredictable", fullyo: "28% Avg. Growth" }
+            ];
+
+            return h('section', { className: "py-24 bg-slate-50 border-y border-slate-100" },
+                h('div', { className: "container mx-auto px-6 max-w-5xl" },
+                    h('div', { className: "text-center mb-16" },
+                        h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "The Professional Advantage"),
+                        h('p', { className: "text-slate-500" }, "The cost of doing it yourself vs. partnering with experts.")
+                    ),
+                    h('div', { className: "bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden" },
+                        h('div', { className: "grid grid-cols-3 bg-slate-900 text-white p-6 font-bold uppercase tracking-wider text-sm" },
+                            h('div', null, ""),
+                            h('div', { className: "text-center opacity-70" }, "DIY (The Hard Way)"),
+                            h('div', { className: "text-center text-emerald-400" }, "With Fullyo")
                         ),
-                        h('div', { className: "lg:w-1/2 w-full" },
-                            h(motion.div, {
-                                initial: { scale: 0.8, opacity: 0 },
-                                whileInView: { scale: 1, opacity: 1 },
-                                viewport: { once: true },
-                                className: "relative aspect-square rounded-3xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 p-8 shadow-2xl flex items-center justify-center"
-                            },
-                                h('div', { className: "absolute inset-0 bg-indigo-500/10 rounded-3xl blur-2xl" }),
-                                h('div', { className: "absolute inset-0 flex items-center justify-center" },
-                                    h('div', { className: "bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-center" },
-                                        h('p', { className: "text-sm text-slate-300 uppercase tracking-wider mb-2" }, "Return on Ad Spend"),
-                                        h('p', { className: "text-5xl font-bold text-white" }, h('span', { className: "text-emerald-400" }, "4.8x"))
-                                    )
+                        comparison.map((row, i) => 
+                            h('div', { key: i, className: "grid grid-cols-3 p-8 border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors items-center" },
+                                h('div', { className: "font-bold text-slate-900 flex items-center" }, row.feature),
+                                h('div', { className: "text-center text-slate-500 flex items-center justify-center gap-2" }, 
+                                    h(X, { size: 18, className: "text-red-400" }),
+                                    row.diy
+                                ),
+                                h('div', { className: "text-center font-bold text-emerald-600 flex items-center justify-center gap-2" }, 
+                                    h(Check, { size: 18, className: "text-emerald-500" }),
+                                    row.fullyo
                                 )
                             )
                         )
@@ -663,73 +493,35 @@
             );
         };
 
-        // --- BRAND SCROLL SECTION ---
+        // --- VISUAL BREAK SECTION ---
+        const VisualBreakSection = () => {
+            return h('section', { className: "py-32 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 text-white" },
+                h(CircleBackground),
+                h('div', { className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10" }),
+                h('div', { className: "container mx-auto px-6 relative z-10 text-center" },
+                    h('h2', { className: "text-4xl md:text-6xl font-bold mb-6" }, "Total Control. Zero Headaches."),
+                    h('p', { className: "text-xl text-indigo-200 max-w-2xl mx-auto" }, "We build the engine. You drive the car. Or sit in the passenger seat. It's entirely up to you.")
+                )
+            );
+        };
+
+        // --- CONSOLIDATED PROOF STACK ---
+        const ProofStack = ({ onOpenCase }) => {
+            return h('div', null,
+                h(TestimonialsSection),
+                h(BrandMarquee)
+            );
+        };
+
+        // ... (Testimonials, Marquee, FAQ, Booking, Footer remain the same) ...
+
         const BrandMarquee = () => {
-            // Simulate brands with text for now, replace with Logos
-            const brands = [
-                "Summit Stays", "Coastal Retreats", "Urban Host Co.", "Cabin & Co.", "Alpine Lodging", "Sea to Sky Rentals", "Boutique Homes", "Escape Properties"
-            ];
-            
-            return h('section', { className: "py-10 bg-white border-b border-slate-100 overflow-hidden" },
+            const brands = ["Summit Stays", "Coastal Retreats", "Urban Host Co.", "Cabin & Co.", "Alpine Lodging", "Sea to Sky Rentals", "Boutique Homes", "Escape Properties"];
+            return h('section', { className: "py-16 bg-white border-b border-slate-100 overflow-hidden" },
                 h('p', { className: "text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-8 font-display" }, "Trusted by Leading Owners & Managers"),
                 h('div', { className: "relative flex overflow-x-hidden group" },
                     h('div', { className: "animate-infinite-scroll whitespace-nowrap flex gap-16 px-8" },
-                        // Double the list to create infinite loop effect
-                        [...brands, ...brands].map((brand, i) => 
-                            h('div', { key: i, className: "text-xl font-display italic text-slate-400 font-bold whitespace-nowrap" }, brand)
-                        )
-                    )
-                )
-            );
-        };
-
-        // --- FAQ SECTION ---
-        const FAQSection = () => {
-            const faqs = [
-                { q: "Do you work with individual owners or just property managers?", a: "We work with both. Our system is designed to scale, whether you have one high-performing property or 50+ listings. We tailor the strategy to your specific goals." },
-                { q: "Does this replace my Airbnb listing?", a: "No, it enhances it. We use a multi-channel strategy where Airbnb is just one source. We build your direct booking engine to capture repeat guests and save on fees, while optimizing OTAs for visibility." },
-                { q: "How quickly can we launch?", a: "Our onboarding is streamlined. We typically have your Strategic Analysis ready in 5 days and your full Direct Booking ecosystem live within 3-4 weeks." },
-                { q: "Do I need to switch my current PMS?", a: "Not necessarily. We integrate with most major Property Management Systems. If you don't have one, or yours is holding you back, we will recommend and implement the best-in-class solution for your needs." }
-            ];
-
-            const [openIndex, setOpenIndex] = useState(null);
-
-            return h('section', { className: "py-24 bg-slate-50" },
-                h('div', { className: "container mx-auto px-6 max-w-3xl" },
-                    h('div', { className: "text-center mb-16" },
-                        h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "Common Questions"),
-                        h('p', { className: "text-slate-500" }, "Everything you need to know about the Fullyo system.")
-                    ),
-                    h('div', { className: "space-y-4" },
-                        faqs.map((faq, index) => {
-                            const isOpen = openIndex === index;
-                            return h(motion.div, {
-                                key: index,
-                                initial: false,
-                                className: "bg-white rounded-2xl border border-slate-200 overflow-hidden"
-                            },
-                                h('button', {
-                                    onClick: () => setOpenIndex(isOpen ? null : index),
-                                    className: "w-full flex items-center justify-between p-6 text-left"
-                                },
-                                    h('span', { className: "font-bold text-slate-900 text-lg" }, faq.q),
-                                    h(motion.div, {
-                                        animate: { rotate: isOpen ? 180 : 0 },
-                                        transition: { duration: 0.2 }
-                                    }, h(ChevronDown, { className: "text-indigo-500" }))
-                                ),
-                                h(AnimatePresence, {},
-                                    isOpen && h(motion.div, {
-                                        initial: { height: 0, opacity: 0 },
-                                        animate: { height: "auto", opacity: 1 },
-                                        exit: { height: 0, opacity: 0 },
-                                        transition: { duration: 0.3 }
-                                    },
-                                        h('div', { className: "px-6 pb-6 text-slate-600 leading-relaxed" }, faq.a)
-                                    )
-                                )
-                            )
-                        })
+                        [...brands, ...brands].map((brand, i) => h('div', { key: i, className: "text-2xl font-serif italic text-slate-300 font-bold whitespace-nowrap" }, brand))
                     )
                 )
             );
@@ -743,30 +535,16 @@
             ];
             return h('section', { className: "py-24 bg-white" },
                 h('div', { className: "container mx-auto px-6 max-w-6xl" },
+                    h('h3', { className: "text-2xl font-bold text-center mb-12 text-slate-900" }, "What Our Partners Say"),
                     h('div', { className: "grid md:grid-cols-3 gap-8" }, testimonials.map((t, i) => 
-                        h(motion.div, {
-                            key: i,
-                            initial: { opacity: 0, y: 20 },
-                            whileInView: { opacity: 1, y: 0 },
-                            viewport: { once: true },
-                            transition: { delay: i * 0.2 },
-                            className: "bg-slate-50 p-8 rounded-3xl relative flex flex-col h-full"
-                        },
+                        h(motion.div, { key: i, initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "bg-slate-50 p-8 rounded-3xl relative flex flex-col h-full" },
                             h(Quote, { className: "absolute top-8 left-8 text-slate-200 w-12 h-12 -z-0" }),
                             h('div', { className: "relative z-10 flex-1 flex flex-col" },
-                                h('div', { className: "flex gap-1 mb-6 text-yellow-400" }, 
-                                    Array.from({length: t.stars}).map((_, i) => h(Star, { key: i, size: 18, fill: "currentColor" }))
-                                ),
+                                h('div', { className: "flex gap-1 mb-6 text-yellow-400" }, Array.from({length: t.stars}).map((_, i) => h(Star, { key: i, size: 18, fill: "currentColor" }))),
                                 h('p', { className: "text-lg text-slate-700 font-medium leading-relaxed mb-8 flex-1" }, `"${t.quote}"`),
                                 h('div', { className: "flex items-center gap-4 mt-auto" },
-                                    // NEW: Avatar Placeholder
-                                    h('div', { className: `w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-indigo-600 flex-shrink-0` },
-                                        h(User, { size: 24 })
-                                    ),
-                                    h('div', null,
-                                        h('div', { className: "font-bold text-slate-900 text-sm" }, t.author),
-                                        h('div', { className: "text-slate-500 text-xs" }, t.role)
-                                    )
+                                    h('div', { className: `w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-indigo-600 flex-shrink-0` }, h(User, { size: 24 })),
+                                    h('div', null, h('div', { className: "font-bold text-slate-900 text-sm" }, t.author), h('div', { className: "text-slate-500 text-xs" }, t.role))
                                 )
                             )
                         )
@@ -775,131 +553,76 @@
             );
         };
 
-        const BookingSection = () => {
-            // Compact Process Roadmap Content
-            const steps = ["Strategy Call", "Custom Plan", "System Build", "Growth"];
+        const FAQSection = () => {
+            const faqs = [
+                { q: "Do you work with individual owners or just property managers?", a: "We work with both. Our system is designed to scale, whether you have one high-performing property or 50+ listings. We tailor the strategy to your specific goals." },
+                { q: "Does this replace my Airbnb listing?", a: "No, it enhances it. We use a multi-channel strategy where Airbnb is just one source. We build your direct booking engine to capture repeat guests and save on fees, while optimizing OTAs for visibility." },
+                { q: "How quickly can we launch?", a: "Our onboarding is streamlined. We typically have your Strategic Analysis ready in 5 days and your full Direct Booking ecosystem live within 3-4 weeks." },
+                { q: "Do I need to switch my current PMS?", a: "Not necessarily. We integrate with most major Property Management Systems. If you don't have one, or yours is holding you back, we will recommend and implement the best-in-class solution for your needs." }
+            ];
+            const [openIndex, setOpenIndex] = useState(null);
+            return h('section', { className: "py-24 bg-slate-50" },
+                h('div', { className: "container mx-auto px-6 max-w-3xl" },
+                    h('div', { className: "text-center mb-16" }, h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "Common Questions"), h('p', { className: "text-slate-500" }, "Everything you need to know about the Fullyo system.")),
+                    h('div', { className: "space-y-4" }, faqs.map((faq, index) => {
+                        const isOpen = openIndex === index;
+                        return h(motion.div, { key: index, initial: false, className: "bg-white rounded-2xl border border-slate-200 overflow-hidden" },
+                            h('button', { onClick: () => setOpenIndex(isOpen ? null : index), className: "w-full flex items-center justify-between p-6 text-left" },
+                                h('span', { className: "font-bold text-slate-900 text-lg" }, faq.q),
+                                h(motion.div, { animate: { rotate: isOpen ? 180 : 0 }, transition: { duration: 0.2 } }, h(ChevronDown, { className: "text-indigo-500" }))
+                            ),
+                            h(AnimatePresence, {}, isOpen && h(motion.div, { initial: { height: 0, opacity: 0 }, animate: { height: "auto", opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.3 } }, h('div', { className: "px-6 pb-6 text-slate-600 leading-relaxed" }, faq.a)))
+                        )
+                    }))
+                )
+            );
+        };
 
+        const BookingSection = () => {
+            const steps = ["Strategy Call", "Custom Plan", "System Build", "Growth"];
             return h('section', { id: "booking-section", className: "py-24 bg-white border-t border-slate-100" },
                 h('div', { className: "container mx-auto px-6 max-w-4xl text-center" },
-                    h(motion.div, {
-                        initial: { opacity: 0, y: 30 },
-                        whileInView: { opacity: 1, y: 0 },
-                        viewport: { once: true },
-                        className: "bg-slate-900 rounded-3xl p-12 md:p-20 shadow-2xl relative overflow-hidden"
-                    },
+                    h(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 rounded-3xl p-12 md:p-20 shadow-2xl relative overflow-hidden text-white" },
+                        h(CircleBackground),
                         h('div', { className: "absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:16px_16px]" }),
-                        
                         h('div', { className: "relative z-10" },
                             h('h2', { className: "text-4xl md:text-5xl font-bold text-white mb-6" }, "Ready to Scale Your Business?"),
-                            h('p', { className: "text-xl text-slate-300 mb-10 max-w-2xl mx-auto" }, "Stop trading time for bookings. Join the owners and managers scaling their revenue with the Fullyo system."),
-                            
-                            // COMPACT ROADMAP ROW
+                            h('p', { className: "text-xl text-indigo-200 mb-10 max-w-2xl mx-auto" }, "Stop trading time for bookings. Join the owners and managers scaling their revenue with the Fullyo system."),
                             h('div', { className: "flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-10 text-sm md:text-base text-indigo-200 font-medium" },
                                 steps.map((step, i) => [
-                                    h('span', { key: i, className: "flex items-center gap-2" }, 
-                                        h('span', { className: "bg-indigo-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" }, i + 1),
-                                        step
-                                    ),
-                                    i < steps.length - 1 && h(ArrowRight, { key: `arrow-${i}`, size: 14, className: "text-slate-600" })
+                                    h('span', { key: i, className: "flex items-center gap-2" }, h('span', { className: "bg-white text-indigo-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center" }, i + 1), step),
+                                    i < steps.length - 1 && h(ArrowRight, { key: `arrow-${i}`, size: 14, className: "text-indigo-400" })
                                 ])
                             ),
-
-                            h('button', { 
-                                className: "group relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-full font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 transition-all inline-flex items-center gap-2"
-                            }, 
-                                "Book Your Strategy Call",
-                                h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform" })
-                            ),
-                            h('p', { className: "mt-6 text-sm text-slate-500" }, "Let's see if we can help. Just an honest conversation and real feedback.")
+                            h('button', { className: "group relative px-8 py-4 bg-white text-indigo-900 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-indigo-500/30 transition-all inline-flex items-center gap-2" }, "Book Your Strategy Call", h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform text-indigo-600" })),
+                            h('p', { className: "mt-6 text-sm text-indigo-200" }, "Let's see if we can help. Just an honest conversation and real feedback.")
                         )
                     )
                 )
             );
         };
 
-        // --- UPDATED FOOTER ---
+        // ... (Footer remains the same) ...
         const Footer = ({ onNavigate }) => {
             return h('footer', { className: "bg-slate-50 pt-20 pb-10 border-t border-slate-200" },
                 h('div', { className: "container mx-auto px-6" },
-                    
-                    // Trust Strip
                     h('div', { className: "flex flex-wrap justify-center gap-8 mb-20 opacity-40 grayscale" },
                         h('div', { className: "font-bold text-xl font-display" }, "Airbnb"),
                         h('div', { className: "font-bold text-xl font-display" }, "VRBO"),
                         h('div', { className: "font-bold text-xl font-display" }, "Booking.com"),
                         h('div', { className: "font-bold text-xl font-display" }, "Expedia")
                     ),
-
                     h('div', { className: "grid md:grid-cols-4 gap-12 mb-16" },
-                        // Brand Column
                         h('div', null,
-                        // Simplified Logo in Footer
-                            h('div', { className: "text-3xl font-bold tracking-tighter mb-6 text-slate-900" },
-                                "Fullyo."
-                            ),
+                            h('div', { className: "text-3xl font-bold tracking-tighter mb-6 text-slate-900" }, "Fullyo."),
                             h('p', { className: "text-slate-500 text-sm leading-relaxed mb-6" }, "The premier growth partner for owners and managers who value their time."),
-                            h('div', { className: "flex gap-4 text-slate-400" },
-                                h(Mail, { size: 20, className: "hover:text-indigo-600 cursor-pointer transition-colors" }),
-                                h(MapPin, { size: 20, className: "hover:text-indigo-600 cursor-pointer transition-colors" })
-                            )
+                            h('div', { className: "flex gap-4 text-slate-400" }, h(Mail, { size: 20 }), h(MapPin, { size: 20 }))
                         ),
-                        
-                        // Services Column (SEO) - UPDATED TO MATCH 5 PILLARS
-                        h('div', null,
-                            h('h4', { className: "font-bold text-slate-900 mb-6" }, "Solutions"),
-                            h('ul', { className: "space-y-4 text-sm text-slate-500" },
-                                h('li', { 
-                                    onClick: () => onNavigate('service-strategic-analysis'),
-                                    className: "hover:text-indigo-600 cursor-pointer transition-colors" 
-                                }, "Strategic Listing Optimization"),
-                                h('li', { 
-                                    onClick: () => onNavigate('service-direct-booking'),
-                                    className: "hover:text-indigo-600 cursor-pointer transition-colors"
-                                }, "Direct Booking Websites"),
-                                h('li', { 
-                                    onClick: () => onNavigate('service-multi-channel'),
-                                    className: "hover:text-indigo-600 cursor-pointer transition-colors" 
-                                }, "Multi-Channel Distribution"),
-                                h('li', { 
-                                    onClick: () => onNavigate('service-pms-integration'),
-                                    className: "hover:text-indigo-600 cursor-pointer transition-colors" 
-                                }, "PMS Integration"),
-                                h('li', { 
-                                    onClick: () => onNavigate('service-growth-marketing'),
-                                    className: "hover:text-indigo-600 cursor-pointer transition-colors" 
-                                }, "Growth Marketing")
-                            )
-                        ),
-
-                        // Company Column
-                        h('div', null,
-                            h('h4', { className: "font-bold text-slate-900 mb-6" }, "Company"),
-                            h('ul', { className: "space-y-4 text-sm text-slate-500" },
-                                h('li', { className: "hover:text-indigo-600 cursor-pointer transition-colors" }, "Case Studies"),
-                                h('li', { className: "hover:text-indigo-600 cursor-pointer transition-colors" }, "About Us"),
-                                h('li', { className: "hover:text-indigo-600 cursor-pointer transition-colors" }, "Careers"),
-                                h('li', { className: "hover:text-indigo-600 cursor-pointer transition-colors" }, "Contact")
-                            )
-                        ),
-
-                        // Contact/Legal Column
-                        h('div', null,
-                            h('h4', { className: "font-bold text-slate-900 mb-6" }, "Get in Touch"),
-                            h('ul', { className: "space-y-4 text-sm text-slate-500" },
-                                h('li', { className: "flex items-center gap-2" }, h(Mail, { size: 16 }), "hello@fullyo.com"),
-                                h('li', { className: "flex items-center gap-2" }, h(Phone, { size: 16 }), "+1 (555) 123-4567"),
-                                h('li', { className: "flex items-center gap-2" }, h(MapPin, { size: 16 }), "Squamish, BC"),
-                                h('li', { className: "pt-4 flex items-center gap-2 text-slate-400" }, h(ShieldCheck, { size: 16 }), "Secure & Private")
-                            )
-                        )
+                        h('div', null, h('h4', { className: "font-bold text-slate-900 mb-6" }, "Solutions"), h('ul', { className: "space-y-4 text-sm text-slate-500" }, Object.keys(servicesData).map(k => h('li', { key: k, onClick: () => onNavigate(`service-${k}`), className: "hover:text-indigo-600 cursor-pointer transition-colors" }, servicesData[k].title)))),
+                        h('div', null, h('h4', { className: "font-bold text-slate-900 mb-6" }, "Company"), h('ul', { className: "space-y-4 text-sm text-slate-500" }, ["Case Studies", "About Us", "Careers", "Contact"].map(i => h('li', { key: i, className: "hover:text-indigo-600 cursor-pointer" }, i)))),
+                        h('div', null, h('h4', { className: "font-bold text-slate-900 mb-6" }, "Get in Touch"), h('ul', { className: "space-y-4 text-sm text-slate-500" }, [h('li', { className: "flex items-center gap-2" }, h(Mail, { size: 16 }), "hello@fullyo.com"), h('li', { className: "flex items-center gap-2" }, h(Phone, { size: 16 }), "+1 (555) 123-4567")]))
                     ),
-                    h('div', { className: "pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center opacity-60 text-sm" },
-                        h('p', null, "© 2024 Fullyo Inc. All rights reserved."),
-                        h('div', { className: "flex gap-6 mt-4 md:mt-0" },
-                            h('span', { className: "cursor-pointer hover:text-slate-900" }, "Privacy Policy"),
-                            h('span', { className: "cursor-pointer hover:text-slate-900" }, "Terms of Service")
-                        )
-                    )
+                    h('div', { className: "pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center opacity-60 text-sm" }, h('p', null, "© 2024 Fullyo Inc. All rights reserved."), h('div', { className: "flex gap-6 mt-4 md:mt-0" }, h('span', null, "Privacy Policy"), h('span', null, "Terms of Service")))
                 )
             );
         };
