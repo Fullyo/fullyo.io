@@ -28,6 +28,7 @@
                         'infinite-scroll': 'infinite-scroll 60s linear infinite',
                         'float': 'float 8s ease-in-out infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
                     },
                     keyframes: {
                         'infinite-scroll': {
@@ -37,6 +38,10 @@
                         'float': {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
                 }
@@ -74,14 +79,14 @@
         import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
         import { 
             BarChart3, Globe, Share2, LayoutDashboard, Megaphone, Calendar, 
-            ArrowRight, TrendingUp, Clock, CheckCircle2, Star, Quote, ChevronLeft,
+            ArrowRight, TrendingUp, Clock, CheckCircle2, Star, Quote, ChevronLeft, ChevronRight,
             Mail, MapPin, Phone, ShieldCheck, X, User, ChevronDown, Plus, Minus, 
-            AlertCircle, Check, Zap, Target, Layers, AlertTriangle, Activity, Rocket, Heart, Users
+            AlertCircle, Check, Zap, Target, Layers, AlertTriangle, Activity, Rocket, Heart, Users, Briefcase
         } from 'lucide-react';
 
         const h = createElement;
 
-        // --- CONTENT DATABASE FOR SERVICE PAGES ---
+        // --- 1. DATA CONSTANTS ---
         const servicesData = {
             'strategic-analysis': {
                 pillar: "Fullyo Pillar #1",
@@ -155,40 +160,7 @@
             }
         };
 
-        // --- APP ENTRY POINT ---
-        const FullyoApp = () => {
-            const [currentRoute, setCurrentRoute] = useState('home');
-
-            const navigateTo = (route) => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                setCurrentRoute(route);
-            };
-
-            // Route Logic
-            let PageComponent;
-            let pageKey = null;
-
-            if (currentRoute === 'home') {
-                PageComponent = MainFunnel;
-            } else if (currentRoute === 'about') {
-                PageComponent = AboutPage;
-            } else if (currentRoute.startsWith('service-')) {
-                PageComponent = ServicePage;
-                pageKey = currentRoute.replace('service-', '');
-            } else {
-                PageComponent = MainFunnel; // Fallback
-            }
-
-            return h('div', { className: "min-h-screen bg-white text-slate-900 font-sans overflow-x-hidden" },
-                h(AnimatePresence, { mode: "wait" },
-                    h(PageComponent, { 
-                        key: currentRoute, 
-                        serviceKey: pageKey, 
-                        onNavigate: navigateTo 
-                    })
-                )
-            );
-        };
+        // --- 2. BASE COMPONENTS ---
 
         const CircleBackground = () => {
             return h('div', { className: "absolute inset-0 overflow-hidden pointer-events-none" },
@@ -199,177 +171,412 @@
             );
         };
 
-        // --- NEW: ABOUT / TEAM PAGE ---
-        const AboutPage = ({ onNavigate }) => {
-            const teamMembers = [
-                { name: "Alysia", role: "Business Development", desc: "Leading partner relationships and identifying strategic opportunities for portfolio growth.", icon: Target },
-                { name: "Jenn", role: "PMS Integration Specialist", desc: "Architecting the central nervous system of your operations for seamless automation.", icon: Layers },
-                { name: "Lola", role: "Web Development Lead", desc: "Building high-speed, direct booking engines that convert visitors into guests.", icon: Globe },
-                { name: "Azim", role: "Paid Media Specialist", desc: "Expert management of Google & Facebook campaigns to drive targeted traffic.", icon: Megaphone },
-                { name: "Dave", role: "Content & Video Strategy", desc: "Crafting viral-ready video content and social strategies to build your brand authority.", icon: Share2 }
-            ];
-
-            return h(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } },
-                // Nav
-                h('nav', { className: "border-b border-slate-100 py-4 bg-white sticky top-0 z-50" },
-                    h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
-                        h('div', { onClick: () => onNavigate('home'), className: "flex items-center gap-2 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors group" },
-                            h(ChevronLeft, { size: 20, className: "group-hover:-translate-x-1 transition-transform" }),
-                            h('span', { className: "font-medium text-sm" }, "Back to Home")
-                        ),
-                        h('button', { onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); }, className: "px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-colors" }, "Book Strategy Call")
-                    )
-                ),
-                // Hero
-                h('div', { className: "relative bg-slate-50 py-24 overflow-hidden" },
-                    h('div', { className: "container mx-auto px-6 max-w-4xl relative z-10 text-center" },
-                        h('span', { className: "text-indigo-600 font-bold tracking-widest text-xs uppercase mb-4 block" }, "Our Philosophy"),
-                        h('h1', { className: "text-4xl md:text-6xl font-extrabold text-slate-900 mb-6" }, "Built by Hosts, For Hosts."),
-                        h('p', { className: "text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto" }, "We aren't just a software company. We are a concierge agency dedicated to restoring sanity to property management.")
-                    )
-                ),
-                // Founder Section
-                h('div', { className: "py-24 bg-white border-b border-slate-100" },
-                    h('div', { className: "container mx-auto px-6 max-w-5xl" },
-                        h('div', { className: "flex flex-col md:flex-row gap-16 items-center" },
-                            // Founder Image Placeholder
-                            h('div', { className: "w-full md:w-5/12" },
-                                h('div', { className: "aspect-[4/5] bg-slate-200 rounded-3xl overflow-hidden relative shadow-2xl" },
-                                    // Placeholder visual
-                                    h('div', { className: "absolute inset-0 bg-gradient-to-tr from-slate-300 to-slate-100 flex items-center justify-center text-slate-400" },
-                                        h(User, { size: 64, strokeWidth: 1 })
-                                    ),
-                                    h('div', { className: "absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-8" },
-                                        h('p', { className: "text-white font-bold text-xl" }, "Your Name"),
-                                        h('p', { className: "text-slate-200 text-sm" }, "Founder & Head of Strategy")
-                                    )
-                                )
-                            ),
-                            // Founder Bio
-                            h('div', { className: "w-full md:w-7/12" },
-                                h('h2', { className: "text-3xl font-bold text-slate-900 mb-6" }, "A Note from the Founder"),
-                                h('div', { className: "space-y-6 text-lg text-slate-600 leading-relaxed" },
-                                    h('p', null, "I started Fullyo because I saw too many property owners stuck in the \"Host Trap.\" They were spending all day messaging guests, syncing calendars manually, and worrying about the next booking."),
-                                    h('p', null, "My goal wasn't just to build a tool, but to build a partner."),
-                                    h('p', null, "We operate with a simple rule: ", h('strong', { className: "text-indigo-600" }, "High Concierge Care."), " This means that while we use advanced automation and enterprise systems, we never lose the human touch. When you partner with us, you aren't just getting software—you are getting a dedicated team obsessed with your growth."),
-                                    h('p', null, "I still personally oversee the strategy for every new partner we onboard to ensure we deliver on that promise.")
-                                ),
-                                h('div', { className: "mt-8 pt-8 border-t border-slate-100 flex gap-12" },
-                                    h('div', null,
-                                        h('p', { className: "text-3xl font-bold text-slate-900" }, "750+"),
-                                        h('p', { className: "text-sm text-slate-500 uppercase tracking-wider" }, "Properties")
-                                    ),
-                                    h('div', null,
-                                        h('p', { className: "text-3xl font-bold text-slate-900" }, "$15M+"),
-                                        h('p', { className: "text-sm text-slate-500 uppercase tracking-wider" }, "Revenue Generated")
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
+        const HeroSection = ({ onCta }) => {
+            const { scrollY } = useScroll();
+            return h('section', { className: "relative min-h-screen flex items-center justify-center pt-20 pb-20 bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 text-white z-20 shadow-2xl" },
+                h(CircleBackground),
+                h('div', { className: "absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-white/5 pointer-events-none" }),
                 
-                // NEW: TEAM GRID SECTION
-                h('div', { className: "py-24 bg-white" },
-                    h('div', { className: "container mx-auto px-6 max-w-6xl" },
-                        h('div', { className: "text-center mb-16" },
-                            h('h2', { className: "text-3xl font-bold text-slate-900 mb-4" }, "The Leadership Team"),
-                            h('p', { className: "text-slate-500 max-w-2xl mx-auto" }, "Your property is in good hands. Meet the experts leading your growth strategy.")
-                        ),
-                        h('div', { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-8" },
-                            teamMembers.map((member, i) => 
-                                h('div', { key: i, className: "group p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-100 hover:shadow-xl transition-all duration-300" },
-                                    h('div', { className: "flex items-center gap-4 mb-6" },
-                                        h('div', { className: "w-16 h-16 rounded-full bg-slate-200 overflow-hidden flex items-center justify-center text-slate-400 group-hover:scale-105 transition-transform" },
-                                             h(User, { size: 32 })
-                                        ),
-                                        h('div', null,
-                                            h('h4', { className: "font-bold text-slate-900" }, member.name),
-                                            h('span', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wide" }, member.role)
-                                        )
-                                    ),
-                                    h('p', { className: "text-slate-600 text-sm leading-relaxed" }, member.desc)
-                                )
-                            ),
-                            h('div', { className: "p-6 rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-center opacity-60 hover:opacity-100 hover:border-indigo-300 transition-all cursor-pointer" },
-                                h(Users, { size: 32, className: "text-slate-400 mb-3" }),
-                                h('h4', { className: "font-bold text-slate-900" }, "The Specialists"),
-                                h('p', { className: "text-xs text-slate-500 mt-1" }, "+12 Support & Tech Staff")
+                h('div', { className: "container mx-auto px-6 relative z-10 text-center max-w-5xl" },
+                    h(motion.div, {
+                        initial: { opacity: 0, y: 30 },
+                        animate: { opacity: 1, y: 0 },
+                        transition: { duration: 0.8 },
+                        className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-8 backdrop-blur-sm"
+                    },
+                        h('span', { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
+                        h('span', { className: "text-xs font-semibold uppercase tracking-widest text-white" }, "Agency for Property Growth")
+                    ),
+                    h(motion.h1, {
+                        initial: { opacity: 0, y: 50 },
+                        animate: { opacity: 1, y: 0 },
+                        transition: { duration: 0.8, delay: 0.2 },
+                        className: "text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.1]"
+                    },
+                        "Focus on your guests, ", h('br'),
+                        h('span', { className: "text-indigo-200" }, "we automate the rest.")
+                    ),
+                    h(motion.p, {
+                        initial: { opacity: 0 },
+                        animate: { opacity: 1 },
+                        transition: { duration: 0.8, delay: 0.4 },
+                        className: "text-lg md:text-2xl text-slate-200 max-w-3xl mx-auto mb-12 leading-relaxed font-light"
+                    }, "We implement our proprietary 5-part system to maximize direct bookings. We handle the tech and marketing setup, empowering you to run efficient operations with total control."),
+                    h(motion.div, {
+                        initial: { opacity: 0, scale: 0.9 },
+                        animate: { opacity: 1, scale: 1 },
+                        transition: { duration: 0.5, delay: 0.6 }
+                    },
+                        h('button', { onClick: onCta, className: "group relative px-10 py-5 bg-white text-indigo-900 rounded-full font-bold text-lg overflow-hidden shadow-2xl hover:shadow-indigo-500/50 transition-all hover:-translate-y-1" },
+                            h('span', { className: "relative flex items-center gap-3" }, 
+                                "Book Your Strategy Call", 
+                                h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform text-indigo-600" })
                             )
                         )
                     )
-                ),
-
-                // Values / Concierge Section
-                h('div', { className: "py-24 bg-slate-900 text-white" },
-                    h('div', { className: "container mx-auto px-6 max-w-4xl text-center" },
-                        h(Heart, { size: 48, className: "mx-auto text-pink-500 mb-8" }),
-                        h('h2', { className: "text-3xl md:text-5xl font-bold mb-8" }, "High Tech. High Touch."),
-                        h('p', { className: "text-xl text-slate-300 leading-relaxed mb-12" }, "Most agencies try to automate everything and disappear. We use automation to free up our time so we can actually talk to you."),
-                        h('div', { className: "grid md:grid-cols-3 gap-8 text-left" },
-                            [
-                                { title: "Strategy First", desc: "We don't just 'turn on ads.' We build a custom revenue blueprint for your specific property type." },
-                                { title: "Concierge Support", desc: "You have direct access to our team. No ticketing systems where requests go to die." },
-                                { title: "Total Transparency", desc: "You see what we see. Real-time reporting on bookings, revenue, and ad spend." }
-                            ].map((v, i) => 
-                                h('div', { key: i, className: "bg-white/5 p-6 rounded-2xl border border-white/10" },
-                                    h('h3', { className: "font-bold text-lg mb-2" }, v.title),
-                                    h('p', { className: "text-slate-400 text-sm" }, v.desc)
-                                )
-                            )
-                        )
-                    )
-                ),
-                h(Footer, { onNavigate })
-            );
-        };
-
-
-        const MainFunnel = ({ onNavigate }) => {
-            const [isScrolled, setIsScrolled] = useState(false);
-            const [activeCaseStudy, setActiveCaseStudy] = useState(null);
-
-            useEffect(() => {
-                const handleScroll = () => setIsScrolled(window.scrollY > 50);
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
-
-            const scrollToBooking = () => {
-                const element = document.getElementById('booking-section');
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-            };
-
-            return h(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } },
-                h('nav', { className: `fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-indigo-900/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}` },
-                    h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
-                        h('div', { 
-                            className: "text-3xl font-extrabold tracking-tighter cursor-pointer text-white hover:opacity-80 transition-opacity", 
-                            onClick: () => window.scrollTo(0,0) 
-                        }, "Fullyo."),
-                        h('button', { onClick: scrollToBooking, className: "hidden md:flex items-center gap-2 px-6 py-2.5 bg-white text-indigo-900 rounded-full font-medium text-sm hover:bg-indigo-50 transition-all hover:scale-105 active:scale-95 shadow-lg" }, "Partner With Us")
-                    )
-                ),
-                h(HeroSection, { onCta: scrollToBooking }),
-                h(TheSystem), 
-                h(ResultCards, { onOpenCase: setActiveCaseStudy }), 
-                h(ProfessionalAdvantageSection),
-                h(VisualBreakSection),
-                h(ProofStack), 
-                h(FAQSection),
-                h(BookingSection),
-                h(Footer, { onNavigate }),
-                
-                h(AnimatePresence, {},
-                    activeCaseStudy && h(CaseStudyModal, { 
-                        key: 'modal', 
-                        data: activeCaseStudy, 
-                        onClose: () => setActiveCaseStudy(null),
-                        onBook: () => { setActiveCaseStudy(null); setTimeout(scrollToBooking, 300); }
-                    })
                 )
             );
         };
+
+        const TheSystem = () => {
+            const [activeTab, setActiveTab] = useState(0);
+            const [isPaused, setIsPaused] = useState(false);
+            
+            useEffect(() => {
+                if (isPaused) return;
+                const timer = setInterval(() => {
+                    setActiveTab((prev) => (prev + 1) % 5);
+                }, 5000); 
+                return () => clearInterval(timer);
+            }, [isPaused]);
+
+            const steps = [
+                { title: "Strategic Analysis", desc: ["We conduct a deep dive analysis to define your ideal guest and uncover key improvements, optimizing your listing to achieve an average of ", h('strong', {className: "font-bold text-emerald-600"}, "28.5% increase"), " in performance."], icon: BarChart3 },
+                { title: "Direct Booking Site", desc: ["A commission-free direct booking engine that puts you in control of your brand, increasing your profit margin by ", h('strong', {className: "font-bold text-emerald-600"}, "up to 18%"), "."], icon: Globe },
+                { title: "5x Multi-Channel", desc: ["We ensure you're visible on ", h('strong', {className: "font-bold text-emerald-600"}, "5 key channels"), " where your guests are searching, creating a powerful funnel for your direct booking site."], icon: Share2 },
+                { title: "Command Center", desc: ["Centralize operations into one dashboard. Automate messaging and schedules, ", h('strong', {className: "font-bold text-emerald-600"}, "saving you 4+ hours"), " every week."], icon: LayoutDashboard },
+                { title: "Growth Marketing", desc: ["A dynamic strategy to build your brand and increase your direct bookings by ", h('strong', {className: "font-bold text-emerald-600"}, "10-30%"), "."], icon: Megaphone },
+            ];
+
+            return h('section', { className: "py-20 bg-white relative overflow-hidden" },
+                h('div', { className: "container mx-auto px-6" },
+                    // Mobile
+                    h('div', { className: "block lg:hidden space-y-8" },
+                        steps.map((step, index) => 
+                            h(motion.div, { key: index, initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, className: "bg-slate-50 p-6 rounded-2xl border border-slate-100" },
+                                h('div', { className: "flex items-center gap-4 mb-3" },
+                                    h('div', { className: "p-3 bg-indigo-100 text-indigo-600 rounded-xl" }, h(step.icon, { size: 20 })),
+                                    h('h3', { className: "font-bold text-slate-900" }, step.title)
+                                ),
+                                h('p', { className: "text-slate-600 text-sm" }, step.desc)
+                            )
+                        )
+                    ),
+                    // Desktop
+                    h('div', { className: "hidden lg:flex flex-col items-center", onMouseEnter: () => setIsPaused(true), onMouseLeave: () => setIsPaused(false) },
+                        h('p', { className: "text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 animate-pulse" }, isPaused ? "Paused for reading" : "System Overview (Auto-playing)"),
+                        
+                        h('div', { className: "flex flex-wrap justify-center gap-2 bg-slate-50 p-2 rounded-full border border-slate-200 mb-12 shadow-sm relative" },
+                            steps.map((step, index) => {
+                                const isActive = activeTab === index;
+                                return h('button', {
+                                    key: index,
+                                    onClick: () => setActiveTab(index),
+                                    className: `relative px-6 py-3 rounded-full font-bold text-sm transition-colors duration-300 z-10 ${isActive ? 'text-white' : 'text-slate-500 hover:text-indigo-600'}`
+                                }, 
+                                    isActive && h(motion.div, {
+                                        layoutId: "activeTab",
+                                        className: "absolute inset-0 bg-indigo-600 rounded-full -z-10",
+                                        transition: { type: "spring", bounce: 0.2, duration: 0.6 }
+                                    },
+                                        !isPaused && h(motion.div, {
+                                            initial: { width: "0%" },
+                                            animate: { width: "100%" },
+                                            transition: { duration: 5, ease: "linear", repeat: 0 }, 
+                                            className: "absolute bottom-0 left-0 h-1 bg-white/30 w-full"
+                                        })
+                                    ),
+                                    step.title
+                                )
+                            })
+                        ),
+                        h(motion.div, {
+                            key: activeTab,
+                            initial: { opacity: 0, y: 10 },
+                            animate: { opacity: 1, y: 0 },
+                            transition: { duration: 0.3 },
+                            className: "flex w-full max-w-5xl items-center gap-12 p-8 bg-white rounded-3xl border border-slate-100 shadow-2xl"
+                        },
+                            h('div', { className: "w-5/12" },
+                                h('span', { className: "text-indigo-600 font-bold tracking-wider text-xs uppercase mb-3 block" }, `Pillar 0${activeTab + 1}`),
+                                h('h3', { className: "text-3xl font-bold text-slate-900 mb-4" }, steps[activeTab].title),
+                                h('p', { className: "text-lg text-slate-600 leading-relaxed" }, steps[activeTab].desc)
+                            ),
+                            h('div', { className: "w-7/12 bg-slate-100 rounded-2xl aspect-[4/3] flex items-center justify-center relative overflow-hidden border border-slate-200" },
+                                h('div', { className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10" }),
+                                h(steps[activeTab].icon, { size: 80, className: "text-slate-300" }),
+                                h('div', { className: "absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-lg text-center" },
+                                    h('span', { className: "text-xs font-bold text-slate-400 uppercase" }, "System Interface Preview")
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        };
+
+        const ResultCards = ({ onOpenCase }) => {
+            const aggregates = [
+                { metric: "28.5%", label: "Avg. Increase in Bookings", icon: TrendingUp, color: "bg-white", border: "border-indigo-100", text: "text-white" }, 
+                { metric: "15-20%", label: "Reduction in Commissions", icon: CheckCircle2, color: "bg-white", border: "border-emerald-100", text: "text-white" },
+                { metric: "4+ Hrs", label: "Regained Weekly", icon: Clock, color: "bg-white", border: "border-blue-100", text: "text-white" }
+            ];
+            return h('section', { className: "py-12 bg-white" },
+                h('div', { className: "container mx-auto px-6 max-w-5xl" },
+                    h('div', { className: "text-center mb-12" },
+                        h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-2" }, "Proven Growth at Scale."),
+                        h('p', { className: "text-slate-500" }, "Average performance metrics across our portfolio of 750+ partner properties.")
+                    ),
+                    h('div', { className: "grid md:grid-cols-3 gap-6" }, aggregates.map((item, i) => 
+                        h(motion.div, { 
+                            key: i, 
+                            initial: { opacity: 0, y: 30 }, 
+                            whileInView: { opacity: 1, y: 0 }, 
+                            viewport: { once: true }, 
+                            transition: { delay: i * 0.1 },
+                            onClick: () => onOpenCase(item),
+                            className: `cursor-pointer hover:scale-105 active:scale-95 rounded-2xl border shadow-lg p-6 flex flex-col items-center text-center transition-all bg-gradient-to-br from-indigo-600 to-violet-600 text-white`
+                        },
+                            h('div', { className: "p-3 rounded-xl bg-white/10 text-white mb-4" }, h(item.icon, { size: 28 })),
+                            h('h3', { className: "text-4xl font-extrabold text-white tracking-tight mb-2" }, item.metric),
+                            h('p', { className: "text-indigo-100 font-medium" }, item.label)
+                        )
+                    ))
+                )
+            );
+        };
+
+        const ProfessionalAdvantageSection = () => {
+            const [expandedIndex, setExpandedIndex] = useState(null);
+            const toggleRow = (index) => { setExpandedIndex(expandedIndex === index ? null : index); };
+
+            const projects = [
+                {
+                    action: "Strategic Listing Optimization",
+                    status: "Audit Completed",
+                    doneForYou: "We executed a deep-dive analysis, defined your ideal guest avatar, and delivered a data-driven revenue blueprint to maximize your listing's potential.",
+                    diyReality: "DIY Reality: Guessing prices based on neighbors, writing generic copy, and leaving significant revenue on the table due to lack of data."
+                },
+                {
+                    action: "Direct Booking Website Design",
+                    status: "Built & Launched",
+                    doneForYou: "We designed and coded a high-converting, commission-free website that gives you full ownership of your brand and guest data.",
+                    diyReality: "DIY Reality: Weeks of frustration with generic templates, dealing with broken plugins, and struggling to get the payment gateway to work."
+                },
+                {
+                    action: "5x Multi-Channel Distribution",
+                    status: "Setup Complete",
+                    doneForYou: "We handled the complex application and setup process for 5+ major platforms. Your calendar is now fully synchronized 24/7 across all channels.",
+                    diyReality: "DIY Reality: Manually creating listings on every site, updating 4+ calendars daily by hand, and living in fear of double bookings."
+                },
+                {
+                    action: "PMS & Command Center Integration",
+                    status: "System Integrated",
+                    doneForYou: "We architected your entire backend, connecting your PMS, smart locks, and cleaning schedules into one automated 'Command Center'.",
+                    diyReality: "DIY Reality: Logging into ten different apps to manage one guest, missing messages, and manually texting cleaners."
+                },
+                {
+                    action: "Growth Marketing Plan",
+                    status: "Campaigns Active",
+                    doneForYou: "We deployed your direct booking strategy and launched targeted ad campaigns to drive traffic exactly when you need it.",
+                    diyReality: "DIY Reality: Posting sporadically on social media without a strategy, boosting posts blindly, and seeing zero return on investment."
+                }
+            ];
+
+            return h('section', { className: "py-24 bg-slate-50 border-y border-slate-100" },
+                h('div', { className: "container mx-auto px-6 max-w-4xl" },
+                    h('div', { className: "text-center mb-16" },
+                        h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "The Professional Advantage"),
+                        h('p', { className: "text-slate-500 max-w-2xl mx-auto" }, "See exactly how partnering with Fullyo transforms your operation. We don't just advise; we execute.")
+                    ),
+                    h('div', { className: "bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden" },
+                        h('div', { className: "bg-slate-900 p-5 md:p-6 flex justify-between items-center border-b border-slate-800" },
+                            h('div', { className: "flex items-center gap-3" },
+                                h(CheckCircle2, { size: 20, className: "text-emerald-400" }),
+                                h('span', { className: "text-white font-bold tracking-wider text-sm uppercase" }, "Execution Log")
+                            ),
+                            h('span', { className: "text-slate-400 text-xs font-mono hidden md:block" }, "System ID: F-750-PRO")
+                        ),
+                        h('div', { className: "divide-y divide-slate-100" },
+                            projects.map((item, i) => {
+                                const isOpen = expandedIndex === i;
+                                return h(motion.div, { key: i, initial: false, className: `transition-colors duration-300 ${isOpen ? 'bg-indigo-50/30' : 'hover:bg-slate-50'}` },
+                                    h('div', { onClick: () => toggleRow(i), className: "p-6 md:p-8 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4" },
+                                        h('div', { className: "flex items-start gap-4" },
+                                            h('div', { className: `mt-1 transition-transform duration-300 ${isOpen ? 'rotate-90 text-indigo-600' : 'text-slate-300'}` }, h(ChevronRight, { size: 20 })),
+                                            h('div', null, h('h4', { className: "font-bold text-slate-900 text-lg" }, item.action), h('p', { className: "text-sm text-slate-500 mt-1 md:hidden" }, item.status))
+                                        ),
+                                        h('div', { className: "hidden md:flex" },
+                                            h('div', { className: "inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-100" },
+                                                h('span', { className: "relative flex h-2 w-2" }, h('span', { className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" }), h('span', { className: "relative inline-flex rounded-full h-2 w-2 bg-emerald-500" })),
+                                                item.status
+                                            )
+                                        )
+                                    ),
+                                    h(AnimatePresence, {}, isOpen && h(motion.div, { initial: { height: 0, opacity: 0 }, animate: { height: "auto", opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.3 } },
+                                        h('div', { className: "px-6 pb-8 md:px-16 md:pb-8 pt-0 grid md:grid-cols-2 gap-8" },
+                                            h('div', null, h('h5', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2 flex items-center gap-2" }, h(Check, { size: 14 }), "Done For You"), h('p', { className: "text-slate-700 text-sm leading-relaxed" }, item.doneForYou)),
+                                            h('div', { className: "bg-slate-100 rounded-xl p-4 border border-slate-200" }, h('h5', { className: "text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-2" }, h(AlertCircle, { size: 14 }), "The Alternative"), h('p', { className: "text-slate-600 text-sm leading-relaxed italic" }, item.diyReality))
+                                        )
+                                    ))
+                                );
+                            })
+                        ),
+                        h('div', { className: "bg-indigo-50 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6" },
+                            h('div', { className: "flex items-center gap-3" }, h(Rocket, { size: 24, className: "text-indigo-600" }), h('div', null, h('p', { className: "text-sm font-bold text-indigo-900 leading-tight" }, "Fully operational in just 14 days."), h('p', { className: "text-xs text-indigo-600/80 mt-1" }, "Stop guessing. Start generating bookings immediately."))),
+                            h('button', { onClick: () => document.getElementById('booking-section').scrollIntoView({ behavior: 'smooth' }), className: "px-6 py-2 bg-indigo-600 text-white text-sm font-bold rounded-full hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 whitespace-nowrap" }, "Get the Advantage")
+                        )
+                    )
+                )
+            );
+        };
+
+        const VisualBreakSection = () => {
+            return h('section', { className: "py-32 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 text-white" },
+                h(CircleBackground),
+                h('div', { className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10" }),
+                h('div', { className: "container mx-auto px-6 relative z-10 text-center" },
+                    h('h2', { className: "text-4xl md:text-6xl font-bold mb-6" }, "Fully Booked. Fully In Control."),
+                    h('p', { className: "text-xl text-indigo-200 max-w-2xl mx-auto" }, "We help you build a sustainable, independent business by achieving a strategic 50/50 balance between direct bookings and OTAs—filling your calendar without over-relying on the platforms.")
+                )
+            );
+        };
+
+        const TestimonialsSection = () => {
+             const testimonials = [
+                { quote: "We were drowning in messages and cleaning schedules. Fullyo's system didn't just get us more bookings, it gave us our weekends back.", author: "Sarah J.", role: "Owner, Mountain View Retreats", stars: 5, color: "bg-indigo-50" },
+                { quote: "The direct booking site they built accounts for 40% of our revenue now. We're saving thousands in Airbnb fees every season.", author: "Michael T.", role: "Property Manager, Coastal Stays", stars: 5, color: "bg-violet-50" },
+                { quote: "Our revenue grew by 40% in the first quarter alone. The ROI on this system is undeniable. It paid for itself in the first month.", author: "James P.", role: "Owner, Lakeside Cabins", stars: 5, color: "bg-blue-50" }
+            ];
+            return h('section', { className: "py-24 bg-white" },
+                h('div', { className: "container mx-auto px-6 max-w-6xl" },
+                    h('h3', { className: "text-2xl font-bold text-center mb-12 text-slate-900" }, "What Our Partners Say"),
+                    h('div', { className: "grid md:grid-cols-3 gap-8" }, testimonials.map((t, i) => 
+                        h(motion.div, { key: i, initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "bg-slate-50 p-8 rounded-3xl relative flex flex-col h-full" },
+                            h(Quote, { className: "absolute top-8 left-8 text-slate-200 w-12 h-12 -z-0" }),
+                            h('div', { className: "relative z-10 flex-1 flex flex-col" },
+                                h('div', { className: "flex gap-1 mb-6 text-yellow-400" }, Array.from({length: t.stars}).map((_, i) => h(Star, { key: i, size: 18, fill: "currentColor" }))),
+                                h('p', { className: "text-lg text-slate-700 font-medium leading-relaxed mb-8 flex-1" }, `"${t.quote}"`),
+                                h('div', { className: "flex items-center gap-4 mt-auto" },
+                                    h('div', { className: `w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-indigo-600 flex-shrink-0` }, h(User, { size: 24 })),
+                                    h('div', null, h('div', { className: "font-bold text-slate-900 text-sm" }, t.author), h('div', { className: "text-slate-500 text-xs" }, t.role))
+                                )
+                            )
+                        )
+                    ))
+                )
+            );
+        };
+
+        const BrandMarquee = () => {
+            const brands = ["Summit Stays", "Coastal Retreats", "Urban Host Co.", "Cabin & Co.", "Alpine Lodging", "Sea to Sky Rentals", "Boutique Homes", "Escape Properties"];
+            return h('section', { className: "py-16 bg-white border-b border-slate-100 overflow-hidden" },
+                h('p', { className: "text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-8 font-display" }, "Trusted by Leading Owners & Managers"),
+                h('div', { className: "relative flex overflow-x-hidden group" },
+                    h('div', { className: "animate-infinite-scroll whitespace-nowrap flex gap-16 px-8" },
+                        [...brands, ...brands].map((brand, i) => h('div', { key: i, className: "text-2xl font-serif italic text-slate-300 font-bold whitespace-nowrap" }, brand))
+                    )
+                )
+            );
+        };
+
+        const ProofStack = ({ onOpenCase }) => {
+            return h('div', null, h(TestimonialsSection), h(BrandMarquee));
+        };
+
+        const FAQSection = () => {
+            const faqs = [
+                { q: "How long does it take to get the full system?", a: "Our efficient onboarding system is designed for speed. Implementation can be completed in as little as two weeks, but we work at a pace that suits you. The most important thing is that once the system is active, you can start generating new reservations, which for many hosts means a few extra thousand dollars per year." },
+                { q: "What if I already have a website or PMS?", a: "That's great! We can absolutely work with the tools you already have. We'll analyze your current setup to ensure it's performing at its best and seamlessly integrate the rest of our system to enhance its capabilities." },
+                { q: "Do I need to be tech-savvy?", a: "Not at all. We are your technical team. We become part of your tech stack and handle all the complicated stuff so you can focus on creating amazing experiences for your guests." },
+                { q: "What does it cost?", a: "Our services are tailored to your specific needs and budget to deliver the most effective results. It doesn't cost much to get started, and our focus is always on delivering a guaranteed return on your investment." },
+                { q: "How soon can I get started?", a: "We move quickly. Within the same week of contacting us, our process begins with the initial strategy call to build your performance blueprint." }
+            ];
+            const [openIndex, setOpenIndex] = useState(null);
+            return h('section', { className: "py-24 bg-slate-50" },
+                h('div', { className: "container mx-auto px-6 max-w-3xl" },
+                    h('div', { className: "text-center mb-16" }, h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "Common Questions"), h('p', { className: "text-slate-500" }, "Everything you need to know about the Fullyo system.")),
+                    h('div', { className: "space-y-4" }, faqs.map((faq, index) => {
+                        const isOpen = openIndex === index;
+                        return h(motion.div, { key: index, initial: false, className: "bg-white rounded-2xl border border-slate-200 overflow-hidden" },
+                            h('button', { onClick: () => setOpenIndex(isOpen ? null : index), className: "w-full flex items-center justify-between p-6 text-left" },
+                                h('span', { className: "font-bold text-slate-900 text-lg" }, faq.q),
+                                h(motion.div, { animate: { rotate: isOpen ? 180 : 0 }, transition: { duration: 0.2 } }, h(ChevronDown, { className: "text-indigo-500" }))
+                            ),
+                            h(AnimatePresence, {}, isOpen && h(motion.div, { initial: { height: 0, opacity: 0 }, animate: { height: "auto", opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.3 } }, h('div', { className: "px-6 pb-6 text-slate-600 leading-relaxed" }, faq.a)))
+                        )
+                    }))
+                )
+            );
+        };
+
+        const BookingSection = () => {
+            const steps = ["Strategy Call", "Custom Plan", "System Build", "Growth"];
+            return h('section', { id: "booking-section", className: "py-24 bg-white border-t border-slate-100" },
+                h('div', { className: "container mx-auto px-6 max-w-4xl text-center" },
+                    h(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 rounded-3xl p-12 md:p-20 shadow-2xl relative overflow-hidden text-white" },
+                        h(CircleBackground),
+                        h('div', { className: "absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:16px_16px]" }),
+                        h('div', { className: "relative z-10 flex flex-col items-center" },
+                            h('h2', { className: "text-4xl md:text-5xl font-bold text-white mb-6" }, "Ready to Grow a Sustainable Business?"),
+                            h('p', { className: "text-xl text-indigo-200 mb-10 max-w-2xl mx-auto" }, "Stop relying 100% on the platforms. Join the owners building balanced, independent portfolios with the Fullyo system."),
+                            
+                            h('div', { className: "flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-10 text-sm md:text-base text-indigo-200 font-medium" },
+                                steps.map((step, i) => [
+                                    h('span', { key: i, className: "flex items-center gap-2" }, h('span', { className: "bg-white text-indigo-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center" }, i + 1), step),
+                                    i < steps.length - 1 && h(ArrowRight, { key: `arrow-${i}`, size: 14, className: "text-indigo-400" })
+                                ])
+                            ),
+                            h('button', { className: "group relative px-8 py-4 bg-white text-indigo-900 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-indigo-500/30 transition-all inline-flex items-center gap-2 mb-10" }, "Book Your Strategy Call", h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform text-indigo-600" })),
+                            
+                            h('div', { className: "flex flex-col md:flex-row items-center justify-center gap-4 animate-fade-in-up" },
+                                h('div', { className: "flex -space-x-3" },
+                                    [1, 2, 3, 4].map((_, i) => 
+                                        h('div', { key: i, className: "w-12 h-12 rounded-full border-2 border-indigo-800 bg-indigo-100 flex items-center justify-center text-indigo-600 relative z-10 shadow-lg" },
+                                            h(User, { size: 24, strokeWidth: 1.5 })
+                                        )
+                                    )
+                                ),
+                                h('div', { className: "text-center md:text-left" },
+                                    h('p', { className: "text-base font-bold text-white" }, "Speak directly with our specialists."),
+                                    h('p', { className: "text-xs text-indigo-300 font-medium" }, "No sales pressure. Just strategy.")
+                                )
+                            ),
+
+                            // UPDATED: The "Soft Fallback" Email Link
+                            h('div', { className: "mt-12 pt-8 border-t border-white/10 w-full max-w-md mx-auto" },
+                                h('p', { className: "text-sm text-indigo-200/60 mb-2" }, "Have a specific question before booking?"),
+                                h('a', { 
+                                    href: "mailto:hello@fullyo.com",
+                                    className: "text-white font-medium hover:text-emerald-400 transition-colors border-b border-white/30 hover:border-emerald-400 pb-0.5 text-sm"
+                                }, "Email us directly at hello@fullyo.com")
+                            )
+                        )
+                    )
+                )
+            );
+        };
+
+        const Footer = ({ onNavigate }) => {
+            return h('footer', { className: "bg-slate-900 pt-20 pb-10 border-t border-slate-800" },
+                h('div', { className: "container mx-auto px-6" },
+                    h('div', { className: "flex flex-wrap justify-center gap-8 mb-20 opacity-30 text-white" },
+                        h('div', { className: "font-bold text-xl font-display" }, "Airbnb"),
+                        h('div', { className: "font-bold text-xl font-display" }, "VRBO"),
+                        h('div', { className: "font-bold text-xl font-display" }, "Booking.com"),
+                        h('div', { className: "font-bold text-xl font-display" }, "Expedia")
+                    ),
+                    h('div', { className: "grid md:grid-cols-4 gap-12 mb-16" },
+                        h('div', null,
+                            h('div', { className: "text-3xl font-bold tracking-tighter mb-6 text-white" }, "Fullyo."),
+                            h('p', { className: "text-slate-400 text-sm leading-relaxed mb-6" }, "The premier growth partner for owners and managers who value their time."),
+                            h('div', { className: "flex gap-4 text-slate-400" }, h(Mail, { size: 20 }), h(MapPin, { size: 20 }))
+                        ),
+                        h('div', null, h('h4', { className: "font-bold text-white mb-6" }, "Solutions"), h('ul', { className: "space-y-4 text-sm text-slate-400" }, Object.keys(servicesData).map(k => h('li', { key: k, onClick: () => onNavigate(`service-${k}`), className: "hover:text-indigo-400 cursor-pointer transition-colors" }, servicesData[k].title)))),
+                        h('div', null, h('h4', { className: "font-bold text-white mb-6" }, "Company"), h('ul', { className: "space-y-4 text-sm text-slate-400" }, [
+                            h('li', { onClick: () => onNavigate('case-studies'), className: "hover:text-indigo-400 cursor-pointer" }, "Case Studies"),
+                            h('li', { onClick: () => onNavigate('about'), className: "hover:text-indigo-400 cursor-pointer" }, "About Us"),
+                            h('li', { onClick: () => onNavigate('careers'), className: "hover:text-indigo-400 cursor-pointer" }, "Careers"),
+                            h('li', { onClick: () => { onNavigate('home'); setTimeout(() => { const el = document.getElementById('booking-section'); if(el) el.scrollIntoView({behavior: 'smooth'}) }, 300); }, className: "hover:text-indigo-400 cursor-pointer" }, "Contact")
+                        ])),
+                        h('div', null, h('h4', { className: "font-bold text-white mb-6" }, "Get in Touch"), h('ul', { className: "space-y-4 text-sm text-slate-400" }, [h('li', { className: "flex items-center gap-2" }, h(Mail, { size: 16 }), "hello@fullyo.com"), h('li', { className: "flex items-center gap-2" }, h(Phone, { size: 16 }), "+1 (555) 123-4567")]))
+                    ),
+                    h('div', { className: "pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center opacity-60 text-sm text-slate-400" }, h('p', null, "© 2024 Fullyo Inc. All rights reserved."), h('div', { className: "flex gap-6 mt-4 md:mt-0" }, h('span', null, "Privacy Policy"), h('span', null, "Terms of Service")))
+                )
+            );
+        };
+
+        // --- 4. MODAL COMPONENTS ---
 
         const CaseStudyModal = ({ data, onClose, onBook }) => {
             return h(motion.div, {
@@ -403,6 +610,220 @@
                         "Discuss Your Potential", h(ArrowRight, { size: 18 })
                     )
                 )
+            );
+        };
+
+        const ApplicationModal = ({ jobTitle, onClose }) => {
+            const [formData, setFormData] = useState({ name: "", email: "", linkedin: "", message: "" });
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                const subject = `Application for ${jobTitle} - ${formData.name}`;
+                const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0ALinkedIn/Portfolio: ${formData.linkedin}%0D%0A%0D%0AWhy I'm a fit:%0D%0A${formData.message}%0D%0A%0D%0A[Please attach your resume PDF to this email]`;
+                window.location.href = `mailto:hello@fullyo.com?subject=${subject}&body=${body}`;
+                setTimeout(onClose, 1000);
+            };
+
+            return h(motion.div, {
+                initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 },
+                className: "fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md",
+                onClick: onClose
+            },
+                h(motion.div, {
+                    initial: { scale: 0.9, opacity: 0 }, animate: { scale: 1, opacity: 1 }, exit: { scale: 0.9, opacity: 0 },
+                    onClick: e => e.stopPropagation(),
+                    className: "bg-white rounded-2xl p-8 max-w-lg w-full relative shadow-2xl overflow-hidden"
+                },
+                    h('button', { onClick: onClose, className: "absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 rounded-full" }, h(X, { size: 20 })),
+                    
+                    h('h3', { className: "text-2xl font-bold text-slate-900 mb-1" }, "Apply Now"),
+                    h('p', { className: "text-slate-500 text-sm mb-6" }, `Position: ${jobTitle}`),
+
+                    h('form', { onSubmit: handleSubmit, className: "space-y-4" },
+                        h('div', null,
+                            h('label', { className: "block text-xs font-bold text-slate-700 uppercase mb-1" }, "Full Name"),
+                            h('input', { required: true, type: "text", className: "w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors", placeholder: "Jane Doe", onChange: e => setFormData({...formData, name: e.target.value}) })
+                        ),
+                        h('div', null,
+                            h('label', { className: "block text-xs font-bold text-slate-700 uppercase mb-1" }, "Email Address"),
+                            h('input', { required: true, type: "email", className: "w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors", placeholder: "jane@example.com", onChange: e => setFormData({...formData, email: e.target.value}) })
+                        ),
+                        h('div', null,
+                            h('label', { className: "block text-xs font-bold text-slate-700 uppercase mb-1" }, "LinkedIn / Portfolio URL"),
+                            h('input', { type: "url", className: "w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors", placeholder: "https://linkedin.com/in/jane", onChange: e => setFormData({...formData, linkedin: e.target.value}) })
+                        ),
+                        h('div', null,
+                            h('label', { className: "block text-xs font-bold text-slate-700 uppercase mb-1" }, "Why you?"),
+                            h('textarea', { required: true, rows: 3, className: "w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors", placeholder: "Tell us why you are the best fit...", onChange: e => setFormData({...formData, message: e.target.value}) })
+                        ),
+                        h('div', { className: "border-2 border-dashed border-slate-200 rounded-xl p-6 text-center" },
+                            h('p', { className: "text-sm text-slate-500 font-medium" }, "Resume Upload"),
+                            h('p', { className: "text-xs text-slate-400 mt-1" }, "(Please attach PDF to the email draft)")
+                        ),
+                        
+                        h('button', { type: "submit", className: "w-full py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 mt-4" }, "Send Application")
+                    )
+                )
+            );
+        };
+
+        // --- 5. PAGE COMPONENTS (MUST BE DEFINED BEFORE MAIN FUNNEL) ---
+
+        const AboutPage = ({ onNavigate }) => {
+            const teamMembers = [
+                { name: "Alysia", role: "Business Development", desc: "Leading partner relationships and identifying strategic opportunities for portfolio growth.", icon: Target },
+                { name: "Jenn", role: "PMS Integration Specialist", desc: "Architecting the central nervous system of your operations for seamless automation.", icon: Layers },
+                { name: "Lola", role: "Web Development Lead", desc: "Building high-speed, direct booking engines that convert visitors into guests.", icon: Globe },
+                { name: "Azim", role: "Paid Media Specialist", desc: "Expert management of Google & Facebook campaigns to drive targeted traffic.", icon: Megaphone },
+                { name: "Dave", role: "Content & Video Strategy", desc: "Crafting viral-ready video content and social strategies to build your brand authority.", icon: Share2 }
+            ];
+
+            return h(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } },
+                h('nav', { className: "border-b border-slate-100 py-4 bg-white sticky top-0 z-50" },
+                    h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
+                        h('div', { onClick: () => onNavigate('home'), className: "flex items-center gap-2 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors group" },
+                            h(ChevronLeft, { size: 20, className: "group-hover:-translate-x-1 transition-transform" }),
+                            h('span', { className: "font-medium text-sm" }, "Back to Home")
+                        ),
+                        h('button', { onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); }, className: "px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-colors" }, "Book Strategy Call")
+                    )
+                ),
+                h('div', { className: "relative bg-slate-50 py-24 overflow-hidden" },
+                    h('div', { className: "container mx-auto px-6 max-w-4xl relative z-10 text-center" },
+                        h('span', { className: "text-indigo-600 font-bold tracking-widest text-xs uppercase mb-4 block" }, "Our Philosophy"),
+                        h('h1', { className: "text-4xl md:text-6xl font-extrabold text-slate-900 mb-6" }, "Built by Hosts, For Hosts."),
+                        h('p', { className: "text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto" }, "We aren't just a software company. We are a concierge agency dedicated to restoring sanity to property management.")
+                    )
+                ),
+                h('div', { className: "py-24 bg-white border-b border-slate-100" },
+                    h('div', { className: "container mx-auto px-6 max-w-5xl" },
+                        h('div', { className: "flex flex-col md:flex-row gap-16 items-center" },
+                            h('div', { className: "w-full md:w-5/12" },
+                                h('div', { className: "aspect-[4/5] bg-slate-200 rounded-3xl overflow-hidden relative shadow-2xl" },
+                                    h('div', { className: "absolute inset-0 bg-gradient-to-tr from-slate-300 to-slate-100 flex items-center justify-center text-slate-400" },
+                                        h(User, { size: 64, strokeWidth: 1 })
+                                    ),
+                                    h('div', { className: "absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-8" },
+                                        h('p', { className: "text-white font-bold text-xl" }, "Your Name"),
+                                        h('p', { className: "text-slate-200 text-sm" }, "Founder & Head of Strategy")
+                                    )
+                                )
+                            ),
+                            h('div', { className: "w-full md:w-7/12" },
+                                h('h2', { className: "text-3xl font-bold text-slate-900 mb-6" }, "A Note from the Founder"),
+                                h('div', { className: "space-y-6 text-lg text-slate-600 leading-relaxed" },
+                                    h('p', null, "I started Fullyo because I saw too many property owners stuck in the \"Host Trap.\" They were spending all day messaging guests, syncing calendars manually, and worrying about the next booking."),
+                                    h('p', null, "My goal wasn't just to build a tool, but to build a partner."),
+                                    h('p', null, "We operate with a simple rule: ", h('strong', { className: "text-indigo-600" }, "High Concierge Care."), " This means that while we use advanced automation and enterprise systems, we never lose the human touch. When you partner with us, you aren't just getting software—you are getting a dedicated team obsessed with your growth."),
+                                    h('p', null, "I still personally oversee the strategy for every new partner we onboard to ensure we deliver on that promise.")
+                                ),
+                                h('div', { className: "mt-8 pt-8 border-t border-slate-100 flex gap-12" },
+                                    h('div', null,
+                                        h('p', { className: "text-3xl font-bold text-slate-900" }, "750+"),
+                                        h('p', { className: "text-sm text-slate-500 uppercase tracking-wider" }, "Properties")
+                                    ),
+                                    h('div', null,
+                                        h('p', { className: "text-3xl font-bold text-slate-900" }, "$15M+"),
+                                        h('p', { className: "text-sm text-slate-500 uppercase tracking-wider" }, "Revenue Generated")
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                h('div', { className: "py-24 bg-white" },
+                    h('div', { className: "container mx-auto px-6 max-w-6xl" },
+                        h('div', { className: "text-center mb-16" },
+                            h('h2', { className: "text-3xl font-bold text-slate-900 mb-4" }, "The Leadership Team"),
+                            h('p', { className: "text-slate-500 max-w-2xl mx-auto" }, "Your property is in good hands. Meet the experts leading your growth strategy.")
+                        ),
+                        h('div', { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-8" },
+                            teamMembers.map((member, i) => 
+                                h('div', { key: i, className: "group p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-100 hover:shadow-xl transition-all duration-300" },
+                                    h('div', { className: "flex items-center gap-4 mb-6" },
+                                        h('div', { className: "w-16 h-16 rounded-full bg-slate-200 overflow-hidden flex items-center justify-center text-slate-400 group-hover:scale-105 transition-transform" },
+                                             h(User, { size: 32 })
+                                        ),
+                                        h('div', null,
+                                            h('h4', { className: "font-bold text-slate-900" }, member.name),
+                                            h('span', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wide" }, member.role)
+                                        )
+                                    ),
+                                    h('p', { className: "text-slate-600 text-sm leading-relaxed" }, member.desc)
+                                )
+                            ),
+                            h('div', { className: "p-6 rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-center opacity-60 hover:opacity-100 hover:border-indigo-300 transition-all cursor-pointer" },
+                                h(Users, { size: 32, className: "text-slate-400 mb-3" }),
+                                h('h4', { className: "font-bold text-slate-900" }, "The Specialists"),
+                                h('p', { className: "text-xs text-slate-500 mt-1" }, "+12 Support & Tech Staff")
+                            )
+                        )
+                    )
+                ),
+                h('div', { className: "py-24 bg-slate-900 text-white" },
+                    h('div', { className: "container mx-auto px-6 max-w-4xl text-center" },
+                        h(Heart, { size: 48, className: "mx-auto text-pink-500 mb-8" }),
+                        h('h2', { className: "text-3xl md:text-5xl font-bold mb-8" }, "High Tech. High Touch."),
+                        h('p', { className: "text-xl text-slate-300 leading-relaxed mb-12" }, "Most agencies try to automate everything and disappear. We use automation to free up our time so we can actually talk to you."),
+                        h('div', { className: "grid md:grid-cols-3 gap-8 text-left" },
+                            [
+                                { title: "Strategy First", desc: "We don't just 'turn on ads.' We build a custom revenue blueprint for your specific property type." },
+                                { title: "Concierge Support", desc: "You have direct access to our team. No ticketing systems where requests go to die." },
+                                { title: "Total Transparency", desc: "You see what we see. Real-time reporting on bookings, revenue, and ad spend." }
+                            ].map((v, i) => 
+                                h('div', { key: i, className: "bg-white/5 p-6 rounded-2xl border border-white/10" },
+                                    h('h3', { className: "font-bold text-lg mb-2" }, v.title),
+                                    h('p', { className: "text-slate-400 text-sm" }, v.desc)
+                                )
+                            )
+                        )
+                    )
+                ),
+                h(Footer, { onNavigate })
+            );
+        };
+
+        const CaseStudiesPage = ({ onNavigate }) => {
+            const cases = [
+                { title: "Mountain View Retreats", result: "+42% Revenue", desc: "How we transformed a seasonal cabin into a year-round destination using email marketing and dynamic pricing.", tags: ["Email Marketing", "Pricing"] },
+                { title: "Coastal Stays Portfolio", result: "98% Direct Bookings", desc: "Breaking free from Airbnb: How this portfolio moved almost entirely to their own platform in 6 months.", tags: ["Web Dev", "SEO"] },
+                { title: "Urban Loft Co.", result: "12hrs Saved/Week", desc: "Automating the chaos: Implementing a unified inbox and auto-scheduling for a 15-unit city manager.", tags: ["Automation", "PMS"] }
+            ];
+
+            return h(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } },
+                h('nav', { className: "border-b border-slate-100 py-4 bg-white sticky top-0 z-50" },
+                    h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
+                        h('div', { onClick: () => onNavigate('home'), className: "flex items-center gap-2 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors group" },
+                            h(ChevronLeft, { size: 20, className: "group-hover:-translate-x-1 transition-transform" }),
+                            h('span', { className: "font-medium text-sm" }, "Back to Home")
+                        ),
+                        h('button', { onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); }, className: "px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-colors" }, "Book Strategy Call")
+                    )
+                ),
+                h('div', { className: "bg-slate-50 py-20" },
+                    h('div', { className: "container mx-auto px-6 max-w-4xl text-center" },
+                        h('h1', { className: "text-4xl md:text-5xl font-bold text-slate-900 mb-6" }, "Real Results. Real Revenue."),
+                        h('p', { className: "text-xl text-slate-600 max-w-2xl mx-auto" }, "See how property owners like you are reclaiming their time and maximizing their profits with Fullyo.")
+                    )
+                ),
+                h('div', { className: "py-20 bg-white" },
+                    h('div', { className: "container mx-auto px-6 max-w-5xl" },
+                        h('div', { className: "grid md:grid-cols-2 gap-8" },
+                            cases.map((c, i) => 
+                                h('div', { key: i, className: "border border-slate-100 rounded-3xl p-8 hover:shadow-xl transition-shadow bg-white" },
+                                    h('div', { className: "flex flex-wrap gap-2 mb-4" }, 
+                                        c.tags.map((t, j) => h('span', { key: j, className: "text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md" }, t))
+                                    ),
+                                    h('h3', { className: "text-2xl font-bold text-slate-900 mb-2" }, c.title),
+                                    h('p', { className: "text-4xl font-extrabold text-emerald-500 mb-4" }, c.result),
+                                    h('p', { className: "text-slate-600 mb-8" }, c.desc),
+                                    h('button', { onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); }, className: "text-slate-900 font-bold flex items-center gap-2 hover:gap-3 transition-all" }, "Read Full Story", h(ArrowRight, { size: 18 }))
+                                )
+                            )
+                        )
+                    )
+                ),
+                h(Footer, { onNavigate })
             );
         };
 
@@ -481,479 +902,216 @@
             );
         };
 
+        const CareersPage = ({ onNavigate }) => {
+            const [expandedJob, setExpandedJob] = useState(null);
+            const [applicationModalOpen, setApplicationModalOpen] = useState(false);
+            const [selectedJobTitle, setSelectedJobTitle] = useState("");
 
-        const HeroSection = ({ onCta }) => {
-            const { scrollY } = useScroll();
-            const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-            const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+            const toggleJob = (index) => {
+                setExpandedJob(expandedJob === index ? null : index);
+            };
 
-            // UPDATED: Added 'shadow-2xl' and 'z-20' to cast a shadow on the section below
-            // Removed 'pb-32' and overflow hidden to let the shadow breathe if needed, though usually overflow-hidden clips it.
-            // To make the shadow visible, we need z-index higher than the next section and remove overflow-hidden from the bottom edge specifically, 
-            // or just rely on the sharp contrast. 
-            // Actually, to see the shadow *outside* the hero, we need to remove overflow-hidden or place a shadow div at the bottom.
-            // Let's use a subtle gradient fade at the bottom instead of a harsh clip, or just the shadow.
-            
-            return h('section', { className: "relative min-h-screen flex items-center justify-center pt-20 pb-20 bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 text-white z-20 shadow-2xl" },
-                h(CircleBackground),
-                h('div', { className: "absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-white/5 pointer-events-none" }),
-                
-                h('div', { className: "container mx-auto px-6 relative z-10 text-center max-w-5xl" },
-                    h(motion.div, {
-                        initial: { opacity: 0, y: 30 },
-                        animate: { opacity: 1, y: 0 },
-                        transition: { duration: 0.8 },
-                        className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-8 backdrop-blur-sm"
-                    },
-                        h('span', { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
-                        h('span', { className: "text-xs font-semibold uppercase tracking-widest text-white" }, "Agency for Property Growth")
-                    ),
-                    h(motion.h1, {
-                        initial: { opacity: 0, y: 50 },
-                        animate: { opacity: 1, y: 0 },
-                        transition: { duration: 0.8, delay: 0.2 },
-                        className: "text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.1]"
-                    },
-                        "Focus on your guests, ", h('br'),
-                        h('span', { className: "text-indigo-200" }, "we automate the rest.")
-                    ),
-                    h(motion.p, {
-                        initial: { opacity: 0 },
-                        animate: { opacity: 1 },
-                        transition: { duration: 0.8, delay: 0.4 },
-                        className: "text-lg md:text-2xl text-slate-200 max-w-3xl mx-auto mb-12 leading-relaxed font-light"
-                    }, "We implement our proprietary 5-part system to maximize direct bookings. We handle the tech and marketing setup, empowering you to run efficient operations with total control."),
-                    h(motion.div, {
-                        initial: { opacity: 0, scale: 0.9 },
-                        animate: { opacity: 1, scale: 1 },
-                        transition: { duration: 0.5, delay: 0.6 }
-                    },
-                        h('button', { onClick: onCta, className: "group relative px-10 py-5 bg-white text-indigo-900 rounded-full font-bold text-lg overflow-hidden shadow-2xl hover:shadow-indigo-500/50 transition-all hover:-translate-y-1" },
-                            h('span', { className: "relative flex items-center gap-3" }, 
-                                "Book Your Strategy Call", 
-                                h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform text-indigo-600" })
-                            )
-                        )
-                    )
-                )
-                // Removed the SVG Divider entirely for the Clean Straight Line
-            );
-        };
+            const openApplication = (title) => {
+                setSelectedJobTitle(title);
+                setApplicationModalOpen(true);
+            };
 
-        const TheSystem = () => {
-            const [activeTab, setActiveTab] = useState(0);
-            const [isPaused, setIsPaused] = useState(false);
-            
-            // AUTO-PLAY LOGIC
-            useEffect(() => {
-                if (isPaused) return;
-                const timer = setInterval(() => {
-                    setActiveTab((prev) => (prev + 1) % 5);
-                }, 5000); // 5 Seconds per slide
-                return () => clearInterval(timer);
-            }, [isPaused]);
-
-            const steps = [
+            const jobs = [
                 { 
-                    title: "Strategic Analysis", 
-                    desc: ["We conduct a deep dive analysis to define your ideal guest and uncover key improvements, optimizing your listing to achieve an average of ", h('strong', {className: "font-bold text-emerald-600"}, "28.5% increase"), " in performance."], 
-                    icon: BarChart3 
+                    title: "Business Development Lead", 
+                    type: "Remote / Commission + Base", 
+                    dept: "Growth",
+                    mission: "You are the hunter. Your mission is to identify high-potential property portfolios and show them the path to independence.",
+                    reqs: ["Proven track record in B2B sales (SaaS or Real Estate preferred)", "Fearless on the phone and empathetic in the inbox", "Ability to diagnose complex operational pain points"]
                 },
                 { 
-                    title: "Direct Booking Site", 
-                    desc: ["A commission-free direct booking engine that puts you in control of your brand, increasing your profit margin by ", h('strong', {className: "font-bold text-emerald-600"}, "up to 18%"), "."], 
-                    icon: Globe 
+                    title: "Social Media Manager", 
+                    type: "Remote", 
+                    dept: "Content",
+                    mission: "You are the voice of the brand. Your mission is to turn our partner properties into desirable destinations through viral storytelling.",
+                    reqs: ["Deep understanding of IG Reels / TikTok trends for travel", "Ability to edit raw footage into high-converting assets", "Community management experience (you actually reply to comments)"]
                 },
                 { 
-                    title: "5x Multi-Channel", 
-                    desc: ["We ensure you're visible on ", h('strong', {className: "font-bold text-emerald-600"}, "5 key channels"), " where your guests are searching, creating a powerful funnel for your direct booking site."], 
-                    icon: Share2 
+                    title: "Senior React Developer", 
+                    type: "Remote", 
+                    dept: "Engineering",
+                    mission: "You build the engines. Your mission is to maintain and upgrade our direct booking infrastructure for speed and conversion.",
+                    reqs: ["Expert in React, Tailwind, and Node.js", "Experience with payment gateway integrations (Stripe)", "Obsessed with site speed metrics (Core Web Vitals)"]
                 },
                 { 
-                    title: "Command Center", 
-                    desc: ["Centralize operations into one dashboard. Automate messaging and schedules, ", h('strong', {className: "font-bold text-emerald-600"}, "saving you 4+ hours"), " every week."], 
-                    icon: LayoutDashboard 
+                    title: "Account Manager (STR Expert)", 
+                    type: "Remote / Hybrid", 
+                    dept: "Client Success",
+                    mission: "You are the partner. Your mission is to ensure our property owners feel supported, informed, and profitable every single month.",
+                    reqs: ["Previous experience managing Airbnb listings", "Hyper-organized with excellent communication skills", "Ability to read revenue reports and explain them simply"]
                 },
                 { 
-                    title: "Growth Marketing", 
-                    desc: ["A dynamic strategy to build your brand and increase your direct bookings by ", h('strong', {className: "font-bold text-emerald-600"}, "10-30%"), "."], 
-                    icon: Megaphone 
-                },
-            ];
-
-            return h('section', { className: "py-20 bg-white relative overflow-hidden" },
-                h('div', { className: "container mx-auto px-6" },
-                    // Mobile
-                    h('div', { className: "block lg:hidden space-y-8" },
-                        steps.map((step, index) => 
-                            h(motion.div, { key: index, initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, className: "bg-slate-50 p-6 rounded-2xl border border-slate-100" },
-                                h('div', { className: "flex items-center gap-4 mb-3" },
-                                    h('div', { className: "p-3 bg-indigo-100 text-indigo-600 rounded-xl" }, h(step.icon, { size: 20 })),
-                                    h('h3', { className: "font-bold text-slate-900" }, step.title)
-                                ),
-                                h('p', { className: "text-slate-600 text-sm" }, step.desc)
-                            )
-                        )
-                    ),
-                    // Desktop
-                    h('div', { className: "hidden lg:flex flex-col items-center", onMouseEnter: () => setIsPaused(true), onMouseLeave: () => setIsPaused(false) },
-                        // INSTRUCTIONAL LABEL (Optional "Clue")
-                        h('p', { className: "text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 animate-pulse" }, isPaused ? "Paused for reading" : "System Overview (Auto-playing)"),
-                        
-                        h('div', { className: "flex flex-wrap justify-center gap-2 bg-slate-50 p-2 rounded-full border border-slate-200 mb-12 shadow-sm relative" },
-                            steps.map((step, index) => {
-                                const isActive = activeTab === index;
-                                return h('button', {
-                                    key: index,
-                                    onClick: () => setActiveTab(index),
-                                    className: `relative px-6 py-3 rounded-full font-bold text-sm transition-colors duration-300 z-10 ${isActive ? 'text-white' : 'text-slate-500 hover:text-indigo-600'}`
-                                }, 
-                                    // Progress Bar Background (Only for active tab)
-                                    isActive && h(motion.div, {
-                                        layoutId: "activeTab",
-                                        className: "absolute inset-0 bg-indigo-600 rounded-full -z-10",
-                                        transition: { type: "spring", bounce: 0.2, duration: 0.6 }
-                                    },
-                                        // The Moving Progress Bar Line
-                                        !isPaused && h(motion.div, {
-                                            initial: { width: "0%" },
-                                            animate: { width: "100%" },
-                                            transition: { duration: 5, ease: "linear", repeat: 0 }, // Matches interval
-                                            className: "absolute bottom-0 left-0 h-1 bg-white/30 w-full"
-                                        })
-                                    ),
-                                    step.title
-                                )
-                            })
-                        ),
-                        h(motion.div, {
-                            key: activeTab,
-                            initial: { opacity: 0, y: 10 },
-                            animate: { opacity: 1, y: 0 },
-                            transition: { duration: 0.3 },
-                            className: "flex w-full max-w-5xl items-center gap-12 p-8 bg-white rounded-3xl border border-slate-100 shadow-2xl"
-                        },
-                            h('div', { className: "w-5/12" },
-                                h('span', { className: "text-indigo-600 font-bold tracking-wider text-xs uppercase mb-3 block" }, `Pillar 0${activeTab + 1}`),
-                                h('h3', { className: "text-3xl font-bold text-slate-900 mb-4" }, steps[activeTab].title),
-                                h('p', { className: "text-lg text-slate-600 leading-relaxed" }, steps[activeTab].desc)
-                            ),
-                            h('div', { className: "w-7/12 bg-slate-100 rounded-2xl aspect-[4/3] flex items-center justify-center relative overflow-hidden border border-slate-200" },
-                                h('div', { className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10" }),
-                                h(steps[activeTab].icon, { size: 80, className: "text-slate-300" }),
-                                h('div', { className: "absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-lg text-center" },
-                                    h('span', { className: "text-xs font-bold text-slate-400 uppercase" }, "System Interface Preview")
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-        };
-
-        const TimelineCard = ({ step, index }) => {
-            const isEven = index % 2 === 0;
-            return h(motion.div, {
-                initial: { opacity: 0, y: 50 },
-                whileInView: { opacity: 1, y: 0 },
-                viewport: { once: true, margin: "-100px" },
-                transition: { duration: 0.7 },
-                className: `flex flex-col md:flex-row items-center gap-8 md:gap-0 ${isEven ? 'md:flex-row-reverse' : ''}`
-            },
-                h('div', { className: "flex-1 w-full md:w-1/2 md:px-12" },
-                    h('div', { className: `flex flex-col ${isEven ? 'md:items-start' : 'md:items-end'} text-center md:text-left ${!isEven && 'md:text-right'}` },
-                        h('div', { className: "w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-200 rotate-3 hover:rotate-6 transition-transform" }, h(step.icon, { size: 32 })),
-                        h('h3', { className: "text-2xl font-bold mb-3" }, step.title),
-                        h('p', { className: "text-slate-500 leading-relaxed" }, step.desc)
-                    )
-                ),
-                h('div', { className: "hidden md:flex relative z-10 w-8 h-8 rounded-full bg-white border-4 border-indigo-600 shadow-xl items-center justify-center" },
-                    h('div', { className: "w-2 h-2 bg-indigo-600 rounded-full" })
-                ),
-                h('div', { className: "flex-1 w-full md:w-1/2 md:px-12" },
-                    h('div', { className: "bg-slate-50 p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-500 group" },
-                        h('div', { className: "h-32 rounded-xl bg-white w-full flex items-center justify-center overflow-hidden relative" },
-                            h('div', { className: "absolute inset-0 bg-grid-slate-100 opacity-20" }),
-                            h('div', { className: "text-slate-200 group-hover:text-indigo-600 transition-colors duration-500 transform group-hover:scale-110" }, h(step.icon, { size: 64 }))
-                        )
-                    )
-                )
-            );
-        };
-
-        const ResultCards = ({ onOpenCase }) => {
-            const aggregates = [
-                { metric: "28.5%", label: "Avg. Increase in Bookings", icon: TrendingUp, color: "bg-white", border: "border-indigo-100", text: "text-white" }, 
-                { metric: "15-20%", label: "Reduction in Commissions", icon: CheckCircle2, color: "bg-white", border: "border-emerald-100", text: "text-white" },
-                { metric: "4+ Hrs", label: "Regained Weekly", icon: Clock, color: "bg-white", border: "border-blue-100", text: "text-white" }
-            ];
-            return h('section', { className: "py-12 bg-white" },
-                h('div', { className: "container mx-auto px-6 max-w-5xl" },
-                    h('div', { className: "text-center mb-12" },
-                        h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-2" }, "Proven Growth at Scale."),
-                        h('p', { className: "text-slate-500" }, "Average performance metrics across our portfolio of 750+ partner properties.")
-                    ),
-                    h('div', { className: "grid md:grid-cols-3 gap-6" }, aggregates.map((item, i) => 
-                        h(motion.div, { 
-                            key: i, 
-                            initial: { opacity: 0, y: 30 }, 
-                            whileInView: { opacity: 1, y: 0 }, 
-                            viewport: { once: true }, 
-                            transition: { delay: i * 0.1 },
-                            onClick: () => onOpenCase(item),
-                            className: `cursor-pointer hover:scale-105 active:scale-95 rounded-2xl border shadow-lg p-6 flex flex-col items-center text-center transition-all bg-gradient-to-br from-indigo-600 to-violet-600 text-white`
-                        },
-                            h('div', { className: "p-3 rounded-xl bg-white/10 text-white mb-4" }, h(item.icon, { size: 28 })),
-                            h('h3', { className: "text-4xl font-extrabold text-white tracking-tight mb-2" }, item.metric),
-                            h('p', { className: "text-indigo-100 font-medium" }, item.label)
-                        )
-                    ))
-                )
-            );
-        };
-
-        const ProfessionalAdvantageSection = () => {
-            const comparisons = [
-                {
-                    area: "Strategy & Analysis",
-                    diy: "Guesswork based on general trends",
-                    fullyo: "Expert team audit & data-driven blueprint" 
-                },
-                {
-                    area: "Direct Booking Site",
-                    diy: "Generic template, low conversion",
-                    fullyo: "Custom build, high-converting & commission-free" 
-                },
-                {
-                    area: "Multi-Channel Distribution", 
-                    diy: "Manual signup & fragmented listings", 
-                    fullyo: "Complete setup & optimization on 5+ platforms" 
-                },
-                {
-                    area: "Property Management System", 
-                    diy: "Steep learning curve & basic setup",
-                    fullyo: "Full integration & automation architecture" 
-                },
-                {
-                    area: "Growth Marketing",
-                    diy: "Occasional social post, no strategy",
-                    fullyo: "Ads management & direct strategy blueprint" 
+                    title: "Performance Marketer", 
+                    type: "Remote", 
+                    dept: "Growth",
+                    mission: "You control the traffic. Your mission is to manage Google and Meta ad spend to drive direct bookings at a 4x+ ROAS.",
+                    reqs: ["Data-driven mindset (you dream in spreadsheets)", "Experience with travel/hospitality ad campaigns", "Understanding of pixel tracking and attribution"]
                 }
             ];
 
-            return h('section', { className: "py-24 bg-slate-50 border-y border-slate-100" },
-                h('div', { className: "container mx-auto px-6 max-w-5xl" },
-                    // Header
-                    h('div', { className: "text-center mb-16" },
-                        h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "The Professional Advantage"),
-                        h('p', { className: "text-slate-500 max-w-2xl mx-auto" }, "See exactly how partnering with Fullyo transforms your operation from chaotic to streamlined.")
-                    ),
-                    
-                    // Comparison Table Container
-                    h('div', { className: "bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden" },
-                        // Table Header (Hidden on Mobile, Visible on Desktop)
-                        h('div', { className: "hidden md:grid grid-cols-12 gap-4 p-6 bg-slate-50 border-b border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-400" },
-                            h('div', { className: "col-span-4" }, "Area of Focus"),
-                            h('div', { className: "col-span-4 pl-4" }, "The DIY Struggle"),
-                            h('div', { className: "col-span-4 pl-4 text-indigo-600" }, "The Fullyo Solution")
+            return h(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } },
+                h('nav', { className: "border-b border-slate-100 py-4 bg-white sticky top-0 z-50" },
+                    h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
+                        h('div', { onClick: () => onNavigate('home'), className: "flex items-center gap-2 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors group" },
+                            h(ChevronLeft, { size: 20, className: "group-hover:-translate-x-1 transition-transform" }),
+                            h('span', { className: "font-medium text-sm" }, "Back to Home")
                         ),
-
-                        // Rows
-                        h('div', { className: "divide-y divide-slate-100" },
-                            comparisons.map((item, i) => 
-                                h(motion.div, { 
-                                    key: i,
-                                    initial: { opacity: 0, y: 10 },
-                                    whileInView: { opacity: 1, y: 0 },
-                                    viewport: { once: true },
-                                    transition: { delay: i * 0.1 },
-                                    className: "grid md:grid-cols-12 gap-4 p-6 md:p-8 hover:bg-slate-50/50 transition-colors items-center group"
-                                },
-                                    // Area (Col 1)
-                                    h('div', { className: "md:col-span-4 mb-2 md:mb-0" },
-                                        h('h4', { className: "font-bold text-slate-900 text-lg md:text-base" }, item.area)
-                                    ),
-                                    
-                                    // DIY (Col 2)
-                                    h('div', { className: "md:col-span-4 flex items-start gap-3 pl-0 md:pl-4 opacity-70 group-hover:opacity-100 transition-opacity" },
-                                        h(X, { size: 18, className: "text-red-400 mt-1 flex-shrink-0" }),
-                                        h('span', { className: "text-slate-500 text-sm font-medium" }, item.diy)
-                                    ),
-
-                                    // Fullyo (Col 3)
-                                    h('div', { className: "md:col-span-4 flex items-start gap-3 pl-0 md:pl-4 mt-2 md:mt-0" },
-                                        h(CheckCircle2, { size: 18, className: "text-emerald-500 mt-1 flex-shrink-0" }),
-                                        h('span', { className: "text-indigo-900 text-sm font-bold" }, item.fullyo)
-                                    )
-                                )
-                            )
-                        ),
-                        // Footer Hook
-                        h('div', { className: "bg-indigo-50 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6" },
-                            h('div', { className: "flex items-center gap-3" },
-                                h(Rocket, { size: 24, className: "text-indigo-600" }),
-                                h('div', null,
-                                    h('p', { className: "text-sm font-bold text-indigo-900 leading-tight" }, "Fully operational in just 14 days."),
-                                    h('p', { className: "text-xs text-indigo-600/80 mt-1" }, "Stop guessing. Start generating bookings immediately.")
-                                )
-                            ),
-                            h('button', { 
-                                onClick: () => document.getElementById('booking-section').scrollIntoView({ behavior: 'smooth' }),
-                                className: "px-6 py-2 bg-indigo-600 text-white text-sm font-bold rounded-full hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 whitespace-nowrap"
-                            }, "Get the Advantage")
-                        )
+                        h('button', { onClick: () => { onNavigate('home'); setTimeout(() => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), 300); }, className: "px-5 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-colors" }, "Book Strategy Call")
                     )
-                )
-            );
-        };
-
-        const VisualBreakSection = () => {
-            return h('section', { className: "py-32 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 text-white" },
-                h(CircleBackground),
-                h('div', { className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10" }),
-                h('div', { className: "container mx-auto px-6 relative z-10 text-center" },
-                    h('h2', { className: "text-4xl md:text-6xl font-bold mb-6" }, "Total Control. Zero Headaches."),
-                    h('p', { className: "text-xl text-indigo-200 max-w-2xl mx-auto" }, "We build the engine. You drive the car. Or sit in the passenger seat. It's entirely up to you.")
-                )
-            );
-        };
-
-        const ProofStack = ({ onOpenCase }) => {
-            return h('div', null,
-                h(TestimonialsSection),
-                h(BrandMarquee)
-            );
-        };
-
-        const BrandMarquee = () => {
-            const brands = ["Summit Stays", "Coastal Retreats", "Urban Host Co.", "Cabin & Co.", "Alpine Lodging", "Sea to Sky Rentals", "Boutique Homes", "Escape Properties"];
-            return h('section', { className: "py-16 bg-white border-b border-slate-100 overflow-hidden" },
-                h('p', { className: "text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-8 font-display" }, "Trusted by Leading Owners & Managers"),
-                h('div', { className: "relative flex overflow-x-hidden group" },
-                    h('div', { className: "animate-infinite-scroll whitespace-nowrap flex gap-16 px-8" },
-                        [...brands, ...brands].map((brand, i) => h('div', { key: i, className: "text-2xl font-serif italic text-slate-300 font-bold whitespace-nowrap" }, brand))
+                ),
+                h('div', { className: "bg-slate-900 py-20 text-white" },
+                    h('div', { className: "container mx-auto px-6 max-w-4xl text-center" },
+                        h('h1', { className: "text-4xl md:text-5xl font-bold mb-6" }, "Join the Mission."),
+                        h('p', { className: "text-xl text-slate-300 max-w-2xl mx-auto" }, "We are building the operating system for modern hospitality. Come help us restore sanity to property management.")
                     )
-                )
-            );
-        };
-
-        const TestimonialsSection = () => {
-             const testimonials = [
-                { quote: "We were drowning in messages and cleaning schedules. Fullyo's system didn't just get us more bookings, it gave us our weekends back.", author: "Sarah J.", role: "Owner, Mountain View Retreats", stars: 5, color: "bg-indigo-50" },
-                { quote: "The direct booking site they built accounts for 40% of our revenue now. We're saving thousands in Airbnb fees every season.", author: "Michael T.", role: "Property Manager, Coastal Stays", stars: 5, color: "bg-violet-50" },
-                { quote: "Our revenue grew by 40% in the first quarter alone. The ROI on this system is undeniable. It paid for itself in the first month.", author: "James P.", role: "Owner, Lakeside Cabins", stars: 5, color: "bg-blue-50" }
-            ];
-            return h('section', { className: "py-24 bg-white" },
-                h('div', { className: "container mx-auto px-6 max-w-6xl" },
-                    h('h3', { className: "text-2xl font-bold text-center mb-12 text-slate-900" }, "What Our Partners Say"),
-                    h('div', { className: "grid md:grid-cols-3 gap-8" }, testimonials.map((t, i) => 
-                        h(motion.div, { key: i, initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "bg-slate-50 p-8 rounded-3xl relative flex flex-col h-full" },
-                            h(Quote, { className: "absolute top-8 left-8 text-slate-200 w-12 h-12 -z-0" }),
-                            h('div', { className: "relative z-10 flex-1 flex flex-col" },
-                                h('div', { className: "flex gap-1 mb-6 text-yellow-400" }, Array.from({length: t.stars}).map((_, i) => h(Star, { key: i, size: 18, fill: "currentColor" }))),
-                                h('p', { className: "text-lg text-slate-700 font-medium leading-relaxed mb-8 flex-1" }, `"${t.quote}"`),
-                                h('div', { className: "flex items-center gap-4 mt-auto" },
-                                    h('div', { className: `w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-indigo-600 flex-shrink-0` }, h(User, { size: 24 })),
-                                    h('div', null, h('div', { className: "font-bold text-slate-900 text-sm" }, t.author), h('div', { className: "text-slate-500 text-xs" }, t.role))
-                                )
-                            )
-                        )
-                    ))
-                )
-            );
-        };
-
-        const FAQSection = () => {
-            const faqs = [
-                { q: "How long does it take to get the full system?", a: "Our efficient onboarding system is designed for speed. Implementation can be completed in as little as two weeks, but we work at a pace that suits you. The most important thing is that once the system is active, you can start generating new reservations, which for many hosts means a few extra thousand dollars per year." },
-                { q: "What if I already have a website or PMS?", a: "That's great! We can absolutely work with the tools you already have. We'll analyze your current setup to ensure it's performing at its best and seamlessly integrate the rest of our system to enhance its capabilities." },
-                { q: "Do I need to be tech-savvy?", a: "Not at all. We are your technical team. We become part of your tech stack and handle all the complicated stuff so you can focus on creating amazing experiences for your guests." },
-                { q: "What does it cost?", a: "Our services are tailored to your specific needs and budget to deliver the most effective results. It doesn't cost much to get started, and our focus is always on delivering a guaranteed return on your investment." },
-                { q: "How soon can I get started?", a: "We move quickly. Within the same week of contacting us, our process begins with the initial strategy call to build your performance blueprint." }
-            ];
-            const [openIndex, setOpenIndex] = useState(null);
-            return h('section', { className: "py-24 bg-slate-50" },
-                h('div', { className: "container mx-auto px-6 max-w-3xl" },
-                    h('div', { className: "text-center mb-16" }, h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "Common Questions"), h('p', { className: "text-slate-500" }, "Everything you need to know about the Fullyo system.")),
-                    h('div', { className: "space-y-4" }, faqs.map((faq, index) => {
-                        const isOpen = openIndex === index;
-                        return h(motion.div, { key: index, initial: false, className: "bg-white rounded-2xl border border-slate-200 overflow-hidden" },
-                            h('button', { onClick: () => setOpenIndex(isOpen ? null : index), className: "w-full flex items-center justify-between p-6 text-left" },
-                                h('span', { className: "font-bold text-slate-900 text-lg" }, faq.q),
-                                h(motion.div, { animate: { rotate: isOpen ? 180 : 0 }, transition: { duration: 0.2 } }, h(ChevronDown, { className: "text-indigo-500" }))
-                            ),
-                            h(AnimatePresence, {}, isOpen && h(motion.div, { initial: { height: 0, opacity: 0 }, animate: { height: "auto", opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.3 } }, h('div', { className: "px-6 pb-6 text-slate-600 leading-relaxed" }, faq.a)))
-                        )
-                    }))
-                )
-            );
-        };
-
-        const BookingSection = () => {
-            const steps = ["Strategy Call", "Custom Plan", "System Build", "Growth"];
-            return h('section', { id: "booking-section", className: "py-24 bg-white border-t border-slate-100" },
-                h('div', { className: "container mx-auto px-6 max-w-4xl text-center" },
-                    h(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "bg-gradient-to-br from-indigo-900 via-blue-900 to-violet-900 rounded-3xl p-12 md:p-20 shadow-2xl relative overflow-hidden text-white" },
-                        h(CircleBackground),
-                        h('div', { className: "absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:16px_16px]" }),
-                        h('div', { className: "relative z-10 flex flex-col items-center" },
-                            h('h2', { className: "text-4xl md:text-5xl font-bold text-white mb-6" }, "Ready to Scale Your Business?"),
-                            h('p', { className: "text-xl text-indigo-200 mb-10 max-w-2xl mx-auto" }, "Stop trading time for bookings. Join the owners and managers scaling their revenue with the Fullyo system."),
-                            h('div', { className: "flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-10 text-sm md:text-base text-indigo-200 font-medium" },
-                                steps.map((step, i) => [
-                                    h('span', { key: i, className: "flex items-center gap-2" }, h('span', { className: "bg-white text-indigo-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center" }, i + 1), step),
-                                    i < steps.length - 1 && h(ArrowRight, { key: `arrow-${i}`, size: 14, className: "text-indigo-400" })
-                                ])
-                            ),
-                            h('button', { className: "group relative px-8 py-4 bg-white text-indigo-900 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-indigo-500/30 transition-all inline-flex items-center gap-2 mb-10" }, "Book Your Strategy Call", h(ArrowRight, { className: "w-5 h-5 group-hover:translate-x-1 transition-transform text-indigo-600" })),
-                            
-                            // NEW: TEAM FACEPILE SECTION
-                            h('div', { className: "flex flex-col md:flex-row items-center justify-center gap-4 animate-fade-in-up" },
-                                h('div', { className: "flex -space-x-3" },
-                                    [1, 2, 3, 4].map((_, i) => 
-                                        h('div', { key: i, className: "w-12 h-12 rounded-full border-2 border-indigo-800 bg-indigo-100 flex items-center justify-center text-indigo-600 relative z-10 shadow-lg" },
-                                            h(User, { size: 24, strokeWidth: 1.5 })
+                ),
+                h('div', { className: "py-20 bg-white" },
+                    h('div', { className: "container mx-auto px-6 max-w-4xl" },
+                        h('div', { className: "space-y-4" },
+                            jobs.map((job, i) => {
+                                const isOpen = expandedJob === i;
+                                return h(motion.div, { key: i, className: `border border-slate-100 rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'border-indigo-200 shadow-lg bg-white' : 'hover:border-indigo-100'}` },
+                                    h('div', { onClick: () => toggleJob(i), className: "flex items-center justify-between p-6 cursor-pointer bg-white" },
+                                        h('div', null,
+                                            h('h3', { className: "font-bold text-lg text-slate-900" }, job.title),
+                                            h('div', { className: "flex gap-4 mt-1 text-sm text-slate-500" },
+                                                h('span', { className: "flex items-center gap-1" }, h(Briefcase, { size: 14 }), job.dept),
+                                                h('span', { className: "flex items-center gap-1" }, h(MapPin, { size: 14 }), job.type)
+                                            )
+                                        ),
+                                        h(motion.div, { animate: { rotate: isOpen ? 180 : 0 }, transition: { duration: 0.2 } }, 
+                                            h(ChevronDown, { className: "text-slate-400" })
+                                        )
+                                    ),
+                                    h(AnimatePresence, {}, 
+                                        isOpen && h(motion.div, { initial: { height: 0 }, animate: { height: "auto" }, exit: { height: 0 } },
+                                            h('div', { className: "px-6 pb-8 pt-2 border-t border-slate-50 bg-slate-50/50" },
+                                                h('div', { className: "mb-6" },
+                                                    h('h4', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2" }, "The Mission"),
+                                                    h('p', { className: "text-slate-700 leading-relaxed" }, job.mission)
+                                                ),
+                                                h('div', { className: "mb-8" },
+                                                    h('h4', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2" }, "Requirements"),
+                                                    h('ul', { className: "list-disc pl-5 space-y-1 text-slate-600" },
+                                                        job.reqs.map((req, r) => h('li', { key: r }, req))
+                                                    )
+                                                ),
+                                                h('button', { 
+                                                    onClick: () => openApplication(job.title),
+                                                    className: "px-6 py-3 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200" 
+                                                }, "Apply for this Position")
+                                            )
                                         )
                                     )
-                                ),
-                                h('div', { className: "text-center md:text-left" },
-                                    h('p', { className: "text-base font-bold text-white" }, "Speak directly with our specialists."),
-                                    h('p', { className: "text-xs text-indigo-300 font-medium" }, "No sales pressure. Just strategy.")
                                 )
-                            ),
-
-                            h('p', { className: "mt-12 text-sm text-indigo-200/60" }, "Let's see if we can help. Just an honest conversation.")
+                            })
+                        ),
+                        h('div', { className: "mt-12 text-center" },
+                            h('p', { className: "text-slate-500 mb-4" }, "Don't see your role?"),
+                            h('button', { onClick: () => openApplication("Open Application"), className: "text-indigo-600 font-bold hover:underline" }, "Send us an open application")
                         )
                     )
+                ),
+                
+                h(AnimatePresence, {},
+                    applicationModalOpen && h(ApplicationModal, { 
+                        jobTitle: selectedJobTitle, 
+                        onClose: () => setApplicationModalOpen(false) 
+                    })
+                ),
+
+                h(Footer, { onNavigate })
+            );
+        };
+
+        // --- 6. MAIN FUNNEL (AGGREGATES COMPONENTS) ---
+
+        const MainFunnel = ({ onNavigate }) => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [activeCaseStudy, setActiveCaseStudy] = useState(null);
+
+            useEffect(() => {
+                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const scrollToBooking = () => {
+                const element = document.getElementById('booking-section');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return h(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } },
+                h('nav', { className: `fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-indigo-900/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}` },
+                    h('div', { className: "container mx-auto px-6 flex justify-between items-center" },
+                        h('div', { 
+                            className: "text-3xl font-extrabold tracking-tighter cursor-pointer text-white hover:opacity-80 transition-opacity", 
+                            onClick: () => window.scrollTo(0,0) 
+                        }, "Fullyo."),
+                        h('button', { onClick: scrollToBooking, className: "hidden md:flex items-center gap-2 px-6 py-2.5 bg-white text-indigo-900 rounded-full font-medium text-sm hover:bg-indigo-50 transition-all hover:scale-105 active:scale-95 shadow-lg" }, "Partner With Us")
+                    )
+                ),
+                h(HeroSection, { onCta: scrollToBooking }),
+                h(TheSystem), 
+                h(ResultCards, { onOpenCase: setActiveCaseStudy }), 
+                h(ProfessionalAdvantageSection),
+                h(VisualBreakSection),
+                h(ProofStack), 
+                h(FAQSection),
+                h(BookingSection),
+                h(Footer, { onNavigate }),
+                
+                h(AnimatePresence, {},
+                    activeCaseStudy && h(CaseStudyModal, { 
+                        key: 'modal', 
+                        data: activeCaseStudy, 
+                        onClose: () => setActiveCaseStudy(null),
+                        onBook: () => { setActiveCaseStudy(null); setTimeout(scrollToBooking, 300); }
+                    })
                 )
             );
         };
 
-        const Footer = ({ onNavigate }) => {
-            return h('footer', { className: "bg-slate-900 pt-20 pb-10 border-t border-slate-800" },
-                h('div', { className: "container mx-auto px-6" },
-                    h('div', { className: "flex flex-wrap justify-center gap-8 mb-20 opacity-30 text-white" },
-                        h('div', { className: "font-bold text-xl font-display" }, "Airbnb"),
-                        h('div', { className: "font-bold text-xl font-display" }, "VRBO"),
-                        h('div', { className: "font-bold text-xl font-display" }, "Booking.com"),
-                        h('div', { className: "font-bold text-xl font-display" }, "Expedia")
-                    ),
-                    h('div', { className: "grid md:grid-cols-4 gap-12 mb-16" },
-                        h('div', null,
-                            h('div', { className: "text-3xl font-bold tracking-tighter mb-6 text-white" }, "Fullyo."),
-                            h('p', { className: "text-slate-400 text-sm leading-relaxed mb-6" }, "The premier growth partner for owners and managers who value their time."),
-                            h('div', { className: "flex gap-4 text-slate-400" }, h(Mail, { size: 20 }), h(MapPin, { size: 20 }))
-                        ),
-                        h('div', null, h('h4', { className: "font-bold text-white mb-6" }, "Solutions"), h('ul', { className: "space-y-4 text-sm text-slate-400" }, Object.keys(servicesData).map(k => h('li', { key: k, onClick: () => onNavigate(`service-${k}`), className: "hover:text-indigo-400 cursor-pointer transition-colors" }, servicesData[k].title)))),
-                        h('div', null, h('h4', { className: "font-bold text-white mb-6" }, "Company"), h('ul', { className: "space-y-4 text-sm text-slate-400" }, [
-                            h('li', { onClick: () => onNavigate('home'), className: "hover:text-indigo-400 cursor-pointer" }, "Case Studies"),
-                            h('li', { onClick: () => onNavigate('about'), className: "hover:text-indigo-400 cursor-pointer" }, "About Us"),
-                            h('li', { onClick: () => onNavigate('home'), className: "hover:text-indigo-400 cursor-pointer" }, "Careers"),
-                            h('li', { onClick: () => document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}), className: "hover:text-indigo-400 cursor-pointer" }, "Contact")
-                        ])),
-                        h('div', null, h('h4', { className: "font-bold text-white mb-6" }, "Get in Touch"), h('ul', { className: "space-y-4 text-sm text-slate-400" }, [h('li', { className: "flex items-center gap-2" }, h(Mail, { size: 16 }), "hello@fullyo.com"), h('li', { className: "flex items-center gap-2" }, h(Phone, { size: 16 }), "+1 (555) 123-4567")]))
-                    ),
-                    h('div', { className: "pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center opacity-60 text-sm text-slate-400" }, h('p', null, "© 2024 Fullyo Inc. All rights reserved."), h('div', { className: "flex gap-6 mt-4 md:mt-0" }, h('span', null, "Privacy Policy"), h('span', null, "Terms of Service")))
+        // --- 7. ROUTER (MUST BE LAST) ---
+        
+        const FullyoApp = () => {
+            const [currentRoute, setCurrentRoute] = useState('home');
+
+            const navigateTo = (route) => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setCurrentRoute(route);
+            };
+
+            let PageComponent;
+            let pageKey = null;
+
+            if (currentRoute === 'home') {
+                PageComponent = MainFunnel;
+            } else if (currentRoute === 'about') {
+                PageComponent = AboutPage;
+            } else if (currentRoute === 'case-studies') {
+                PageComponent = CaseStudiesPage;
+            } else if (currentRoute === 'careers') {
+                PageComponent = CareersPage;
+            } else if (currentRoute.startsWith('service-')) {
+                PageComponent = ServicePage;
+                pageKey = currentRoute.replace('service-', '');
+            } else {
+                PageComponent = MainFunnel;
+            }
+
+            return h('div', { className: "min-h-screen bg-white text-slate-900 font-sans overflow-x-hidden" },
+                h(AnimatePresence, { mode: "wait" },
+                    h(PageComponent, { 
+                        key: currentRoute, 
+                        serviceKey: pageKey, 
+                        onNavigate: navigateTo 
+                    })
                 )
             );
         };
