@@ -336,40 +336,47 @@
             );
         };
 
+        // --- UPDATED: Professional Advantage Section ("The Live Roadmap") ---
         const ProfessionalAdvantageSection = () => {
             const [expandedIndex, setExpandedIndex] = useState(null);
             const toggleRow = (index) => { setExpandedIndex(expandedIndex === index ? null : index); };
 
+            // DATA: Refined for "Done With You" nuance & Upsell hints
             const projects = [
                 {
-                    action: "Strategic Listing Optimization",
+                    action: "Strategic Listing Optimization", 
                     status: "Audit Completed",
-                    doneForYou: "We executed a deep-dive analysis, defined your ideal guest avatar, and delivered a data-driven revenue blueprint to maximize your listing's potential.",
-                    diyReality: "DIY Reality: Guessing prices based on neighbors, writing generic copy, and leaving significant revenue on the table due to lack of data."
+                    timeframe: "Days 1-3",
+                    ourExecution: "We conduct the deep-dive analysis and deliver a data-driven revenue blueprint. We define the strategy; you approve the direction.",
+                    diyReality: "DIY Reality: Guessing prices based on neighbors and leaving 20% revenue on the table."
                 },
                 {
-                    action: "Direct Booking Website Design",
+                    action: "Direct Booking Website Design", 
                     status: "Built & Launched",
-                    doneForYou: "We designed and coded a high-converting, commission-free website that gives you full ownership of your brand and guest data.",
-                    diyReality: "DIY Reality: Weeks of frustration with generic templates, dealing with broken plugins, and struggling to get the payment gateway to work."
+                    timeframe: "Days 4-7",
+                    ourExecution: "We design, code, and launch your high-converting website. Complete technical setup included.",
+                    diyReality: "DIY Reality: Weeks of frustration with templates, broken plugins, and payment gateway errors."
                 },
                 {
-                    action: "5x Multi-Channel Distribution",
-                    status: "Setup Complete",
-                    doneForYou: "We handled the complex application and setup process for 5+ major platforms. Your calendar is now fully synchronized 24/7 across all channels.",
-                    diyReality: "DIY Reality: Manually creating listings on every site, updating 4+ calendars daily by hand, and living in fear of double bookings."
+                    action: "5x Multi-Channel Distribution", 
+                    status: "Setup & Sync",
+                    timeframe: "Days 7-10",
+                    ourExecution: "We handle the technical application and sync across 5+ platforms. *Requires your validation for identity checks.*", // Honest partnership
+                    diyReality: "DIY Reality: Manually updating 4 calendars daily and risking double bookings."
                 },
                 {
-                    action: "PMS & Command Center Integration",
+                    action: "PMS & Command Center Integration", 
                     status: "System Integrated",
-                    doneForYou: "We architected your entire backend, connecting your PMS, smart locks, and cleaning schedules into one automated 'Command Center'.",
-                    diyReality: "DIY Reality: Logging into ten different apps to manage one guest, missing messages, and manually texting cleaners."
+                    timeframe: "Days 10-12",
+                    ourExecution: "We architect the entire backend, connecting smart locks and cleaning schedules into one dashboard for you.",
+                    diyReality: "DIY Reality: Logging into ten different apps to manage one guest."
                 },
                 {
-                    action: "Growth Marketing Plan",
-                    status: "Campaigns Active",
-                    doneForYou: "We deployed your direct booking strategy and launched targeted ad campaigns to drive traffic exactly when you need it.",
-                    diyReality: "DIY Reality: Posting sporadically on social media without a strategy, boosting posts blindly, and seeing zero return on investment."
+                    action: "Growth Marketing Plan", 
+                    status: "Strategy Deployed",
+                    timeframe: "Day 14",
+                    ourExecution: "We deliver your custom direct booking playbook and assets. *Full social media management available as an add-on.*", // Upsell pivot
+                    diyReality: "DIY Reality: Posting sporadically with no strategy and zero ROI tracking."
                 }
             ];
 
@@ -377,44 +384,96 @@
                 h('div', { className: "container mx-auto px-6 max-w-4xl" },
                     h('div', { className: "text-center mb-16" },
                         h('h2', { className: "text-3xl md:text-4xl font-bold text-slate-900 mb-4" }, "The Professional Advantage"),
-                        h('p', { className: "text-slate-500 max-w-2xl mx-auto" }, "See exactly how partnering with Fullyo transforms your operation. We don't just advise; we execute.")
+                        h('p', { className: "text-slate-500 max-w-2xl mx-auto" }, "From chaos to clarity in 2 weeks. See exactly how we execute your transformation.")
                     ),
-                    h('div', { className: "bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden" },
-                        h('div', { className: "bg-slate-900 p-5 md:p-6 flex justify-between items-center border-b border-slate-800" },
+                    
+                    // "Roadmap" Container
+                    h('div', { className: "bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden relative" },
+                        
+                        // Header
+                        h('div', { className: "bg-slate-50 p-6 flex justify-between items-center border-b border-slate-200" },
                             h('div', { className: "flex items-center gap-3" },
-                                h(CheckCircle2, { size: 20, className: "text-emerald-400" }),
-                                h('span', { className: "text-white font-bold tracking-wider text-sm uppercase" }, "Execution Log")
+                                h('div', { className: "bg-indigo-600 p-2 rounded-lg text-white" }, h(Briefcase, { size: 18 })),
+                                h('div', null,
+                                    h('h3', { className: "text-slate-900 font-bold text-sm uppercase tracking-wider" }, "Execution Roadmap"),
+                                    h('p', { className: "text-xs text-slate-500" }, "The 14-Day Transformation")
+                                )
                             ),
-                            h('span', { className: "text-slate-400 text-xs font-mono hidden md:block" }, "System ID: F-750-PRO")
+                            h('div', { className: "hidden md:flex items-center gap-2 px-3 py-1 bg-emerald-50 rounded-full border border-emerald-100" },
+                                h(CheckCircle2, { size: 14, className: "text-emerald-500" }),
+                                h('span', { className: "text-emerald-700 font-bold text-xs uppercase" }, "Active Partnership")
+                            )
                         ),
-                        h('div', { className: "divide-y divide-slate-100" },
-                            projects.map((item, i) => {
-                                const isOpen = expandedIndex === i;
-                                return h(motion.div, { key: i, initial: false, className: `transition-colors duration-300 ${isOpen ? 'bg-indigo-50/30' : 'hover:bg-slate-50'}` },
-                                    h('div', { onClick: () => toggleRow(i), className: "p-6 md:p-8 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4" },
-                                        h('div', { className: "flex items-start gap-4" },
-                                            h('div', { className: `mt-1 transition-transform duration-300 ${isOpen ? 'rotate-90 text-indigo-600' : 'text-slate-300'}` }, h(ChevronRight, { size: 20 })),
-                                            h('div', null, h('h4', { className: "font-bold text-slate-900 text-lg" }, item.action), h('p', { className: "text-sm text-slate-500 mt-1 md:hidden" }, item.status))
-                                        ),
-                                        h('div', { className: "hidden md:flex" },
-                                            h('div', { className: "inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-100" },
-                                                h('span', { className: "relative flex h-2 w-2" }, h('span', { className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" }), h('span', { className: "relative inline-flex rounded-full h-2 w-2 bg-emerald-500" })),
-                                                item.status
+                        
+                        // Rows
+                        h('div', { className: "relative" },
+                            // The Vertical Timeline Line (Visual Connector)
+                            h('div', { className: "absolute left-[29px] md:left-[45px] top-6 bottom-6 w-0.5 bg-slate-100 z-0" }),
+
+                            h('div', { className: "divide-y divide-slate-100 relative z-10" },
+                                projects.map((item, i) => {
+                                    const isOpen = expandedIndex === i;
+                                    return h(motion.div, { key: i, initial: false, className: `transition-colors duration-300 ${isOpen ? 'bg-indigo-50/30' : 'hover:bg-slate-50'}` },
+                                        // Row Header
+                                        h('div', { onClick: () => toggleRow(i), className: "p-6 md:p-8 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4" },
+                                            h('div', { className: "flex items-start gap-4 md:gap-6" },
+                                                // Numbered Step (The Timeline Node)
+                                                h('div', { className: `w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors duration-300 ${isOpen ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-slate-200 text-slate-400'}` }, 
+                                                    i + 1
+                                                ),
+                                                h('div', null, 
+                                                    h('h4', { className: "font-bold text-slate-900 text-lg" }, item.action),
+                                                    // Mobile Timeframe
+                                                    h('p', { className: "text-xs font-medium text-indigo-500 mt-1 md:hidden" }, item.timeframe)
+                                                )
+                                            ),
+                                            
+                                            // Desktop Status (Timeframe Badge)
+                                            h('div', { className: "hidden md:flex items-center gap-4" },
+                                                h('span', { className: "text-sm text-slate-400 font-medium" }, item.timeframe),
+                                                h('div', { className: `transition-transform duration-300 text-slate-300 ${isOpen ? 'rotate-90 text-indigo-600' : ''}` }, 
+                                                    h(ChevronRight, { size: 20 })
+                                                )
                                             )
-                                        )
-                                    ),
-                                    h(AnimatePresence, {}, isOpen && h(motion.div, { initial: { height: 0, opacity: 0 }, animate: { height: "auto", opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.3 } },
-                                        h('div', { className: "px-6 pb-8 md:px-16 md:pb-8 pt-0 grid md:grid-cols-2 gap-8" },
-                                            h('div', null, h('h5', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2 flex items-center gap-2" }, h(Check, { size: 14 }), "Done For You"), h('p', { className: "text-slate-700 text-sm leading-relaxed" }, item.doneForYou)),
-                                            h('div', { className: "bg-slate-100 rounded-xl p-4 border border-slate-200" }, h('h5', { className: "text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-2" }, h(AlertCircle, { size: 14 }), "The Alternative"), h('p', { className: "text-slate-600 text-sm leading-relaxed italic" }, item.diyReality))
-                                        )
-                                    ))
-                                );
-                            })
+                                        ),
+                                        // Expanded Content
+                                        h(AnimatePresence, {}, isOpen && h(motion.div, { initial: { height: 0, opacity: 0 }, animate: { height: "auto", opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.3 } },
+                                            h('div', { className: "pl-16 pr-6 pb-8 md:pl-24 md:pr-16 md:pb-8 pt-0 grid md:grid-cols-2 gap-8" },
+                                                // Left: Our Execution
+                                                h('div', null, 
+                                                    h('h5', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2 flex items-center gap-2" }, "Our Execution"), 
+                                                    h('p', { className: "text-slate-700 text-sm leading-relaxed" }, item.ourExecution)
+                                                ),
+                                                // Right: Contrast
+                                                h('div', { className: "bg-slate-100 rounded-xl p-4 border border-slate-200" }, 
+                                                    h('h5', { className: "text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-2" }, h(AlertCircle, { size: 14 }), "The DIY Alternative"), 
+                                                    h('p', { className: "text-slate-600 text-sm leading-relaxed italic" }, item.diyReality)
+                                                )
+                                            )
+                                        ))
+                                    );
+                                })
+                            )
                         ),
-                        h('div', { className: "bg-indigo-50 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6" },
-                            h('div', { className: "flex items-center gap-3" }, h(Rocket, { size: 24, className: "text-indigo-600" }), h('div', null, h('p', { className: "text-sm font-bold text-indigo-900 leading-tight" }, "Fully operational in just 14 days."), h('p', { className: "text-xs text-indigo-600/80 mt-1" }, "Stop guessing. Start generating bookings immediately."))),
-                            h('button', { onClick: () => document.getElementById('booking-section').scrollIntoView({ behavior: 'smooth' }), className: "px-6 py-2 bg-indigo-600 text-white text-sm font-bold rounded-full hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 whitespace-nowrap" }, "Get the Advantage")
+
+                        // The "14-Day Sprint" Timeline Footer
+                        h('div', { className: "bg-slate-900 p-8 border-t border-slate-800 text-white" },
+                            h('div', { className: "flex flex-col md:flex-row items-center justify-between gap-6 mb-4" },
+                                h('div', { className: "flex items-center gap-3" },
+                                    h(Rocket, { size: 24, className: "text-emerald-400" }),
+                                    h('span', { className: "font-bold text-lg" }, "Rapid Deployment Cycle")
+                                ),
+                                h('span', { className: "text-emerald-400 font-mono font-bold" }, "14 Days Total")
+                            ),
+                            // Visual Timeline Bar
+                            h('div', { className: "relative h-2 bg-slate-700 rounded-full w-full overflow-hidden" },
+                                h('div', { className: "absolute left-0 top-0 h-full bg-gradient-to-r from-indigo-500 to-emerald-400 w-full" }) // Full bar for effect
+                            ),
+                            h('div', { className: "flex justify-between text-xs text-slate-400 mt-2 font-mono" },
+                                h('span', null, "Day 1: Kickoff"),
+                                h('span', null, "Day 7: Build"),
+                                h('span', null, "Day 14: Launch")
+                            )
                         )
                     )
                 )
@@ -989,7 +1048,7 @@
                                         )
                                     ),
                                     h(AnimatePresence, {}, 
-                                        isOpen && h(motion.div, { initial: { height: 0 }, animate: { height: "auto" }, exit: { height: 0 } },
+                                        isOpen && h(motion.div, { initial: { height: 0 }, animate: { height: "auto", opacity: 1 }, exit: { height: 0 } },
                                             h('div', { className: "px-6 pb-8 pt-2 border-t border-slate-50 bg-slate-50/50" },
                                                 h('div', { className: "mb-6" },
                                                     h('h4', { className: "text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2" }, "The Mission"),
