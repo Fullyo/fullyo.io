@@ -88,112 +88,201 @@ We operate with a single rule: **High Concierge Care.** This means that while we
 
 ## 4. The Fullyo System — 5 Pillars
 
+**Site sub-headline:** Our strategic framework for maximizing short-term rental performance through data, technology, and marketing.
+
 The core offer. Marketed as "One System. Five Essential Pillars." — an all-in-one ecosystem for owners and property managers serious about sustainable growth.
 
 ---
 
-### Pillar 01 — Strategic Listing Optimization
+### Pillar 01 — Strategic Analysis
 
-**Tag:** Fullyo Pillar #1  
-**Icon:** BarChart3
+**Tag:** Fullyo Pillar #1
 
 **Description:**  
-We conduct a deep dive into your business — identifying what works and what doesn't, defining your ideal guest avatar, and using powerful tools to uncover key areas for improvement.
-
-**Why It Comes First:**  
-You can't improve what you don't measure. Before we run ads or build websites, we build a custom blueprint based on data, not guesswork.
+Strategic analysis is rarely done thoroughly in short-term rentals, yet it is essential to remove guesswork and make informed decisions.
 
 **What's Included:**
 - Identify revenue leaks in your current listing
-- Competitor price benchmarking
+- Competitor price benchmarking analysis
 - Ideal Guest Avatar definition
 - Custom Performance Blueprint creation
 
-**Result:** Average 28.5% increase in performance.
+**Result:** 28.5% average increase
 
 ---
 
-### Pillar 02 — Direct Booking Website Design
+**Problem vs. Solution**
 
-**Tag:** Fullyo Pillar #2  
-**Icon:** Globe
+| The Problem | The Fullyo Solution |
+|---|---|
+| Strategic decisions are made without access to reliable market data | Decisions are informed by professional-grade data and market intelligence |
+| Optimization relies on trial and error | AI is leveraged to surface patterns and opportunities |
+| No external validation of pricing, positioning, or performance | Industry experts interpret the data and apply proven strategies |
 
-**Description:**  
-Stop losing money to commissions. We build a beautiful, commission-free direct booking website that acts as your most profitable channel, putting you back in control of your brand.
+**Impact Without Strategic Analysis:**
+- Missed booking opportunities
+- Properties underperforming their true potential
+- Inconsistent results across seasons and platforms
 
-**Why It Matters:**  
-Relying solely on Airbnb and VRBO exposes your business to algorithm changes and policy shifts. A direct booking website is your insurance policy.
-
-**What's Included:**
-- Seamless PMS Integration
-- Automated Upsells & Add-ons
-- Mobile-First & Speed Optimized
-- Full Guest Data Capture (Email/Phone)
-
-**Result:** Up to 18% increase in profit margin.
-
----
-
-### Pillar 03 — 5x Multi-Channel Distribution
-
-**Tag:** Fullyo Pillar #3  
-**Icon:** Share2
-
-**Description:**  
-The Airbnb-only era is over. We ensure you're visible on at least five key channels where your ideal guests are searching, turning them all into a powerful funnel.
-
-**Why It Matters:**  
-We synchronize your calendar and pricing across Airbnb, VRBO, Booking.com, Expedia, and niche sites. Never miss a booking because you weren't seen.
-
-**What's Included:**
-- Sync across 5+ Major OTAs
-- Zero Double-Bookings Guarantee
-- Centralized Calendar Management
-- Niche Site Listing (e.g., Glamping Hub, Pet-Friendly)
-
-**Result:** Visible on 5 key channels where guests are searching.
+**Outcome With Strategic Analysis:**
+- Clear, data-backed direction
+- Optimized positioning and pricing
+- Stronger, more predictable performance
 
 ---
 
-### Pillar 04 — PMS & Command Center Integration
+### Pillar 02 — Direct Booking Site
 
-**Tag:** Fullyo Pillar #4  
-**Icon:** LayoutDashboard
+**Tag:** Fullyo Pillar #2
 
 **Description:**  
-We centralize your entire operation into one powerful dashboard. Whether integrating with your existing PMS or setting you up with our preferred system, we synchronize your business.
-
-**Why It Matters:**  
-This allows us to automate everything from messaging to cleaning schedules, saving you hours every week so you can focus on growth.
+Without a direct booking site, properties operate at the mercy of third-party platforms — limiting control, guest data ownership, and long-term sustainability.
 
 **What's Included:**
-- Unified Inbox for all channels
-- Automated Guest Messaging
-- Cleaner & Maintenance Scheduling
-- Dynamic Pricing Tool Integration
+- Increase reservations by 15–35%
+- Eliminate 15–20% OTA commission fees
+- Own your guest data (email & phone)
+- Full brand control — no algorithm changes
 
-**Result:** Saves 4–12+ hours per week.
+**Result:** 15–35% more reservations
 
 ---
 
-### Pillar 05 — Growth Marketing Plan
+**Problem vs. Solution**
 
-**Tag:** Fullyo Pillar #5  
-**Icon:** Megaphone
+| The Problem | The Fullyo Solution |
+|---|---|
+| 15–25% commission leakage on every third-party booking | Commission-free direct bookings that protect margins |
+| Guest data is controlled by platforms | Full ownership of guest data for future remarketing |
+| Booking visibility depends on platform algorithms | Independent booking channel not affected by algorithm changes |
+| No true brand presence outside marketplaces | A standalone branded site built for direct conversion |
+
+**Impact Without a Direct Booking Site:**
+- Reduced profitability due to ongoing commissions
+- No ability to re-engage past guests directly
+- Long-term dependency on external platforms
+
+**Outcome With a Direct Booking Site:**
+- Higher net revenue per reservation
+- Repeat bookings driven by owned guest relationships
+- A more resilient, independent business model
+
+---
+
+### Pillar 03 — 5× Multi-Channel Distribution
+
+**Tag:** Fullyo Pillar #3
 
 **Description:**  
-A great system requires a powerful plan. We go beyond just a document; we execute a dynamic marketing strategy to build your property into a sought-after brand.
-
-**Why It Matters:**  
-We use email marketing, social media retargeting, and strategic partnerships to fill your calendar during shoulder seasons.
+Relying on a single booking channel limits visibility and exposes the business to risk, as ideal guests search and book across multiple platforms.
 
 **What's Included:**
-- Email Marketing Campaigns
-- Social Media Retargeting Ads
-- Influencer Partnership Strategy
-- Repeat Guest Loyalty Programs
+- Airbnb, VRBO, Booking.com, Google, Expedia
+- Niche platform access (Glamping Hub, pet-friendly)
+- Reach guests who never search Airbnb
+- 5 channels is the new industry baseline
 
-**Result:** 10–30% increase in direct bookings.
+**Result:** 5 channels minimum
+
+**Full Platform List:**  
+Agoda · VRBO · Homes & Villas by Marriott Bonvoy · GlampingHub · Expedia · Booking.com · Airbnb · Google Vacation Rentals · Hopper Homes · Trip.com · bnbfinder · Plum Guide
+
+---
+
+**Problem vs. Solution**
+
+| The Problem | The Fullyo Solution |
+|---|---|
+| Distribution is limited to one or two preferred platforms | Listings are distributed across 5+ major booking channels |
+| Channel choice reflects operator preference | Channel strategy aligns with actual guest booking behavior |
+| Dependence on a single platform increases vulnerability | Diversified exposure reduces volatility and risk |
+| Demand is missed from guests using other platforms | Broader reach captures additional booking opportunities |
+
+**Impact Without Multi-Channel Distribution:**
+- Missed bookings from guests searching elsewhere
+- Inconsistent occupancy due to limited visibility
+- Higher exposure to platform changes or restrictions
+
+**Outcome With 5× Multi-Channel Distribution:**
+- Increased visibility aligned with guest behavior
+- More consistent demand across seasons
+- Reduced reliance on any single platform
+
+---
+
+### Pillar 04 — Command Center (PMS)
+
+**Tag:** Fullyo Pillar #4
+
+**Description:**  
+While multi-channel distribution increases visibility, it requires a centralized system to keep operations synchronized and automated.
+
+**What's Included:**
+- All-in-one dashboard — control everything from one place
+- Unified inbox — all messages from all channels
+- Zero double-bookings across all platforms
+- Automated guest messaging & cleaning schedules
+
+**Result:** Save 4+ hours weekly
+
+---
+
+**Problem vs. Solution**
+
+| The Problem | The Fullyo Solution |
+|---|---|
+| Multiple platforms require separate management | A single command center connecting all channels |
+| Manual updates increase errors and inefficiency | Automated synchronization across calendars and messaging |
+| Disconnected systems lead to operational stress | Streamlined workflows designed to scale |
+| Higher risk of double bookings | Real-time updates across all listings |
+
+**Impact Without a Command Center:**
+- Increased operational workload
+- Higher risk of errors and double bookings
+- Inconsistent guest communication
+
+**Outcome With a Command Center:**
+- Centralized control across all channels
+- Time savings through automation
+- More reliable operations and better guest experience
+
+---
+
+### Pillar 05 — Growth Marketing
+
+**Tag:** Fullyo Pillar #5
+
+**Description:**  
+Most short-term rental properties operate without even a basic marketing system in place, limiting their ability to generate consistent demand or grow beyond the platforms they rely on.
+
+**What's Included:**
+- Email marketing campaigns to past guests
+- Social media retargeting ads
+- Shoulder season calendar filling
+- Repeat guest loyalty programs
+
+**Result:** 10–30% direct booking growth
+
+---
+
+**Problem vs. Solution**
+
+| The Problem | The Fullyo Solution |
+|---|---|
+| No structured marketing foundation exists | A direct booking growth strategy blueprint |
+| Marketing efforts are minimal or ad hoc | Clear short-, mid-, and long-term growth strategies |
+| Past guests are not leveraged for future bookings | Systematic use of owned guest data |
+| Demand relies heavily on third-party platforms | Direct demand generation outside marketplaces |
+
+**Impact Without Growth Marketing:**
+- Little to no repeat business
+- Continued dependency on platforms for demand
+- Limited ability to grow beyond current performance
+
+**Outcome With Growth Marketing:**
+- A clear marketing foundation to build from
+- Increasing direct demand over time
+- More control over long-term growth
 
 ---
 
