@@ -54,7 +54,7 @@ A consolidated brand reference for use in Claude (Managed Agent) system prompts 
 - **1,000+** properties optimized
 - **10+** years of expertise
 - **12+** countries served
-- **750+** properties / **$15M+** revenue generated (founder section)
+- **750+** properties (founder section)
 - Sample case results: +55% direct bookings (Aspen Chalet), 95% occupancy (Malibu Villa), 10+ hrs/wk saved (NYC Loft), +42% revenue (Mountain View Retreats), 98% direct bookings (Coastal Stays), $120k (Desert Modern), +60% occupancy (Lakeside Collective).
 
 ## 7. Tech Ecosystem (Integrations)
