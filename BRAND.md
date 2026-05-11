@@ -1,116 +1,482 @@
-# Fullyo — Brand Profile
+# Fullyo — Complete Brand Guide
 
-A consolidated brand reference for use in Claude (Managed Agent) system prompts and downstream content/marketing tools. Extracted from `index.html` on branch `claude/extract-brand-info-1OV9T`.
-
----
-
-## 1. Identity
-
-- **Name:** Fullyo (legal: Fullyo Inc.)
-- **Domain:** fullyo.io  |  **Contact:** hello@fullyo.com
-- **Tagline (primary):** *The Property Growth Agency*
-- **Hero headline:** *Focus on your guests, we automate the rest.*
-- **Brand promise line:** *Fully Booked. Fully In Control.*
-- **One-liner:** The premier growth partner for short-term rental owners and property managers who value their time.
-- **Category:** Hospitality / short-term rental (STR) growth agency — concierge service + tech implementation, not a SaaS product.
-
-## 2. Mission & Philosophy
-
-- **Mission:** Build the operating system for modern hospitality and restore sanity to property management.
-- **Origin story (founder note):** Founded after seeing too many property owners stuck in the "Host Trap" — spending all day messaging guests, syncing calendars manually, and worrying about the next booking. Goal: build a partner, not just a tool.
-- **Operating principle:** *High Concierge Care* — advanced automation + enterprise systems without losing the human touch.
-- **Positioning slogan:** *High Tech. High Touch.*
-- **Built by hosts, for hosts.**
-
-## 3. Core Values
-
-1. **Strategy First** — custom revenue blueprint per property type; no "just turn on ads."
-2. **Concierge Support** — direct team access, no ticketing systems.
-3. **Total Transparency** — real-time reporting on bookings, revenue, ad spend.
-4. **Data over guesswork** — "You can't improve what you don't measure."
-5. **Independence** — help owners escape over-reliance on OTAs (Airbnb/VRBO).
-
-## 4. The Offer — "The Fullyo System" (5 Pillars)
-
-1. **Strategic Listing Optimization** — deep-dive audit, ideal guest avatar, competitor benchmarking, performance blueprint. *(Avg 28.5% performance lift.)*
-2. **Direct Booking Website Design** — commission-free booking engine, PMS integration, upsells, mobile-first, guest data capture. *(Up to 18% margin lift.)*
-3. **5x Multi-Channel Distribution** — sync across Airbnb, VRBO, Booking.com, Expedia + niche sites (Glamping Hub, Pet-Friendly). Zero double-booking guarantee.
-4. **PMS & Command Center Integration** — unified inbox, automated guest messaging, cleaner/maintenance scheduling, dynamic pricing. *(Saves 4–12+ hours/week.)*
-5. **Growth Marketing Plan** — email, social retargeting, influencer partnerships, repeat-guest loyalty. *(10–30% direct booking lift.)*
-
-**Strategic target mix:** ~50/50 split between direct bookings and OTAs.
-
-## 5. Target Audience ("Who We Help Best")
-
-- The First-Time Host
-- The Owner-Host (1–10 properties)
-- The Growing Manager (scaling fast)
-- The Established Manager (volume optimization)
-- The Boutique Hotelier (independent hotels)
-- The Adventure Operator (surf camps, lodges, retreats)
-
-## 6. Proof / Social Proof
-
-- **1,000+** properties optimized
-- **10+** years of expertise
-- **12+** countries served
-- **750+** properties (founder section)
-- Sample case results: +55% direct bookings (Aspen Chalet), 95% occupancy (Malibu Villa), 10+ hrs/wk saved (NYC Loft), +42% revenue (Mountain View Retreats), 98% direct bookings (Coastal Stays), $120k (Desert Modern), +60% occupancy (Lakeside Collective).
-
-## 7. Tech Ecosystem (Integrations)
-
-- **PMS:** Guesty, Hostaway, OwnerRez, Hospitable, Lodgify, Uplisting
-- **Pricing/Revenue:** PriceLabs, Wheelhouse, Beyond, KeyData, AirDNA, Rankbreeze
-- **Ops/Safety:** Breezeway, Superhog, Safely, Autohost, Turno, Minut
-
-## 8. Team
-
-- **Founder & Head of Strategy** (placeholder name in site)
-- Alysia — Business Development
-- Jenn — PMS Integration Specialist
-- Lola — Web Development Lead
-- Azim — Paid Media Specialist
-- Dave — Content & Video Strategy
-- +12 support & tech specialists
-
-## 9. Visual Identity
-
-- **Primary palette:**
-  - Indigo 600 `#4F46E5` (primary brand) → deep gradient `indigo-900 → blue-900 → violet-900` for hero/dark sections
-  - Slate 900 `#0F172A` (dark neutral) on white
-  - Accent: Emerald 500/600 (proof points, success metrics), Pink 500 (heart/values), Yellow 400 (star ratings)
-- **Backgrounds:** white + slate-50 light sections; dark indigo→violet gradient for premium/hero/CTA blocks.
-- **Typography:** Inter (sans, all headings + body); Playfair Display loaded but unused in current build.
-- **Style traits:** rounded-3xl cards, soft shadows, blurred animated circle motifs, generous whitespace, subtle textures, micro-animations (framer-motion fade/scale/float).
-- **Logo treatment:** wordmark "Fullyo." (period included), bold, tight tracking.
-
-## 10. Voice & Tone
-
-- **Voice:** Confident, direct, operator-to-operator. Premium but not corporate. Empathetic to host pain ("Host Trap," "drowning in messages").
-- **Tone shifts:**
-  - Marketing copy → punchy, benefit-led, contrarian ("The Airbnb-only era is over.")
-  - Founder/about → warm, first-person, humane.
-  - Stats/results → assertive, specific numbers, hedged with "average" or "verified."
-- **Signature phrases:** "Focus on your guests, we automate the rest." · "Fully Booked. Fully In Control." · "High Tech. High Touch." · "Built by Hosts, For Hosts." · "Host Trap" · "Restore sanity to property management." · "Concierge agency."
-- **Words to favor:** partner, system, blueprint, sustainable, independence, concierge, growth, ecosystem.
-- **Words to avoid:** generic SaaS-speak ("solution," "platform"), hype words ("revolutionary," "disruptive"), anything that frames Fullyo as a self-serve tool.
-
-## 11. Conversion Funnel / CTAs
-
-- **Primary CTA:** "Book Your Strategy Call" → `mailto:hello@fullyo.com?subject=Strategy Call Request`
-- **Secondary CTA:** Direct email `hello@fullyo.com`
-- **4-step journey:** Strategy Call → Custom Plan → System Build → Growth
-- **Onboarding speed:** as little as 2 weeks; first contact → strategy call within the same week.
-
-## 12. Hiring / Culture (for recruiting copy)
-
-Open roles framed as missions, remote-first, performance-oriented:
-- Business Development Lead (Growth) — "the hunter"
-- Social Media Manager (Content) — "voice of the brand"
-- Senior React Developer (Engineering) — "you build the engines"
-- Account Manager / STR Expert (Client Success) — "the partner"
-- Performance Marketer (Growth) — "you control the traffic"
+**Version:** May 2026  
+**Source:** fullyo.io (index.html v11)  
+**Contact:** hello@fullyo.com  
+**Legal entity:** Fullyo Inc.
 
 ---
 
-*Source: `index.html` @ commit v11. Update this doc when the site copy changes.*
+## Table of Contents
+
+1. Brand Overview
+2. Brand Description (Official)
+3. Mission, Philosophy & Values
+4. The Fullyo System — 5 Pillars
+5. Who We Serve
+6. Proof Points & Case Studies
+7. Testimonials
+8. Tech Ecosystem & Integrations
+9. Team
+10. Visual Identity
+11. Voice & Tone
+12. Website Pages & Navigation
+13. FAQs (from site)
+14. Conversion Funnel & CTAs
+15. Careers & Culture
+
+---
+
+## 1. Brand Overview
+
+| Field | Detail |
+|---|---|
+| **Brand Name** | Fullyo |
+| **Wordmark** | Fullyo. (period is part of the logo treatment) |
+| **Website** | fullyo.io |
+| **Email** | hello@fullyo.com |
+| **Category** | Short-term rental (STR) growth agency |
+| **Tagline** | The Property Growth Agency |
+| **Hero headline** | Focus on your guests, we automate the rest. |
+| **Brand promise** | Fully Booked. Fully In Control. |
+| **About page headline** | Built by Hosts, For Hosts. |
+| **About page sub** | We aren't just a software company. We are a concierge agency dedicated to restoring sanity to property management. |
+| **Careers headline** | Join the Mission. |
+
+---
+
+## 2. Brand Description (Official)
+
+At Fullyo, we help short-term rental owners and property managers focus on exceptional hospitality instead of juggling software and booking channels.
+
+We build the full system behind your business across five core pillars: listing optimization, direct-booking websites, multi-channel distribution, property management system integration, and revenue-focused marketing.
+
+Everything works together to increase occupancy, drive more direct bookings, and help you turn your listings into a real brand you are proud to own.
+
+---
+
+## 3. Mission, Philosophy & Values
+
+### Mission
+Build the operating system for modern hospitality and restore sanity to property management.
+
+### Philosophy
+We operate with a single rule: **High Concierge Care.** This means that while we use advanced automation and enterprise systems, we never lose the human touch. When you partner with Fullyo, you aren't just getting software — you are getting a dedicated team obsessed with your growth.
+
+### Origin Story (Founder Note)
+> "I started Fullyo because I saw too many property owners stuck in the 'Host Trap.' They were spending all day messaging guests, syncing calendars manually, and worrying about the next booking. My goal wasn't just to build a tool, but to build a partner. I still personally oversee the strategy for every new partner we onboard to ensure we deliver on that promise."
+
+*— Founder & Head of Strategy*
+
+### Core Values
+
+1. **Strategy First** — We don't just "turn on ads." We build a custom revenue blueprint for your specific property type. No guesswork.
+2. **Concierge Support** — You have direct access to our team. No ticketing systems where requests go to die.
+3. **Total Transparency** — You see what we see. Real-time reporting on bookings, revenue, and ad spend.
+4. **Data-First** — "You can't improve what you don't measure." Before running ads or building websites, we build a custom blueprint based on data.
+5. **Independence** — Help owners achieve a strategic 50/50 balance between direct bookings and OTAs — filling calendars without over-relying on platforms.
+
+### Brand Positioning Phrases
+- *High Tech. High Touch.*
+- *Built by Hosts, For Hosts.*
+- *The Airbnb-only era is over.*
+- *Restore sanity to property management.*
+- *Fully Booked. Fully In Control.*
+- *Focus on your guests, we automate the rest.*
+
+---
+
+## 4. The Fullyo System — 5 Pillars
+
+The core offer. Marketed as "One System. Five Essential Pillars." — an all-in-one ecosystem for owners and property managers serious about sustainable growth.
+
+---
+
+### Pillar 01 — Strategic Listing Optimization
+
+**Tag:** Fullyo Pillar #1  
+**Icon:** BarChart3
+
+**Description:**  
+We conduct a deep dive into your business — identifying what works and what doesn't, defining your ideal guest avatar, and using powerful tools to uncover key areas for improvement.
+
+**Why It Comes First:**  
+You can't improve what you don't measure. Before we run ads or build websites, we build a custom blueprint based on data, not guesswork.
+
+**What's Included:**
+- Identify revenue leaks in your current listing
+- Competitor price benchmarking
+- Ideal Guest Avatar definition
+- Custom Performance Blueprint creation
+
+**Result:** Average 28.5% increase in performance.
+
+---
+
+### Pillar 02 — Direct Booking Website Design
+
+**Tag:** Fullyo Pillar #2  
+**Icon:** Globe
+
+**Description:**  
+Stop losing money to commissions. We build a beautiful, commission-free direct booking website that acts as your most profitable channel, putting you back in control of your brand.
+
+**Why It Matters:**  
+Relying solely on Airbnb and VRBO exposes your business to algorithm changes and policy shifts. A direct booking website is your insurance policy.
+
+**What's Included:**
+- Seamless PMS Integration
+- Automated Upsells & Add-ons
+- Mobile-First & Speed Optimized
+- Full Guest Data Capture (Email/Phone)
+
+**Result:** Up to 18% increase in profit margin.
+
+---
+
+### Pillar 03 — 5x Multi-Channel Distribution
+
+**Tag:** Fullyo Pillar #3  
+**Icon:** Share2
+
+**Description:**  
+The Airbnb-only era is over. We ensure you're visible on at least five key channels where your ideal guests are searching, turning them all into a powerful funnel.
+
+**Why It Matters:**  
+We synchronize your calendar and pricing across Airbnb, VRBO, Booking.com, Expedia, and niche sites. Never miss a booking because you weren't seen.
+
+**What's Included:**
+- Sync across 5+ Major OTAs
+- Zero Double-Bookings Guarantee
+- Centralized Calendar Management
+- Niche Site Listing (e.g., Glamping Hub, Pet-Friendly)
+
+**Result:** Visible on 5 key channels where guests are searching.
+
+---
+
+### Pillar 04 — PMS & Command Center Integration
+
+**Tag:** Fullyo Pillar #4  
+**Icon:** LayoutDashboard
+
+**Description:**  
+We centralize your entire operation into one powerful dashboard. Whether integrating with your existing PMS or setting you up with our preferred system, we synchronize your business.
+
+**Why It Matters:**  
+This allows us to automate everything from messaging to cleaning schedules, saving you hours every week so you can focus on growth.
+
+**What's Included:**
+- Unified Inbox for all channels
+- Automated Guest Messaging
+- Cleaner & Maintenance Scheduling
+- Dynamic Pricing Tool Integration
+
+**Result:** Saves 4–12+ hours per week.
+
+---
+
+### Pillar 05 — Growth Marketing Plan
+
+**Tag:** Fullyo Pillar #5  
+**Icon:** Megaphone
+
+**Description:**  
+A great system requires a powerful plan. We go beyond just a document; we execute a dynamic marketing strategy to build your property into a sought-after brand.
+
+**Why It Matters:**  
+We use email marketing, social media retargeting, and strategic partnerships to fill your calendar during shoulder seasons.
+
+**What's Included:**
+- Email Marketing Campaigns
+- Social Media Retargeting Ads
+- Influencer Partnership Strategy
+- Repeat Guest Loyalty Programs
+
+**Result:** 10–30% increase in direct bookings.
+
+---
+
+## 5. Who We Serve
+
+**Section headline:** Who We Help Best  
+**Sub-copy:** Fullyo is the operational partner for serious hospitality professionals.
+
+### The 6 Personas
+
+| Persona | Description |
+|---|---|
+| **The First-Time Host** | Launching your first unit? Skip the amateur phase. Start with a professional system from Day 1. |
+| **The Owner-Host** | Managing 1–10 properties? Stop cleaning and messaging all day. Automate the busywork so you can enjoy the revenue. |
+| **The Growing Manager** | Adding new units fast? Build the backend infrastructure that handles growth without the operational chaos. |
+| **The Established Manager** | Managing at volume? We audit and optimize your tech stack to squeeze more profit from every single booking. |
+| **The Boutique Hotelier** | Running an independent hotel? Stop renting your customers from Expedia. Own your brand and direct bookings. |
+| **The Adventure Operator** | Running a surf camp, lodge, or retreat? We build custom booking flows that handle complex itineraries and rentals. |
+
+---
+
+## 6. Proof Points & Case Studies
+
+### Company-Level Stats
+
+| Metric | Value |
+|---|---|
+| Properties Optimized | 1,000+ |
+| Years of Expertise | 10+ |
+| Countries Served | 12+ |
+| Properties (founder section) | 750+ |
+
+### Featured Results (Homepage Cards)
+
+| Property | Result | Description |
+|---|---|---|
+| Aspen Chalet — Mountain View Retreat | +55% Direct Bookings | Reduced OTA reliance and boosted profitability in just 6 months. |
+| NYC Loft — Urban Oasis Lofts | 10+ Hrs Saved Per Week | Full automation of guest comms and check-in processes. |
+| Malibu Villa — Beachfront Villas | 95% Occupancy Rate | Dynamic pricing strategy led to a fully booked season. |
+
+### Full Case Study Library (Case Studies Page)
+
+| Client | Result | Summary | Tags |
+|---|---|---|---|
+| Mountain View Retreats | +42% Revenue | Transformed a seasonal cabin into a year-round destination using email marketing and dynamic pricing. | Email Marketing, Pricing |
+| Coastal Stays Portfolio | 98% Direct Bookings | Breaking free from Airbnb: moved almost entirely to their own platform in 6 months. | Web Dev, SEO |
+| Urban Loft Co. | 12 hrs Saved/Week | Implementing a unified inbox and auto-scheduling for a 15-unit city manager. | Automation, PMS |
+| The Lakeside Collective | +60% Occupancy | Leveraged targeted Google Ads to capture off-peak corporate retreats. | Paid Ads, Corporate |
+| Desert Modern Portfolio | $120k Revenue | High-ticket branding for a luxury Joshua Tree portfolio. Custom direct booking site rivaling 5-star hotels. | Branding, Direct Booking |
+| City Suites Management | 200+ Reviews | Automated guest experience to maintain Superhost status at scale using AI messaging. | AI Support, Operations |
+
+### Case Study Methodology (3 Principles)
+1. **Data-First Audit** — Every success story starts with a deep dive into pricing and comp sets.
+2. **Custom Execution** — No cookie-cutter plans. We build the exact tech stack your property needs.
+3. **Rapid Iteration** — We launch fast, measure results, and optimize weekly.
+
+---
+
+## 7. Testimonials
+
+> "We were drowning in messages and cleaning schedules. Fullyo's system didn't just get us more bookings, it gave us our weekends back."
+> — **Sarah J.**, Owner, Mountain View Retreats ⭐⭐⭐⭐⭐
+
+> "The direct booking site they built accounts for 40% of our revenue now. We're saving thousands in Airbnb fees every season."
+> — **Michael T.**, Property Manager, Coastal Stays ⭐⭐⭐⭐⭐
+
+> "Our revenue grew by 40% in the first quarter alone. The ROI on this system is undeniable. It paid for itself in the first month."
+> — **James P.**, Owner, Lakeside Cabins ⭐⭐⭐⭐⭐
+
+---
+
+## 8. Tech Ecosystem & Integrations
+
+**Section headline:** The Fullyo Ecosystem  
+**Sub-headline:** Seamless Integrations. Zero Friction.
+
+### Supported Tools
+
+| Category | Tools |
+|---|---|
+| **Property Management Systems** | Guesty, Hostaway, OwnerRez, Hospitable, Lodgify, Uplisting, + More |
+| **Dynamic Pricing & Revenue** | PriceLabs, Wheelhouse, Beyond, KeyData, AirDNA, Rankbreeze, + More |
+| **Operations & Guest Safety** | Breezeway, Superhog, Safely, Autohost, Turno, Minut, + More |
+
+**Note:** Don't see your PMS? We likely support it. Book a call to confirm.
+
+### OTA Channels
+Airbnb · VRBO · Booking.com · Expedia · Niche sites (Glamping Hub, Pet-Friendly, and more)
+
+---
+
+## 9. Team
+
+### Leadership
+
+| Name | Role | Description |
+|---|---|---|
+| *(Founder)* | Founder & Head of Strategy | Personally oversees strategy for every new partner onboarded. |
+| Alysia | Business Development | Leading partner relationships and identifying strategic opportunities for portfolio growth. |
+| Jenn | PMS Integration Specialist | Architecting the central nervous system of your operations for seamless automation. |
+| Lola | Web Development Lead | Building high-speed, direct booking engines that convert visitors into guests. |
+| Azim | Paid Media Specialist | Expert management of Google & Facebook campaigns to drive targeted traffic. |
+| Dave | Content & Video Strategy | Crafting viral-ready video content and social strategies to build brand authority. |
+
+**+ 12 Support & Tech Specialists**
+
+---
+
+## 10. Visual Identity
+
+### Color Palette
+
+| Role | Color | Notes |
+|---|---|---|
+| **Primary brand** | Indigo 600 `#4F46E5` | Buttons, accents, links |
+| **Hero / dark sections** | Indigo-900 → Blue-900 → Violet-900 gradient | Hero, CTA blocks, About/Careers heroes |
+| **Dark neutral** | Slate 900 `#0F172A` | Footer, dark text, secondary CTAs |
+| **Light background** | White + Slate 50 | Card sections, main body |
+| **Success / metrics** | Emerald 500/600 | Proof numbers, checkmarks, metric callouts |
+| **Star ratings** | Yellow 400 | Testimonial stars |
+| **Values accent** | Pink 500 | Heart icon in "High Tech. High Touch." section |
+
+### Typography
+
+| Role | Font | Weights |
+|---|---|---|
+| Primary (all headings + body) | Inter | 300, 400, 500, 600, 700, 800 |
+| Decorative (loaded, available) | Playfair Display | 400, 600, italic 400 |
+
+**Body:** `font-family: 'Inter', sans-serif`
+
+### Design Style
+- **Card style:** Rounded corners (rounded-3xl), soft drop shadows, hover lift + glow effects
+- **Backgrounds:** Generous whitespace, subtle dot/diamond textures at low opacity for depth
+- **Hero motif:** Large blurred animated circles (pulse, float animations) layered behind content
+- **Animations:** Framer Motion — fade-in-up, float (8s ease-in-out), pulse-slow (4s), infinite-scroll ticker
+- **Scrollbar:** Custom styled (8px, slate track, rounded thumb)
+- **Selection color:** Indigo 500 background, white text
+
+### Logo Treatment
+Wordmark only: **"Fullyo."** — bold, extra-tight tracking (`tracking-tighter`), 3xl–3rem size, white on dark / slate-900 on white.
+
+---
+
+## 11. Voice & Tone
+
+### Personality
+Confident, direct, operator-to-operator. Premium without being corporate. Empathetic to host pain points — acknowledges the grind, positions Fullyo as the way out.
+
+### Tone by Context
+
+| Context | Tone |
+|---|---|
+| Marketing headlines | Punchy, contrarian, benefit-led |
+| Body copy | Clear, authoritative, specific numbers |
+| Founder / About | Warm, first-person, conversational |
+| Stats & results | Assertive but responsible ("average," "verified") |
+| Careers | Mission-driven, energetic, bold |
+
+### Signature Phrases
+- "Focus on your guests, we automate the rest."
+- "Fully Booked. Fully In Control."
+- "High Tech. High Touch."
+- "Built by Hosts, For Hosts."
+- "The Host Trap"
+- "The Airbnb-only era is over."
+- "Restore sanity to property management."
+- "A concierge agency, not just a software company."
+- "No sales pressure. Just strategy."
+
+### Words to Favor
+partner · system · blueprint · sustainable · independence · concierge · growth · ecosystem · obsessed · engineer
+
+### Words to Avoid
+"solution" (generic SaaS) · "platform" (generic) · "revolutionary" · "disruptive" · any framing that positions Fullyo as self-serve software
+
+---
+
+## 12. Website Pages & Navigation
+
+### Pages
+- **Home** — Full marketing funnel (hero → stats → system → who we serve → tech stack → results → testimonials → FAQ → booking CTA → footer)
+- **About** — Founder note, team, values ("High Tech. High Touch.")
+- **Case Studies** — 6 detailed case studies with results and tags
+- **Careers** — 5 open roles with missions and requirements
+- **Service Pages** — Individual deep-dive page for each of the 5 pillars
+
+### Footer Navigation
+- **Solutions:** Strategic Listing Optimization · Direct Booking Website Design · 5x Multi-Channel Distribution · PMS & Command Center Integration · Growth Marketing Plan
+- **Company:** Case Studies · About Us · Careers · Contact
+- **Get in Touch:** hello@fullyo.com
+- **OTA logos (faded):** Airbnb · VRBO · Booking.com · Expedia
+- **Copyright:** © 2025 Fullyo Inc. All rights reserved.
+- Privacy Policy · Terms of Service
+
+---
+
+## 13. FAQs (from site)
+
+**Section title:** Common Questions  
+**Sub:** Everything you need to know about the Fullyo system.
+
+**Q: How long does it take to get the full system?**  
+A: Our efficient onboarding system is designed for speed. Implementation can be completed in as little as two weeks, but we work at a pace that suits you. The most important thing is that once the system is active, you can start generating new reservations — which for many hosts means a few extra thousand dollars per year.
+
+**Q: What if I already have a website or PMS?**  
+A: That's great! We can absolutely work with the tools you already have. We'll analyze your current setup to ensure it's performing at its best and seamlessly integrate the rest of our system to enhance its capabilities.
+
+**Q: Do I need to be tech-savvy?**  
+A: Not at all. We are your technical team. We become part of your tech stack and handle all the complicated stuff so you can focus on creating amazing experiences for your guests.
+
+**Q: What does it cost?**  
+A: Our services are tailored to your specific needs and budget to deliver the most effective results. It doesn't cost much to get started, and our focus is always on delivering a guaranteed return on your investment.
+
+**Q: How soon can I get started?**  
+A: We move quickly. Within the same week of contacting us, our process begins with the initial strategy call to build your performance blueprint.
+
+---
+
+## 14. Conversion Funnel & CTAs
+
+### 4-Step Client Journey
+1. **Strategy Call** — No sales pressure. Just strategy. Direct conversation with specialists.
+2. **Custom Plan** — A performance blueprint built specifically for your property.
+3. **System Build** — Implementation of all relevant pillars.
+4. **Growth** — Ongoing optimization and marketing execution.
+
+### Primary CTA
+**"Book Your Strategy Call"**  
+→ `mailto:hello@fullyo.com?subject=Strategy Call Request`  
+→ Styled as white pill button on dark backgrounds; dark pill button on light backgrounds.
+
+### Secondary CTA
+Direct email: **hello@fullyo.com**  
+Copy: *"Have a specific question before booking? Email us directly."*
+
+### Supporting Copy
+- "Speak directly with our specialists."
+- "No sales pressure. Just strategy."
+- "Stop relying 100% on the platforms. Join the owners building balanced, independent portfolios with the Fullyo system."
+- "Ready to Grow a Sustainable Business?"
+
+### Onboarding Speed
+- Same week: strategy call scheduled
+- As little as 2 weeks: full system live
+
+---
+
+## 15. Careers & Culture
+
+**Page headline:** Join the Mission.  
+**Sub:** We are building the operating system for modern hospitality. Come help us restore sanity to property management.
+
+All roles are **remote** (some hybrid available). Applications via email: hello@fullyo.com.  
+Open applications welcome: *"Don't see your role? Send us an open application."*
+
+### Open Roles
+
+**Business Development Lead**  
+Dept: Growth · Type: Remote / Commission + Base  
+Mission: You are the hunter. Your mission is to identify high-potential property portfolios and show them the path to independence.  
+Requirements: Proven track record in B2B sales (SaaS or Real Estate preferred) · Fearless on the phone and empathetic in the inbox · Ability to diagnose complex operational pain points.
+
+**Social Media Manager**  
+Dept: Content · Type: Remote  
+Mission: You are the voice of the brand. Your mission is to turn our partner properties into desirable destinations through viral storytelling.  
+Requirements: Deep understanding of IG Reels / TikTok trends for travel · Ability to edit raw footage into high-converting assets · Community management experience (you actually reply to comments).
+
+**Senior React Developer**  
+Dept: Engineering · Type: Remote  
+Mission: You build the engines. Your mission is to maintain and upgrade our direct booking infrastructure for speed and conversion.  
+Requirements: Expert in React, Tailwind, and Node.js · Experience with payment gateway integrations (Stripe) · Obsessed with site speed metrics (Core Web Vitals).
+
+**Account Manager (STR Expert)**  
+Dept: Client Success · Type: Remote / Hybrid  
+Mission: You are the partner. Your mission is to ensure our property owners feel supported, informed, and profitable every single month.  
+Requirements: Previous experience managing Airbnb listings · Hyper-organized with excellent communication skills · Ability to read revenue reports and explain them simply.
+
+**Performance Marketer**  
+Dept: Growth · Type: Remote  
+Mission: You control the traffic. Your mission is to manage Google and Meta ad spend to drive direct bookings at a 4x+ ROAS.  
+Requirements: Data-driven mindset (you dream in spreadsheets) · Experience with travel/hospitality ad campaigns · Understanding of pixel tracking and attribution.
+
+---
+
+*This document was auto-generated from the fullyo.io codebase. Update when site copy changes.*
