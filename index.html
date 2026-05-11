@@ -622,7 +622,7 @@
                             ),
                             // FUNCTIONAL BUTTON: Opens mailto link
                             h('a', { 
-                                href: "mailto:hello@fullyo.com?subject=Strategy Call Request",
+                                href: "mailto:hello@fullyo.io?subject=Strategy Call Request",
                                 className: "group relative px-8 py-4 bg-white text-indigo-900 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-indigo-500/30 transition-all inline-flex items-center gap-2 mb-10 cursor-pointer" 
                             }, 
                                 "Book Your Strategy Call", 
@@ -647,9 +647,9 @@
                             h('div', { className: "mt-12 pt-8 border-t border-white/10 w-full max-w-md mx-auto" },
                                 h('p', { className: "text-sm text-indigo-200/60 mb-2" }, "Have a specific question before booking?"),
                                 h('a', { 
-                                    href: "mailto:hello@fullyo.com",
+                                    href: "mailto:hello@fullyo.io",
                                     className: "text-white font-medium hover:text-emerald-400 transition-colors border-b border-white/30 hover:border-emerald-400 pb-0.5 text-sm"
-                                }, "Email us directly at hello@fullyo.com")
+                                }, "Email us directly at hello@fullyo.io")
                             )
                         )
                     )
@@ -680,7 +680,7 @@
                             h('li', { onClick: () => { onNavigate('home'); setTimeout(() => { const el = document.getElementById('booking-section'); if(el) el.scrollIntoView({behavior: 'smooth'}) }, 300); }, className: "hover:text-indigo-400 cursor-pointer" }, "Contact")
                         ])),
                         h('div', null, h('h4', { className: "font-bold text-white mb-6" }, "Get in Touch"), h('ul', { className: "space-y-4 text-sm text-slate-400" }, [
-                            h('li', { className: "flex items-center gap-2" }, h(Mail, { size: 16 }), "hello@fullyo.com")
+                            h('li', { className: "flex items-center gap-2" }, h(Mail, { size: 16 }), "hello@fullyo.io")
                             // Removed Phone Number LI
                         ]))
                     ),
@@ -733,7 +733,7 @@
                 e.preventDefault();
                 const subject = `Application for ${jobTitle} - ${formData.name}`;
                 const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0ALinkedIn/Portfolio: ${formData.linkedin}%0D%0A%0D%0AWhy I'm a fit:%0D%0A${formData.message}%0D%0A%0D%0A[Please attach your resume PDF to this email]`;
-                window.location.href = `mailto:hello@fullyo.com?subject=${subject}&body=${body}`;
+                window.location.href = `mailto:hello@fullyo.io?subject=${subject}&body=${body}`;
                 setTimeout(onClose, 1000);
             };
 
